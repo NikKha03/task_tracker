@@ -12,7 +12,7 @@ const FormGrid = styled(Grid)(() => ({
 	flexDirection: 'column',
 }));
 
-export default function CreateTask() {
+export default function UserInfo() {
 	return (
 		<Grid container spacing={3}>
 			<FormGrid item xs={12} md={6}>

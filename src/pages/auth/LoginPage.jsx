@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import { apiCheckAuth } from '../../ApiPath';
+import { checkAuthPath } from '../../ApiPath';
 import SocialMedia from '../../components/auth/SocialMedia';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,7 +18,7 @@ const defaultTheme = createTheme({
 
 const checkAuth = async () => {
 	const response = await axios
-		.get(apiCheckAuth(), {
+		.get(checkAuthPath, {
 			withCredentials: true,
 		})
 		.then(response => {
@@ -53,7 +53,6 @@ const LoginPage = () => {
 								<Typography component='h1' variant='h6' sx={{ fontSize: 25 }}>
 									Вход в «Task tracker»
 								</Typography>
-								{/* <img style={{ height: '11%', width: '11%' }} src='https://raw.githubusercontent.com/NikKha03/web_authorization/main/img/free-icon-task-8655468.png' alt='Task tracker' /> */}
 							</Box>
 							<SocialMedia />
 						</Box>

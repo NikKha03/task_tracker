@@ -7,13 +7,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 
-import CreateTask from './CreateTask';
-import getCheckoutTheme from '../theme/getCheckoutTheme';
-import TaskMenu from './TaskMenu';
-import ToggleColorMode from '../theme/ToggleColorMode';
-import TaskManagement from './TaskManagement';
+import CreateTask from '../task/CreateTask';
+import TaskMenu from '../task/TaskMenu';
+import TaskManagement from '../task/TaskManagement';
 
 const getContent = action => {
 	if (action === 0) {
@@ -25,14 +23,8 @@ const getContent = action => {
 	}
 };
 
-export default function Checkout() {
+export default function Checkout({ theme }) {
 	const [activeAction, setAction] = useState(0);
-	const [mode, setMode] = useState('light');
-	const checkoutTheme = createTheme(getCheckoutTheme(mode));
-
-	const toggleColorMode = () => {
-		setMode(prev => (prev === 'dark' ? 'light' : 'dark'));
-	};
 
 	const handleClickCreate = () => {
 		setAction(0);
@@ -54,11 +46,14 @@ export default function Checkout() {
 		setAction(4);
 	};
 
+	const handleClickIncomplete = () => {
+		setAction(5);
+	};
+
 	return (
-		<ThemeProvider theme={checkoutTheme}>
-			{/* <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} /> */}
+		<ThemeProvider theme={theme}>
 			<CssBaseline />
-			<Grid container sx={{ height: { xs: '90%', sm: '90dvh' } }}>
+			<Grid container sx={{ height: { xs: '100%', sm: '100dvh' } }}>
 				<Grid
 					item
 					xs={12}
@@ -85,7 +80,14 @@ export default function Checkout() {
 							maxWidth: 500,
 						}}
 					>
-						<TaskMenu create={handleClickCreate} onTheDay={handleClickOnTheDay} onOtherDays={handleClickOnOtherDays} onSomeDays={handleClickOnSomeDay} completed={handleClickCompleted} />
+						<TaskMenu
+							create={handleClickCreate}
+							onTheDay={handleClickOnTheDay}
+							onOtherDays={handleClickOnOtherDays}
+							onSomeDays={handleClickOnSomeDay}
+							completed={handleClickCompleted}
+							incomplete={handleClickIncomplete}
+						/>
 					</Box>
 				</Grid>
 				<Grid

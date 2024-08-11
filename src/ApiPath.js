@@ -3,22 +3,22 @@ const portAuthService = 8090;
 
 export const oAuth2Yandex = `http://${hostAuthService}:${portAuthService}/oauth2/authorization/yandex`;
 
-export const apiTasks = `http://${hostAuthService}:${portAuthService}/task-tracker/task`;
-export const apiUsers = `http://${hostAuthService}:${portAuthService}/task-tracker/user`;
+export const apiTaskController = `http://${hostAuthService}:${portAuthService}/task-tracker/task`;
+export const apiUserController = `http://${hostAuthService}:${portAuthService}/task-tracker/user`;
 export const apiAuth = `http://${hostAuthService}:${portAuthService}/task-tracker/auth`;
 
-export const apiAllTasks = () => `${apiTasks}/all`;
-export const apiAllCompletedTasks = () => `${apiTasks}/allCompleted`;
-export const apiTasksOnTheDay = () => `${apiTasks}/onTheDay`;
-export const apiTasksOnOtherDays = () => `${apiTasks}/onOtherDays`;
-export const apiTasksOnSomeday = () => `${apiTasks}/onSomeday`;
+export const allCompletedTasks = `${apiTaskController}/allCompleted`;
+export const tasksOnTheDay = `${apiTaskController}/onTheDay`;
+export const tasksOnOtherDays = `${apiTaskController}/onOtherDays`;
+export const tasksIncomplete = `${apiTaskController}/incomplete`;
+export const tasksOnSomeday = `${apiTaskController}/onSomeday`;
 
-export const apiCreateTask = () => `${apiTasks}/create`;
-export const apiChangeTask = taskId => `${apiTasks}/change/${taskId}`;
-export const apiDeleteTask = taskId => `${apiTasks}/delete/${taskId}`;
+export const createTaskPath = () => `${apiTaskController}/create`;
+export const changeTaskPath = taskId => `${apiTaskController}/change/${taskId}`;
+export const deleteTaskPath = taskId => `${apiTaskController}/delete/${taskId}`;
+export const changeTaskPathStatusOnCompletedPath = taskId => `${apiTaskController}/changeStatusOnCompleted/${taskId}`;
+export const changeTaskPathStatusOnInProgressPath = taskId => `${apiTaskController}/changeStatusOnInProgress/${taskId}`;
 
-export const apiCheckAuth = () => `${apiAuth}/checkAuth`;
+export const checkAuthPath = `${apiAuth}/checkAuth`;
 
-export const apiChangeTaskStatusOnCompleted = taskId => `http://localhost:8080/taskServiceApi/1/changeTaskStatusOnCompleted/${taskId}`;
-
-export const apiUserPage = () => `${apiUsers}`;
+export const userPagePath = () => `${apiUserController}`;

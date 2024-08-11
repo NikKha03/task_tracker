@@ -3,12 +3,13 @@ import { oAuth2Yandex } from '../../ApiPath';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import yandexId from '../../../img/yaID.png';
 
 const SocialMedia = () => {
 	return (
 		<Box>
 			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-				<img style={{ height: '23%', width: '23%' }} src='https://raw.githubusercontent.com/NikKha03/web_authorization/only_yandex/img/yaID.png' alt='YandexID' />
+				<img style={{ height: '23%', width: '23%' }} src={yandexId} alt='YandexID' />
 			</Box>
 			<Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: 0.5, paddingBottom: 2.5 }}>
 				<Typography component='h2' variant='h6' sx={{ fontSize: 20, width: '100%', textAlign: 'center' }}>
