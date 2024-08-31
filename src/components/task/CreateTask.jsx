@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
@@ -12,14 +12,19 @@ import Button from '@mui/material/Button';
 import { createTaskPath } from '../../ApiPath';
 
 const createTask = async (header, date, time, comment) => {
-	const dateArr = date.split('.');
-	const fullDate = `${dateArr[2]}-${dateArr[1]}-${dateArr[0]} ${time}`;
+	let fullDate;
+	if (date.length >= 1) {
+		const [day, month, year] = date.split('.');
+		if (time === '') time = '00:00';
+		fullDate = `${year}-${month}-${day} ${time}`;
+	}
+
 	const response = await axios
 		.post(
 			createTaskPath(),
 			{
 				header: header,
-				datePlannedImplementation: fullDate,
+				plannedImplDate: fullDate,
 				comment: comment,
 			},
 			{
@@ -36,6 +41,15 @@ export default function CreateTask() {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 		createTask(data.get('header'), data.get('date'), data.get('time'), data.get('comment'));
+	};
+
+	const notification = [];
+
+	const handleKeyDown = event => {
+		if (event.key === 'Enter') {
+			notification.push();
+			console.log(notification);
+		}
 	};
 
 	return (
@@ -59,7 +73,8 @@ export default function CreateTask() {
 					</Box>
 					<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
 						<Typography sx={{ fontSize: 22 }}>🔔 Уведомления</Typography>
-						<OutlinedInput id='notification' name='notification' placeholder='Для добавления нажмите enter' />
+						<p>*Убедитесь, что в профиле есть данные о вашем tg</p>
+						<OutlinedInput id='notification' name='notification' onKeyDown={handleKeyDown} placeholder='дд.мм.гггг чч:мм (для добавления нажмите enter)' />
 					</Box>
 					<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
 						<Typography sx={{ fontSize: 22 }}>📝 Комментарий</Typography>

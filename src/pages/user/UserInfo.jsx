@@ -1,11 +1,12 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid';
 import OutlinedInput from '@mui/material/OutlinedInput';
+import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
+import { userInfoPath, changeUserInfoPath } from '../../ApiPath';
 
 const FormGrid = styled(Grid)(() => ({
 	display: 'flex',
@@ -13,57 +14,84 @@ const FormGrid = styled(Grid)(() => ({
 }));
 
 export default function UserInfo() {
+	const [userInfoData, setUserInfoData] = useState(null);
+
+	const getUserInfo = async () => {
+		const response = await axios
+			.get(userInfoPath, {
+				withCredentials: true,
+			})
+			.then(response => {
+				setUserInfoData(response.data);
+			})
+			.catch(error => {
+				console.error('Error fetching data: ', error);
+			});
+	};
+
+	const changeUserInfo = async (firstName, lastName, email, tg) => {
+		const response = await axios
+			.put(
+				changeUserInfoPath,
+				{
+					firstName: firstName,
+					lastName: lastName,
+					email: email,
+					tg: tg,
+				},
+				{
+					withCredentials: true,
+				}
+			)
+			.catch(error => {
+				console.error('Error fetching data: ', error);
+			});
+	};
+
+	useEffect(() => {
+		getUserInfo();
+	}, [userInfoData === null]);
+
+	const handleSubmitSave = event => {
+		event.preventDefault();
+		const data = new FormData(event.currentTarget);
+		changeUserInfo(data.get('first-name'), data.get('last-name'), data.get('email'), data.get('Tg'));
+	};
+
 	return (
-		<Grid container spacing={3}>
-			<FormGrid item xs={12} md={6}>
-				<FormLabel htmlFor='first-name' required>
-					First name
-				</FormLabel>
-				<OutlinedInput id='first-name' name='first-name' type='name' placeholder='John' autoComplete='first name' required />
-			</FormGrid>
-			<FormGrid item xs={12} md={6}>
-				<FormLabel htmlFor='last-name' required>
-					Last name
-				</FormLabel>
-				<OutlinedInput id='last-name' name='last-name' type='last-name' placeholder='Snow' autoComplete='last name' required />
-			</FormGrid>
-			<FormGrid item xs={12}>
-				<FormLabel htmlFor='address1' required>
-					Address line 1
-				</FormLabel>
-				<OutlinedInput id='address1' name='address1' type='address1' placeholder='Street name and number' autoComplete='shipping address-line1' required />
-			</FormGrid>
-			<FormGrid item xs={12}>
-				<FormLabel htmlFor='address2'>Address line 2</FormLabel>
-				<OutlinedInput id='address2' name='address2' type='address2' placeholder='Apartment, suite, unit, etc. (optional)' autoComplete='shipping address-line2' required />
-			</FormGrid>
-			<FormGrid item xs={6}>
-				<FormLabel htmlFor='city' required>
-					City
-				</FormLabel>
-				<OutlinedInput id='city' name='city' type='city' placeholder='New York' autoComplete='City' required />
-			</FormGrid>
-			<FormGrid item xs={6}>
-				<FormLabel htmlFor='state' required>
-					State
-				</FormLabel>
-				<OutlinedInput id='state' name='state' type='state' placeholder='NY' autoComplete='State' required />
-			</FormGrid>
-			<FormGrid item xs={6}>
-				<FormLabel htmlFor='zip' required>
-					Zip / Postal code
-				</FormLabel>
-				<OutlinedInput id='zip' name='zip' type='zip' placeholder='12345' autoComplete='shipping postal-code' required />
-			</FormGrid>
-			<FormGrid item xs={6}>
-				<FormLabel htmlFor='country' required>
-					Country
-				</FormLabel>
-				<OutlinedInput id='country' name='country' type='country' placeholder='United States' autoComplete='shipping country' required />
-			</FormGrid>
-			<FormGrid item xs={12}>
-				<FormControlLabel control={<Checkbox name='saveAddress' value='yes' />} label='Use this address for payment details' />
-			</FormGrid>
-		</Grid>
+		<>
+			{userInfoData === null ? null : (
+				<form onSubmit={handleSubmitSave}>
+					<FormGrid item xs={12} md={6}>
+						<FormLabel htmlFor='first-name' required>
+							Имя
+						</FormLabel>
+						<OutlinedInput id='first-name' name='first-name' type='name' defaultValue={userInfoData.firstName} />
+					</FormGrid>
+					<FormGrid item xs={12} md={6}>
+						<FormLabel htmlFor='last-name' required>
+							Фамилия
+						</FormLabel>
+						<OutlinedInput id='last-name' name='last-name' type='last-name' defaultValue={userInfoData.lastName} />
+					</FormGrid>
+					<FormGrid item xs={12}>
+						<FormLabel htmlFor='email' required>
+							Email
+						</FormLabel>
+						<OutlinedInput id='email' name='email' type='email' defaultValue={userInfoData.email} />
+					</FormGrid>
+					<FormGrid item xs={12}>
+						<FormLabel htmlFor='Tg' required>
+							Tg
+						</FormLabel>
+						<OutlinedInput id='Tg' name='Tg' type='Tg' defaultValue={userInfoData.tg} />
+					</FormGrid>
+
+					<Button type='submitSave' variant='contained' color='success' sx={{ width: '100%', marginTop: 4 }}>
+						Сохранить
+					</Button>
+				</form>
+			)}
+		</>
 	);
 }

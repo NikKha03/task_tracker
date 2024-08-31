@@ -22,3 +22,6 @@ export const changeTaskPathStatusOnInProgressPath = taskId => `${apiTaskControll
 export const checkAuthPath = `${apiAuth}/checkAuth`;
 
 export const userPagePath = () => `${apiUserController}`;
+
+export const userInfoPath = `${apiUserController}/userInfo`;
+export const changeUserInfoPath = `${apiUserController}/changeInfo`;

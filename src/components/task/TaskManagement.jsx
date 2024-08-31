@@ -12,7 +12,7 @@ import {
 	tasksIncomplete,
 } from '../../ApiPath';
 import EmptyPageMassage from './EmptyPageMassage';
-import CompletedTask from './CompletedTask';
+import TaskList from './TaskList';
 
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -26,7 +26,7 @@ import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const changeTask = async (taskId, header, comment, datePlannedImplementation) => {
+const changeTask = async (taskId, header, comment, plannedImplDate) => {
 	const response = await axios
 		.put(
 			changeTaskPath(taskId),
@@ -34,7 +34,7 @@ const changeTask = async (taskId, header, comment, datePlannedImplementation) =>
 				taskId: taskId,
 				header: header,
 				comment: comment,
-				datePlannedImplementation: datePlannedImplementation,
+				plannedImplDate: plannedImplDate,
 			},
 			{
 				withCredentials: true,
@@ -85,10 +85,10 @@ const changeTaskPathStatusOnInProgress = async taskId => {
 
 export default function TaskManagement({ obj }) {
 	const [tasks, setTasks] = useState([]);
+	console.log(tasks);
 	const [tasksIsEmpty, setTasksIsEmpty] = useState(false);
 	const [triggerEffect, setTriggerEffect] = useState(false);
 	const [selectedTaskId, setSelectedTaskId] = useState(null);
-	const [checkedTaskId, setCheckedTaskId] = useState(null);
 
 	const requestCode = () => {
 		switch (obj) {
@@ -110,7 +110,6 @@ export default function TaskManagement({ obj }) {
 			setTriggerEffect(false);
 			requestCode();
 		}
-
 		requestCode();
 	}, [triggerEffect]);
 
@@ -121,7 +120,7 @@ export default function TaskManagement({ obj }) {
 			})
 			.then(response => {
 				setTasks(response.data);
-				response.data.length === 0 ? setTasksIsEmpty(true) : null;
+				if (response.data.length === 0) setTasksIsEmpty(true);
 			})
 			.catch(error => {
 				console.error('Error fetching data: ', error);
@@ -135,7 +134,7 @@ export default function TaskManagement({ obj }) {
 			})
 			.then(response => {
 				setTasks(response.data);
-				response.data.length === 0 ? setTasksIsEmpty(true) : null;
+				if (response.data.length === 0) setTasksIsEmpty(true);
 			})
 			.catch(error => {
 				console.error('Error fetching data: ', error);
@@ -149,7 +148,7 @@ export default function TaskManagement({ obj }) {
 			})
 			.then(response => {
 				setTasks(response.data);
-				response.data.length === 0 ? setTasksIsEmpty(true) : null;
+				if (response.data.length === 0) setTasksIsEmpty(true);
 			})
 			.catch(error => {
 				console.error('Error fetching data: ', error);
@@ -163,7 +162,7 @@ export default function TaskManagement({ obj }) {
 			})
 			.then(response => {
 				setTasks(response.data);
-				response.data.length === 0 ? setTasksIsEmpty(true) : null;
+				if (response.data.length === 0) setTasksIsEmpty(true);
 			})
 			.catch(error => {
 				console.error('Error fetching data: ', error);
@@ -177,7 +176,7 @@ export default function TaskManagement({ obj }) {
 			})
 			.then(response => {
 				setTasks(response.data);
-				response.data.length === 0 ? setTasksIsEmpty(true) : null;
+				if (response.data.length === 0) setTasksIsEmpty(true);
 			})
 			.catch(error => {
 				console.error('Error fetching data: ', error);
@@ -185,14 +184,13 @@ export default function TaskManagement({ obj }) {
 	};
 
 	const handleCheckboxChecked = taskId => {
-		setCheckedTaskId(taskId);
 		changeTaskPathStatusOnCompleted(taskId);
 		setTriggerEffect(true);
 	};
 
 	const handleCheckboxNotChecked = taskId => {
-		setTriggerEffect(true);
 		changeTaskPathStatusOnInProgress(taskId);
+		setTriggerEffect(true);
 	};
 
 	const handleClick = taskId => {
@@ -206,7 +204,13 @@ export default function TaskManagement({ obj }) {
 	const handleSubmitSave = event => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		changeTask(selectedTaskId, data.get('header'), data.get('comment'), data.get('dateTimeOfTask'));
+
+		const fullDate = data.get('dateTimeOfTask');
+		let [date, time] = fullDate.split(' ');
+		if (time === undefined) time = '00:00';
+		const [day, month, year] = date.split('.');
+
+		changeTask(selectedTaskId, data.get('header'), data.get('comment'), `${year}-${month}-${day} ${time}`);
 		setTriggerEffect(true);
 	};
 
@@ -221,23 +225,7 @@ export default function TaskManagement({ obj }) {
 				{tasksIsEmpty ? <EmptyPageMassage command={obj} /> : null}
 				{tasks.map(task => (
 					<Box key={task.taskId} sx={{ width: '100%' }}>
-						{task.datePlannedImplementation !== null &&
-						task.taskStatus !== 'COMPLETED' &&
-						(task === tasks[0] || (task !== tasks[0] && tasks[tasks.indexOf(task) - 1].datePlannedImplementation.substring(0, 10) !== task.datePlannedImplementation.substring(0, 10))) ? (
-							<Typography variant='h2' sx={{ fontSize: 22, marginBottom: 2 }}>
-								{task.datePlannedImplementation.substring(0, 10)}
-							</Typography>
-						) : null}
-						{task.taskStatus === 'COMPLETED' ? (
-							<CompletedTask tasks={tasks} task={task} checkedTaskId={checkedTaskId} click={handleClick} change={handleCheckboxNotChecked} />
-						) : (
-							<Stack sx={{ alignItems: 'center', border: 1, borderRadius: 2, borderColor: 'blue', marginBottom: 2, padding: 1 }} direction='row'>
-								<FormControlLabel control={<Checkbox checked={checkedTaskId === task.taskId} onChange={() => handleCheckboxChecked(task.taskId)} color='success' />} />
-								<Typography onClick={() => handleClick(task.taskId)} variant='h3' sx={{ cursor: 'pointer', fontSize: 22 }}>
-									{task.header}
-								</Typography>
-							</Stack>
-						)}
+						<TaskList status={task.taskStatus} tasks={tasks} task={task} click={handleClick} changeOnNotChecked={handleCheckboxNotChecked} changeOnChecked={handleCheckboxChecked} />
 						{selectedTaskId === task.taskId && (
 							<form onSubmit={handleSubmitSave}>
 								<List sx={{ marginLeft: 6.2, marginRight: 6.2 }}>
@@ -256,7 +244,7 @@ export default function TaskManagement({ obj }) {
 										</Box>
 										<Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', marginTop: 1 }}>
 											<Typography sx={{ fontSize: 22 }}>🗓️ Выполнить</Typography>
-											<OutlinedInput id='dateTimeOfTask' name='dateTimeOfTask' defaultValue={task.datePlannedImplementation} />
+											<OutlinedInput id='dateTimeOfTask' name='dateTimeOfTask' defaultValue={dateFormatter(task.plannedImplDate)} />
 										</Box>
 										<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
 											<Typography sx={{ fontSize: 22 }}>📝 Комментарий</Typography>
@@ -272,3 +260,18 @@ export default function TaskManagement({ obj }) {
 		</React.Fragment>
 	);
 }
+
+const dateFormatter = fullDate => {
+	if (fullDate === '' || fullDate === null) {
+		return '';
+	}
+
+	let [date, time] = fullDate.split(' ');
+	const [year, month, day] = date.split('-');
+
+	if (time === '00:00') {
+		return `${day}.${month}.${year}`;
+	}
+
+	return `${day}.${month}.${year} ${time}`;
+};

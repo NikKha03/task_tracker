@@ -44,7 +44,7 @@ function TaskMenu({ create, onTheDay, onOtherDays, onSomeDays, completed, incomp
 					<Stack sx={{ width: '100%', alignItems: 'center' }} direction='row'>
 						<EventBusyIcon sx={{ color: '#dc143c' }} />
 						<Typography sx={{ fontSize: 22 }} ml={1} variant='subtitle1'>
-							Просрочено
+							Не выполнено
 						</Typography>
 					</Stack>
 				</Button>
