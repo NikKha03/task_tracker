@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-
 import { ThemeProvider } from '@mui/material/styles';
 
 import CreateTask from '../task/CreateTask';
@@ -58,16 +54,15 @@ export default function Checkout({ theme }) {
 					item
 					xs={12}
 					sm={5}
-					lg={4}
+					lg={3}
 					sx={{
-						display: { xs: 'none', md: 'flex' },
 						flexDirection: 'column',
 						backgroundColor: 'background.paper',
 						borderRight: { sm: 'none', md: '1px solid' },
 						borderColor: { sm: 'none', md: 'divider' },
 						alignItems: 'start',
-						pt: 1,
-						px: 1,
+						pt: 2.5,
+						px: 2.5,
 						gap: 4,
 					}}
 				>
@@ -94,7 +89,7 @@ export default function Checkout({ theme }) {
 					item
 					sm={12}
 					md={7}
-					lg={8}
+					lg={9}
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
@@ -113,9 +108,7 @@ export default function Checkout({ theme }) {
 							display: 'flex',
 							flexDirection: 'column',
 							flexGrow: 1,
-							width: '100%',
-							maxWidth: { sm: '100%', md: 600 },
-							maxHeight: '720px',
+							width: '70%',
 							gap: { xs: 5, md: 'none' },
 						}}
 					>

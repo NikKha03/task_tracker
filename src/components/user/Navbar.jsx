@@ -49,8 +49,8 @@ export default function Navbar({ mode }) {
 	);
 
 	return (
-		<Box container sx={{ flexGrow: 1 }}>
-			<AppBar position='static' sx={{ paddingLeft: 2.3, paddingRight: 2.3, backgroundColor: '#050e5c' }}>
+		<Box sx={{ flexGrow: 1 }}>
+			<AppBar position='static' sx={{ paddingLeft: 0.8, paddingRight: 0.8, backgroundColor: '#050e5c' }}>
 				<Toolbar>
 					<Typography variant='h4' noWrap component='div' sx={{ display: { xs: 'none', sm: 'block' } }}>
 						Task tracker

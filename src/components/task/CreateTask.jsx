@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import axios from 'axios';
 
+import AddAlertIcon from '@mui/icons-material/AddAlert';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
@@ -10,21 +10,15 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
 import { createTaskPath } from '../../ApiPath';
+import { dateCreate } from '../../utils/DateUtils';
 
 const createTask = async (header, date, time, comment) => {
-	let fullDate;
-	if (date.length >= 1) {
-		const [day, month, year] = date.split('.');
-		if (time === '') time = '00:00';
-		fullDate = `${year}-${month}-${day} ${time}`;
-	}
-
 	const response = await axios
 		.post(
 			createTaskPath(),
 			{
 				header: header,
-				plannedImplDate: fullDate,
+				plannedImplDate: dateCreate(date, time),
 				comment: comment,
 			},
 			{
@@ -74,7 +68,12 @@ export default function CreateTask() {
 					<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
 						<Typography sx={{ fontSize: 22 }}>🔔 Уведомления</Typography>
 						<p>*Убедитесь, что в профиле есть данные о вашем tg</p>
-						<OutlinedInput id='notification' name='notification' onKeyDown={handleKeyDown} placeholder='дд.мм.гггг чч:мм (для добавления нажмите enter)' />
+						<Box sx={{ display: 'flex' }}>
+							<OutlinedInput id='notification' name='notification' onKeyDown={handleKeyDown} placeholder='дд.мм.гггг чч:мм' />
+							<Button sx={{ color: 'green', marginLeft: 1, border: 1, borderColor: 'green', borderRadius: 2 }}>
+								<AddAlertIcon />
+							</Button>
+						</Box>
 					</Box>
 					<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
 						<Typography sx={{ fontSize: 22 }}>📝 Комментарий</Typography>

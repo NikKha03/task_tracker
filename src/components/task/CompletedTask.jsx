@@ -5,17 +5,20 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 import DataGroup from './DataGroup';
+import { dateParser } from '../../utils/DateUtils';
 
 export default function CompletedTask({ tasks, task, click, change }) {
 	let borderColor;
 
+	if (task.plannedImplDate !== null) {
+		const datePlannedImplementation = Date.parse(task.plannedImplDate.substring(0, 10));
+		const dateExecution = Date.parse(task.executionDate.substring(0, 10));
+		const currenDate = dateParser(new Date());
+
+		datePlannedImplementation === dateExecution || currenDate < datePlannedImplementation ? (borderColor = 'green') : (borderColor = 'orange');
+	}
 	if (task.plannedImplDate === null) {
 		borderColor = 'green';
-	} else {
-		const dataPlannedImplementation = task.plannedImplDate.substring(0, 10);
-		const dataExecution = task.executionDate.substring(0, 10);
-
-		dataPlannedImplementation === dataExecution || new Date() < new Date(dataPlannedImplementation) ? (borderColor = 'green') : (borderColor = 'orange');
 	}
 
 	return (

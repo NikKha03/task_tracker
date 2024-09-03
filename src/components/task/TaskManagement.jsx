@@ -13,13 +13,12 @@ import {
 } from '../../ApiPath';
 import EmptyPageMassage from './EmptyPageMassage';
 import TaskList from './TaskList';
+import { dateChange, showDate } from '../../utils/DateUtils';
 
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import TextField from '@mui/material/TextField';
 import OutlinedInput from '@mui/material/OutlinedInput';
-import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -31,10 +30,9 @@ const changeTask = async (taskId, header, comment, plannedImplDate) => {
 		.put(
 			changeTaskPath(taskId),
 			{
-				taskId: taskId,
 				header: header,
 				comment: comment,
-				plannedImplDate: plannedImplDate,
+				plannedImplDate: dateChange(plannedImplDate),
 			},
 			{
 				withCredentials: true,
@@ -85,7 +83,6 @@ const changeTaskPathStatusOnInProgress = async taskId => {
 
 export default function TaskManagement({ obj }) {
 	const [tasks, setTasks] = useState([]);
-	console.log(tasks);
 	const [tasksIsEmpty, setTasksIsEmpty] = useState(false);
 	const [triggerEffect, setTriggerEffect] = useState(false);
 	const [selectedTaskId, setSelectedTaskId] = useState(null);
@@ -204,13 +201,7 @@ export default function TaskManagement({ obj }) {
 	const handleSubmitSave = event => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-
-		const fullDate = data.get('dateTimeOfTask');
-		let [date, time] = fullDate.split(' ');
-		if (time === undefined) time = '00:00';
-		const [day, month, year] = date.split('.');
-
-		changeTask(selectedTaskId, data.get('header'), data.get('comment'), `${year}-${month}-${day} ${time}`);
+		changeTask(selectedTaskId, data.get('header'), data.get('comment'), data.get('dateTimeOfTask'));
 		setTriggerEffect(true);
 	};
 
@@ -221,30 +212,30 @@ export default function TaskManagement({ obj }) {
 
 	return (
 		<React.Fragment>
-			<List disablePadding sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+			<List disablePadding sx={{ display: 'flex', flexDirection: 'column' }}>
 				{tasksIsEmpty ? <EmptyPageMassage command={obj} /> : null}
 				{tasks.map(task => (
 					<Box key={task.taskId} sx={{ width: '100%' }}>
 						<TaskList status={task.taskStatus} tasks={tasks} task={task} click={handleClick} changeOnNotChecked={handleCheckboxNotChecked} changeOnChecked={handleCheckboxChecked} />
 						{selectedTaskId === task.taskId && (
 							<form onSubmit={handleSubmitSave}>
-								<List sx={{ marginLeft: 6.2, marginRight: 6.2 }}>
+								<List sx={{ marginLeft: 6.2, marginRight: 6.2, marginBottom: 1.5 }}>
 									<Stack sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }}>
-										<Button type='submitSave' sx={{ border: 2, borderColor: 'green', borderRadius: 1, marginRight: 1 }}>
-											<SaveIcon sx={{ fontSize: 30, color: 'green' }} />
+										<Button type='submitSave' size='small' sx={{ border: 1.5, borderColor: 'green', borderRadius: 1, marginRight: 1 }}>
+											<SaveIcon sx={{ fontSize: 27, color: 'green' }} />
 										</Button>
-										<Button onClick={() => handleClickDelete()} sx={{ border: 2, borderColor: 'red', borderRadius: 1, marginLeft: 1 }}>
-											<DeleteIcon sx={{ fontSize: 30, color: 'red' }} />
+										<Button onClick={() => handleClickDelete()} size='small' sx={{ border: 1.5, borderColor: 'red', borderRadius: 1, marginLeft: 1 }}>
+											<DeleteIcon sx={{ fontSize: 27, color: 'red' }} />
 										</Button>
 									</Stack>
 									<List sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-										<Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', marginTop: 1 }}>
+										<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
 											<Typography sx={{ fontSize: 22 }}>🔠 Заголовок</Typography>
 											<OutlinedInput id='header' name='header' defaultValue={task.header} />
 										</Box>
-										<Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', marginTop: 1 }}>
+										<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
 											<Typography sx={{ fontSize: 22 }}>🗓️ Выполнить</Typography>
-											<OutlinedInput id='dateTimeOfTask' name='dateTimeOfTask' defaultValue={dateFormatter(task.plannedImplDate)} />
+											<OutlinedInput id='dateTimeOfTask' name='dateTimeOfTask' defaultValue={showDate(task.plannedImplDate)} />
 										</Box>
 										<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
 											<Typography sx={{ fontSize: 22 }}>📝 Комментарий</Typography>
@@ -260,18 +251,3 @@ export default function TaskManagement({ obj }) {
 		</React.Fragment>
 	);
 }
-
-const dateFormatter = fullDate => {
-	if (fullDate === '' || fullDate === null) {
-		return '';
-	}
-
-	let [date, time] = fullDate.split(' ');
-	const [year, month, day] = date.split('-');
-
-	if (time === '00:00') {
-		return `${day}.${month}.${year}`;
-	}
-
-	return `${day}.${month}.${year} ${time}`;
-};

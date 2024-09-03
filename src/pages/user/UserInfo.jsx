@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
 import { userInfoPath, changeUserInfoPath } from '../../ApiPath';
 
+import Root from '../../components/root/Root';
+
 const FormGrid = styled(Grid)(() => ({
 	display: 'flex',
 	flexDirection: 'column',
@@ -50,7 +52,7 @@ export default function UserInfo() {
 
 	useEffect(() => {
 		getUserInfo();
-	}, [userInfoData === null]);
+	}, []);
 
 	const handleSubmitSave = event => {
 		event.preventDefault();
@@ -60,6 +62,7 @@ export default function UserInfo() {
 
 	return (
 		<>
+			<Root />
 			{userInfoData === null ? null : (
 				<form onSubmit={handleSubmitSave}>
 					<FormGrid item xs={12} md={6}>
