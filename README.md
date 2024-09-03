@@ -1,8 +1,14 @@
-# React + Vite
+# Task-tracker v1.0
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Task-tracker — сервис для отслеживания выполнения задач.
 
-Currently, two official plugins are available:
+## Архитектура проекта:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Frontend (текущий репозиторий)
+
+Backend:
+
+- [Auth](https://github.com/NikKha03/Task-tracker-AuthService) — сервис по работе с пользователями
+- [Task](https://github.com/NikKha03/Task-tracker-TaskService) — сервис по работе с задачами
+
+![Архитектура проекта](/img/архитектура.png)
