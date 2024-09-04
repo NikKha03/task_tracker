@@ -39,6 +39,10 @@ Backend:
 
 `git clone git@github.com:NikKha03/Task-tracker-Frontend.git`
 
+В папке проекта вводим команду для загрузки зависимостей:
+
+`npm install`
+
 В папке проекта вводим команду для запуска:
 
 `npm run dev`
