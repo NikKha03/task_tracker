@@ -3,9 +3,12 @@ const portAuthService = 8090;
 
 export const oAuth2Yandex = `http://${hostAuthService}:${portAuthService}/oauth2/authorization/yandex`;
 
+export const apiCategoryController = `http://${hostAuthService}:${portAuthService}/task-tracker/category`;
 export const apiTaskController = `http://${hostAuthService}:${portAuthService}/task-tracker/task`;
 export const apiUserController = `http://${hostAuthService}:${portAuthService}/task-tracker/user`;
 export const apiAuth = `http://${hostAuthService}:${portAuthService}/task-tracker/auth`;
+
+export const getCategoryPath = `${apiCategoryController}/getAll`;
 
 export const allCompletedTasks = `${apiTaskController}/allCompleted`;
 export const tasksOnTheDay = `${apiTaskController}/onTheDay`;
@@ -22,6 +25,5 @@ export const changeTaskPathStatusOnInProgressPath = taskId => `${apiTaskControll
 export const checkAuthPath = `${apiAuth}/checkAuth`;
 
 export const userPagePath = () => `${apiUserController}`;
-
 export const userInfoPath = `${apiUserController}/userInfo`;
 export const changeUserInfoPath = `${apiUserController}/changeInfo`;

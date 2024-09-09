@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import AddAlertIcon from '@mui/icons-material/AddAlert';
@@ -9,10 +9,11 @@ import List from '@mui/material/List';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
+import Category from './Category';
 import { createTaskPath } from '../../ApiPath';
 import { dateCreate } from '../../utils/DateUtils';
 
-const createTask = async (header, date, time, comment) => {
+const createTask = async (header, date, time, comment, category) => {
 	const response = await axios
 		.post(
 			createTaskPath(),
@@ -20,6 +21,7 @@ const createTask = async (header, date, time, comment) => {
 				header: header,
 				plannedImplDate: dateCreate(date, time),
 				comment: comment,
+				category: category,
 			},
 			{
 				withCredentials: true,
@@ -31,10 +33,16 @@ const createTask = async (header, date, time, comment) => {
 };
 
 export default function CreateTask() {
+	const [selectedValue, setSelectedValue] = useState('null');
+
+	const handleChangeCategory = event => {
+		setSelectedValue(event.target.value);
+	};
+
 	const handleSubmitSave = event => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		createTask(data.get('header'), data.get('date'), data.get('time'), data.get('comment'));
+		createTask(data.get('header'), data.get('date'), data.get('time'), data.get('comment'), selectedValue);
 	};
 
 	const notification = [];
@@ -48,12 +56,22 @@ export default function CreateTask() {
 
 	return (
 		<form onSubmit={handleSubmitSave}>
-			<Typography variant='h4'>Создать задачу</Typography>
-			<List>
+			<Typography variant='h4' sx={{ marginTop: 2, marginLeft: 8, marginRight: 32 }}>
+				Создать задачу
+			</Typography>
+			<List sx={{ marginLeft: 8, marginRight: 32 }}>
 				<List sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-					<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
-						<Typography sx={{ fontSize: 22 }}>🔠 Заголовок</Typography>
-						<OutlinedInput id='header' name='header' />
+					<Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+						<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
+							<Typography sx={{ fontSize: 22 }}>🔠 Заголовок</Typography>
+							<OutlinedInput id='header' name='header' />
+						</Box>
+					</Box>
+					<Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
+						<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
+							<Typography sx={{ fontSize: 22 }}>📂 Категория</Typography>
+							<Category change={handleChangeCategory} value={selectedValue} />
+						</Box>
 					</Box>
 					<Box sx={{ display: 'flex', flexDirection: 'row', width: '100%' }}>
 						<Box sx={{ display: 'flex', flexDirection: 'column', width: '50%', marginTop: 1, marginRight: 1 }}>
@@ -65,9 +83,10 @@ export default function CreateTask() {
 							<OutlinedInput id='time' name='time' placeholder='чч:мм' />
 						</Box>
 					</Box>
+
 					<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
 						<Typography sx={{ fontSize: 22 }}>🔔 Уведомления</Typography>
-						<p>*Убедитесь, что в профиле есть данные о вашем tg</p>
+						{/* <p>*Убедитесь, что в профиле есть данные о вашем tg</p> */}
 						<Box sx={{ display: 'flex' }}>
 							<OutlinedInput id='notification' name='notification' onKeyDown={handleKeyDown} placeholder='дд.мм.гггг чч:мм' />
 							<Button sx={{ color: 'green', marginLeft: 1, border: 1, borderColor: 'green', borderRadius: 2 }}>
@@ -80,10 +99,10 @@ export default function CreateTask() {
 						<TextField id='comment' name='comment' multiline rows={4} variant='filled' />
 					</Box>
 				</List>
+				<Button type='submitSave' variant='contained' color='success' sx={{ width: '100%', marginTop: 1 }}>
+					Сохранить
+				</Button>
 			</List>
-			<Button type='submitSave' variant='contained' color='success' sx={{ width: '100%' }}>
-				Сохранить
-			</Button>
 		</form>
 	);
 }

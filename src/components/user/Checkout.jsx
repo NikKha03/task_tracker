@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,29 +22,43 @@ const getContent = action => {
 
 export default function Checkout({ theme }) {
 	const [activeAction, setAction] = useState(0);
+	const [key, setKey] = useState(0);
+	const navigate = useNavigate();
+
+	const handleClickCheckout = value => {
+		const params = new URLSearchParams({ category: value });
+		navigate(`${location.pathname}?${params.toString()}`);
+		setKey(key + 1);
+	};
 
 	const handleClickCreate = () => {
 		setAction(0);
+		setKey(0);
 	};
 
 	const handleClickOnTheDay = () => {
 		setAction(1);
+		setKey(1);
 	};
 
 	const handleClickOnOtherDays = () => {
 		setAction(2);
+		setKey(2);
 	};
 
 	const handleClickOnSomeDay = () => {
 		setAction(3);
+		setKey(3);
 	};
 
 	const handleClickCompleted = () => {
 		setAction(4);
+		setKey(4);
 	};
 
 	const handleClickIncomplete = () => {
 		setAction(5);
+		setKey(5);
 	};
 
 	return (
@@ -54,7 +69,7 @@ export default function Checkout({ theme }) {
 					item
 					xs={12}
 					sm={5}
-					lg={3}
+					lg={2.5}
 					sx={{
 						flexDirection: 'column',
 						backgroundColor: 'background.paper',
@@ -63,16 +78,13 @@ export default function Checkout({ theme }) {
 						alignItems: 'start',
 						pt: 2.5,
 						px: 2.5,
-						gap: 4,
 					}}
 				>
 					<Box
 						sx={{
 							display: 'flex',
 							flexDirection: 'column',
-							flexGrow: 1,
 							width: '100%',
-							maxWidth: 500,
 						}}
 					>
 						<TaskMenu
@@ -82,34 +94,25 @@ export default function Checkout({ theme }) {
 							onSomeDays={handleClickOnSomeDay}
 							completed={handleClickCompleted}
 							incomplete={handleClickIncomplete}
+							checkout={handleClickCheckout}
 						/>
 					</Box>
 				</Grid>
 				<Grid
 					item
-					sm={12}
-					md={7}
-					lg={9}
+					lg={9.5}
+					sm={5}
 					sx={{
-						display: 'flex',
 						flexDirection: 'column',
-						maxWidth: '100%',
-						width: '100%',
-						backgroundColor: { xs: 'transparent', sm: 'background.default' },
 						alignItems: 'start',
-						pt: { xs: 2, sm: 4 },
-						px: { xs: 2, sm: 10 },
-						gap: { xs: 4, md: 8 },
 					}}
 				>
 					<Box
-						key={activeAction}
+						key={key}
 						sx={{
 							display: 'flex',
 							flexDirection: 'column',
-							flexGrow: 1,
-							width: '70%',
-							gap: { xs: 5, md: 'none' },
+							width: '100%',
 						}}
 					>
 						{getContent(activeAction)}

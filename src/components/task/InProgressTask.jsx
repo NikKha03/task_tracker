@@ -24,9 +24,10 @@ export default function InProgressTask({ tasks, task, click, change }) {
 	return (
 		<>
 			<DataGroup tasks={tasks} task={task} />
-			<Stack sx={{ alignItems: 'center', border: 1, borderRadius: 2, borderColor: { borderColor }, marginBottom: 2, padding: 1 }} direction='row'>
+
+			<Stack sx={{ alignItems: 'center', border: 1, borderRadius: 2, borderColor: { borderColor }, marginBottom: 1, padding: 1 }} direction='row'>
 				<FormControlLabel control={<Checkbox onChange={() => change(task.taskId)} color='success' />} />
-				<Typography onClick={() => click(task.taskId)} variant='h3' sx={{ cursor: 'pointer', fontSize: 22 }}>
+				<Typography onClick={() => click(task.taskId)} variant='h3' sx={{ cursor: 'pointer', fontSize: 21 }}>
 					{task.header}
 				</Typography>
 			</Stack>

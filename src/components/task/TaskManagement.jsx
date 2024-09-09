@@ -13,45 +13,21 @@ import {
 } from '../../ApiPath';
 import EmptyPageMassage from './EmptyPageMassage';
 import TaskList from './TaskList';
+import ChangeTask from './ChangeTask';
 import { dateChange, showDate } from '../../utils/DateUtils';
+import Category from './Category';
 
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import List from '@mui/material/List';
+import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SaveIcon from '@mui/icons-material/Save';
 import DeleteIcon from '@mui/icons-material/Delete';
-
-const changeTask = async (taskId, header, comment, plannedImplDate) => {
-	const response = await axios
-		.put(
-			changeTaskPath(taskId),
-			{
-				header: header,
-				comment: comment,
-				plannedImplDate: dateChange(plannedImplDate),
-			},
-			{
-				withCredentials: true,
-			}
-		)
-		.catch(error => {
-			console.error('Error fetching data: ', error);
-		});
-};
-
-const deleteTask = async taskId => {
-	const response = await axios
-		.delete(deleteTaskPath(taskId), {
-			withCredentials: true,
-		})
-		.catch(error => {
-			console.error('Error fetching data: ', error);
-		});
-};
+import zIndex from '@mui/material/styles/zIndex';
 
 const changeTaskPathStatusOnCompleted = async taskId => {
 	const response = await axios
@@ -86,6 +62,9 @@ export default function TaskManagement({ obj }) {
 	const [tasksIsEmpty, setTasksIsEmpty] = useState(false);
 	const [triggerEffect, setTriggerEffect] = useState(false);
 	const [selectedTaskId, setSelectedTaskId] = useState(null);
+	const url = new URL(window.location.href);
+	const category = url.searchParams.get('category');
+	const [selectedValue, setSelectedValue] = useState(category);
 
 	const requestCode = () => {
 		switch (obj) {
@@ -105,14 +84,14 @@ export default function TaskManagement({ obj }) {
 	useEffect(() => {
 		if (triggerEffect) {
 			setTriggerEffect(false);
-			requestCode();
 		}
+
 		requestCode();
 	}, [triggerEffect]);
 
 	const getTasksIncomplete = async () => {
 		const response = await axios
-			.get(tasksIncomplete, {
+			.get(tasksIncomplete + `?category=${category}`, {
 				withCredentials: true,
 			})
 			.then(response => {
@@ -126,7 +105,7 @@ export default function TaskManagement({ obj }) {
 
 	const getTasksOnTheDay = async () => {
 		const response = await axios
-			.get(tasksOnTheDay, {
+			.get(tasksOnTheDay + `?category=${category}`, {
 				withCredentials: true,
 			})
 			.then(response => {
@@ -140,7 +119,7 @@ export default function TaskManagement({ obj }) {
 
 	const getTasksOnOtherDays = async () => {
 		const response = await axios
-			.get(tasksOnOtherDays, {
+			.get(tasksOnOtherDays + `?category=${category}`, {
 				withCredentials: true,
 			})
 			.then(response => {
@@ -154,7 +133,7 @@ export default function TaskManagement({ obj }) {
 
 	const getTasksOnSomeday = async () => {
 		const response = await axios
-			.get(tasksOnSomeday, {
+			.get(tasksOnSomeday + `?category=${category}`, {
 				withCredentials: true,
 			})
 			.then(response => {
@@ -168,7 +147,7 @@ export default function TaskManagement({ obj }) {
 
 	const getCompletedTasks = async () => {
 		const response = await axios
-			.get(allCompletedTasks, {
+			.get(allCompletedTasks + `?category=${category}`, {
 				withCredentials: true,
 			})
 			.then(response => {
@@ -198,54 +177,51 @@ export default function TaskManagement({ obj }) {
 		}
 	};
 
-	const handleSubmitSave = event => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
-		changeTask(selectedTaskId, data.get('header'), data.get('comment'), data.get('dateTimeOfTask'));
-		setTriggerEffect(true);
-	};
-
-	const handleClickDelete = () => {
-		deleteTask(selectedTaskId);
-		setTriggerEffect(true);
-	};
-
 	return (
 		<React.Fragment>
-			<List disablePadding sx={{ display: 'flex', flexDirection: 'column' }}>
+			<List disablePadding>
 				{tasksIsEmpty ? <EmptyPageMassage command={obj} /> : null}
 				{tasks.map(task => (
-					<Box key={task.taskId} sx={{ width: '100%' }}>
-						<TaskList status={task.taskStatus} tasks={tasks} task={task} click={handleClick} changeOnNotChecked={handleCheckboxNotChecked} changeOnChecked={handleCheckboxChecked} />
-						{selectedTaskId === task.taskId && (
-							<form onSubmit={handleSubmitSave}>
-								<List sx={{ marginLeft: 6.2, marginRight: 6.2, marginBottom: 1.5 }}>
-									<Stack sx={{ display: 'flex', flexDirection: 'row', alignItems: 'start' }}>
-										<Button type='submitSave' size='small' sx={{ border: 1.5, borderColor: 'green', borderRadius: 1, marginRight: 1 }}>
-											<SaveIcon sx={{ fontSize: 27, color: 'green' }} />
-										</Button>
-										<Button onClick={() => handleClickDelete()} size='small' sx={{ border: 1.5, borderColor: 'red', borderRadius: 1, marginLeft: 1 }}>
-											<DeleteIcon sx={{ fontSize: 27, color: 'red' }} />
-										</Button>
-									</Stack>
-									<List sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-										<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
-											<Typography sx={{ fontSize: 22 }}>🔠 Заголовок</Typography>
-											<OutlinedInput id='header' name='header' defaultValue={task.header} />
-										</Box>
-										<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
-											<Typography sx={{ fontSize: 22 }}>🗓️ Выполнить</Typography>
-											<OutlinedInput id='dateTimeOfTask' name='dateTimeOfTask' defaultValue={showDate(task.plannedImplDate)} />
-										</Box>
-										<Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', marginTop: 1 }}>
-											<Typography sx={{ fontSize: 22 }}>📝 Комментарий</Typography>
-											<TextField id='comment' name='comment' multiline rows={4} defaultValue={task.comment} variant='filled' />
-										</Box>
-									</List>
-								</List>
-							</form>
-						)}
-					</Box>
+					<Grid container>
+						<Grid
+							item
+							xs={12}
+							lg={6}
+							sx={{
+								display: 'flex',
+								borderRight: { sm: 'none', md: '1px solid' },
+								borderColor: { sm: 'none', md: 'divider' },
+								flexDirection: 'column',
+								alignItems: 'flex-start',
+								pt: 2.5,
+								px: 5,
+							}}
+						>
+							<Box key={task.taskId} sx={{ flexDirection: 'column', width: '100%' }}>
+								<TaskList status={task.taskStatus} tasks={tasks} task={task} click={handleClick} changeOnNotChecked={handleCheckboxNotChecked} changeOnChecked={handleCheckboxChecked} />
+							</Box>
+						</Grid>
+						<Grid
+							item
+							lg={6}
+							sx={{
+								width: '100%',
+								// height: { xs: '100%', sm: '100dvh' },
+							}}
+						>
+							<Box
+								// sx={{ height: { xs: '100%', sm: '100dvh' } }}
+								sx={{
+									width: '50%',
+									position: 'absolute',
+									top: 0,
+									right: 0,
+								}}
+							>
+								<ChangeTask task={task} selectedValue={selectedValue} selectedTaskId={selectedTaskId} setTriggerEffect={setTriggerEffect} setSelectedValue={setSelectedValue} />
+							</Box>
+						</Grid>
+					</Grid>
 				))}
 			</List>
 		</React.Fragment>
