@@ -62,7 +62,7 @@ export default function Checkout({ theme }) {
 	};
 
 	return (
-		<ThemeProvider theme={theme}>
+		<ThemeProvider>
 			<CssBaseline />
 			<Grid container sx={{ height: { xs: '100%', sm: '100dvh' } }}>
 				<Grid

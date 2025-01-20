@@ -97,7 +97,7 @@ export default function ChangeTask({ task, selectedValue, selectedTaskId, setTri
 									id='comment'
 									name='comment'
 									multiline
-									rows={4}
+									rows={10}
 									defaultValue={task.comment}
 									variant='filled'
 								/>

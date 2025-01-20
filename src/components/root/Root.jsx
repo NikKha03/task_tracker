@@ -9,7 +9,7 @@ const checkAuth = async () => {
 			withCredentials: true,
 		})
 		.then(response => {
-			response.data === true ? null : (location.pathname = '/task-tracker/auth/login');
+			response.data === true ? null : (location.href = 'http://localhost:9010/login');
 		});
 };
 

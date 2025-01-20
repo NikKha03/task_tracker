@@ -1,12 +1,11 @@
-const hostAuthService = 'localhost';
-const portAuthService = 8090;
+const hostAuthService = 'localhost:9010';
 
-export const oAuth2Yandex = `http://${hostAuthService}:${portAuthService}/oauth2/authorization/yandex`;
+export const oAuth2Yandex = `http://${hostAuthService}/oauth2/authorization/yandex`;
 
-export const apiCategoryController = `http://${hostAuthService}:${portAuthService}/task-tracker/category`;
-export const apiTaskController = `http://${hostAuthService}:${portAuthService}/task-tracker/task`;
-export const apiUserController = `http://${hostAuthService}:${portAuthService}/task-tracker/user`;
-export const apiAuth = `http://${hostAuthService}:${portAuthService}/task-tracker/auth`;
+export const apiCategoryController = `http://${hostAuthService}/task-tracker/category`;
+export const apiTaskController = `http://${hostAuthService}/task-tracker/task`;
+export const apiUserController = `http://${hostAuthService}/task-tracker/user`;
+export const apiAuth = `http://${hostAuthService}/task-tracker/auth`;
 
 export const getCategoryPath = `${apiCategoryController}/getAll`;
 
