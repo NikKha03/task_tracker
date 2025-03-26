@@ -5,13 +5,18 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/apiEureka/user")
+@RequestMapping("/api_gateway/user")
 public class UserController {
+
     @GetMapping("/get")
-    public Object getUser(@AuthenticationPrincipal OidcUser oidcUser) {
-        System.out.println(oidcUser);
-        return oidcUser;
+    public Mono<Object> getUser(@AuthenticationPrincipal Mono<OidcUser> oidcUserMono) {
+        return oidcUserMono.map(oidcUser -> {
+            System.out.println("Username: " + oidcUser.getPreferredUsername());
+            return oidcUser;
+        });
     }
+
 }
