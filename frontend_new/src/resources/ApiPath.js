@@ -1,8 +1,6 @@
 const hostApiGateway = 'localhost';
 const portAuthService = 8090;
 
-export const oAuth2Yandex = `http://${hostApiGateway}:${portAuthService}/oauth2/authorization/yandex`;
-
 export const apiTaskController = `http://${hostApiGateway}:${portAuthService}/task-tracker/task`;
 export const apiUserController = `http://${hostApiGateway}:${portAuthService}/task-tracker/user`;
 export const apiAuth = `http://${hostApiGateway}:${portAuthService}/task-tracker/auth`;

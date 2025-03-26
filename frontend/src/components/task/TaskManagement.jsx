@@ -1,16 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {
-	changeTaskPath,
-	deleteTaskPath,
-	changeTaskPathStatusOnCompletedPath,
-	changeTaskPathStatusOnInProgressPath,
-	tasksOnTheDay,
-	tasksOnOtherDays,
-	tasksOnSomeday,
-	allCompletedTasks,
-	tasksIncomplete,
-} from '../../ApiPath';
+import { changeTaskPath, deleteTaskPath, changeTaskStatusOnCompletedPath, changeTaskStatusOnInProgressPath, tasksOnTheDay, tasksOnOtherDays, tasksOnSomeday, allCompletedTasks, tasksIncomplete } from '../../ApiPath';
 import EmptyPageMassage from './EmptyPageMassage';
 import TaskList from './TaskList';
 import { dateChange, showDate } from '../../utils/DateUtils';
@@ -56,7 +46,7 @@ const deleteTask = async taskId => {
 const changeTaskPathStatusOnCompleted = async taskId => {
 	const response = await axios
 		.put(
-			changeTaskPathStatusOnCompletedPath(taskId),
+			changeTaskStatusOnCompletedPath(taskId),
 			{},
 			{
 				withCredentials: true,
@@ -70,7 +60,7 @@ const changeTaskPathStatusOnCompleted = async taskId => {
 const changeTaskPathStatusOnInProgress = async taskId => {
 	const response = await axios
 		.put(
-			changeTaskPathStatusOnInProgressPath(taskId),
+			changeTaskStatusOnInProgressPath(taskId),
 			{},
 			{
 				withCredentials: true,
