@@ -61,38 +61,7 @@ export default function Profile() {
 
 	return (
 		<>
-			{userInfoData === null ? null : (
-				<form onSubmit={handleSubmitSave}>
-					<FormGrid item xs={12} md={6}>
-						<FormLabel htmlFor='first-name' required>
-							Имя
-						</FormLabel>
-						<OutlinedInput id='first-name' name='first-name' type='name' defaultValue={userInfoData.firstName} />
-					</FormGrid>
-					<FormGrid item xs={12} md={6}>
-						<FormLabel htmlFor='last-name' required>
-							Фамилия
-						</FormLabel>
-						<OutlinedInput id='last-name' name='last-name' type='last-name' defaultValue={userInfoData.lastName} />
-					</FormGrid>
-					<FormGrid item xs={12}>
-						<FormLabel htmlFor='email' required>
-							Email
-						</FormLabel>
-						<OutlinedInput id='email' name='email' type='email' defaultValue={userInfoData.email} />
-					</FormGrid>
-					<FormGrid item xs={12}>
-						<FormLabel htmlFor='Tg' required>
-							Tg
-						</FormLabel>
-						<OutlinedInput id='Tg' name='Tg' type='Tg' defaultValue={userInfoData.tg} />
-					</FormGrid>
-
-					<Button type='submitSave' variant='contained' color='success' sx={{ width: '100%', marginTop: 4 }}>
-						Сохранить
-					</Button>
-				</form>
-			)}
+			<h1>Profile</h1>
 		</>
 	);
 }

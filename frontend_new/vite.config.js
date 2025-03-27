@@ -6,6 +6,7 @@ export default defineConfig({
 	plugins: [react()],
 	server: {
 		host: true,
-		port: 8081,
+		port: 5175,
+		allowedHosts: ['task.sharpbubbles.ru'],
 	},
 });

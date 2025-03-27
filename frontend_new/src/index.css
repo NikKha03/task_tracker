@@ -30,34 +30,34 @@ body,
 
 .navbar {
 	color: white;
-	padding: 0 25px;
+	padding: 0 1.5rem;
 	background-color: #454545;
 	width: 100%;
-	height: 76px;
+	height: 4.75rem;
 	border-bottom: 1px solid black;
 }
 
 .navbar .profile-block {
 	display: flex;
 	align-items: center;
-	padding: 0 25px 0 0;
+	margin: 0 1.5rem 0 0;
 
 	height: 100%;
-	width: 310px;
+	width: 20.75rem;
 	border-right: 1px solid black;
 }
 
 .navbar h2 {
 	width: 100%;
-	padding: 0 0 0 10px;
+	padding: 0 0 0 0.75rem;
 	margin: 0;
-	font-size: 22px;
+	font-size: 1.375rem;
 	font-weight: 300;
 }
 
 .task-area {
 	display: flex;
-	height: calc(100% - 76px);
+	height: calc(100% - 4.75rem);
 	width: 100%;
 }
 
@@ -65,23 +65,37 @@ body,
 	display: flex;
 	flex-direction: column;
 	background-color: #454545;
-	padding: 0 25px;
+	padding: 0 1.5rem;
 	border-right: 1px solid black;
 
-	width: 335px;
+	width: 22.25rem;
 	height: 100%;
+	padding-top: 1rem;
+}
+
+.left-menu .top {
+	height: 94%;
+	overflow-y: auto;
+}
+
+.left-menu .bottom {
+	display: flex;
+	height: 6%;
+	min-height: 2rem;
+	align-items: center;
+	border-top: 1px solid black;
 }
 
 .task-area .main-window {
 	display: flex;
-	width: calc(100% - 335px);
+	width: calc(100% - 22.25rem);
 	background-color: #2c2c2c;
-	padding: 20px;
+	padding: 1.25rem;
 	overflow-x: auto;
 }
 
 .column-background {
-	margin: 0 12.5px;
+	margin: 0 0.75rem;
 	width: 33%;
 	height: 100%;
 }
@@ -91,30 +105,72 @@ body,
 	opacity: 0.8;
 	background-color: white;
 
-	margin: 22.5px 0 0 0;
+	margin: 1rem 0 0 0;
 	width: 100%;
-	height: calc(100% - 22.5px);
+	height: calc(100% - 1rem);
 }
 
 .column-area h2 {
 	color: black;
-	font-size: 24px;
-	padding: 5px 20px;
+	font-size: 1.5rem;
+	padding-top: 0.5rem;
+	padding-left: 1.25rem;
 	margin: 0;
 }
 
 .column-area p {
 	margin: 0;
-	padding: 0px 22.5px;
-	font-size: 22px;
-	padding: 5px 20px;
+	font-size: 1.25rem;
+	padding: 0rem 1.5rem 0.75rem;
 	color: #0d99ff;
 }
 
 .column-background,
 .column-area {
 	display: flex;
-	max-width: 490px;
-	min-width: 335px;
-	border-radius: 10px;
+	max-width: 30.75rem;
+	min-width: 21rem;
+	border-radius: 0.5rem;
+}
+
+.left-menu .top .header {
+	display: flex;
+	color: white;
+	align-items: center;
+}
+
+.left-menu .top .header .icon {
+	display: flex;
+	color: #0d99ff;
+	width: 1.5rem;
+	justify-content: center;
+}
+
+.left-menu .top .header h2 {
+	font-size: 1.5rem;
+	margin: 0 0 0 0.5rem;
+	/* cursor: pointer; */
+}
+
+.left-menu .top .add {
+	width: 100%;
+	height: 1.5rem;
+	padding: 0;
+	border-radius: 0.5rem;
+}
+
+.left-menu .top .add:hover,
+.left-menu .top .add {
+	box-shadow: none;
+}
+
+.menu-item {
+	margin-bottom: 0.75rem;
+}
+
+.menu-item .proj-block {
+	width: 100%;
+	overflow-y: auto;
+	margin: 0.25rem 0;
+	/* background-color: aliceblue; */
 }

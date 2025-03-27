@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 
 import Navbar from '../../components/Navbar';
+import LeftMenu from '../../components/LeftMenu';
 import Column from '../../components/task/Column';
 
-export default function MainPage() {
-	const user = { name: 'Халимендик Николай' };
+import { MDBIcon } from 'mdb-react-ui-kit';
+
+export default function KanbanBoardsPage({ user }) {
 	return (
 		<>
 			<Navbar user={user} />
 			<div className='task-area'>
-				<div className='left-menu'>
-					<h1>Hi</h1>
-				</div>
+				<LeftMenu />
 				<div className='main-window'>
 					<Column status={'AWAITING_COMPLETION'} />
 					<Column status={'IN_PROGRESS'} />
