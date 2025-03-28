@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { MDBIcon, MDBBtn, MDBBadge } from 'mdb-react-ui-kit';
 
-export default function LeftMenu() {
+import CreateProject from './modal/CreateProject';
+
+export default function LeftMenu({ listIsClicked }) {
 	const header = name => {
 		return (
 			<div className='header'>
@@ -18,11 +21,21 @@ export default function LeftMenu() {
 		return <div className='proj-block' style={{ maxHeight: maxHeight }}></div>;
 	};
 
+	const navigate = useNavigate();
+
+	const [basicModal, setBasicModal] = useState(false);
+	const toggleOpen = () => setBasicModal(!basicModal);
+
 	return (
 		<>
 			<div className='left-menu'>
 				<div className='top'>
-					<div className='header' style={{ marginBottom: '0.75rem' }}>
+					<div
+						className={`header h-btn ${listIsClicked ? 'active' : ''}`}
+						onClick={() => {
+							navigate('/list/');
+						}}
+					>
 						<div className='icon'>
 							<MDBIcon far size='lg' icon='list-alt' />
 						</div>
@@ -32,9 +45,10 @@ export default function LeftMenu() {
 					<div className='menu-item'>
 						{header('Мои проекты')}
 						{projectsBlock('14rem')}
-						<MDBBtn className='add' color='success'>
+						<MDBBtn className='add' color='success' onClick={toggleOpen}>
 							Создать проект
 						</MDBBtn>
+						<CreateProject isOpen={basicModal} toggle={toggleOpen} />
 					</div>
 
 					<div className='menu-item'>

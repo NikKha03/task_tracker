@@ -130,7 +130,7 @@ body,
 	display: flex;
 	max-width: 30.75rem;
 	min-width: 21rem;
-	border-radius: 0.5rem;
+	border-radius: 8px;
 }
 
 .left-menu .top .header {
@@ -144,6 +144,16 @@ body,
 	color: #0d99ff;
 	width: 1.5rem;
 	justify-content: center;
+}
+
+.h-btn {
+	cursor: pointer;
+	margin-bottom: 0.75rem;
+}
+
+.h-btn.active {
+	background-color: #5e5e5e; /* Фон после клика */
+	border-radius: 4px;
 }
 
 .left-menu .top .header h2 {

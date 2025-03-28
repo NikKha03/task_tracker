@@ -11,7 +11,7 @@ export default function KanbanBoardsPage({ user }) {
 		<>
 			<Navbar user={user} />
 			<div className='task-area'>
-				<LeftMenu />
+				<LeftMenu listIsClicked={false} />
 				<div className='main-window'>
 					<Column status={'AWAITING_COMPLETION'} />
 					<Column status={'IN_PROGRESS'} />
