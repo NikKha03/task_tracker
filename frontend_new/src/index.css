@@ -29,6 +29,7 @@ body,
 }
 
 .navbar {
+	display: flex;
 	color: white;
 	padding: 0 1.5rem;
 	background-color: #454545;
@@ -40,11 +41,18 @@ body,
 .navbar .profile-block {
 	display: flex;
 	align-items: center;
-	margin: 0 1.5rem 0 0;
+	/* margin: 0 1.5rem 0 0; */
 
 	height: 100%;
 	width: 20.75rem;
 	border-right: 1px solid black;
+}
+
+.nav-m {
+	display: flex;
+	flex-direction: column;
+	width: calc(100% - 20.75rem);
+	height: 100%;
 }
 
 .navbar h2 {
@@ -157,21 +165,21 @@ body,
 }
 
 .left-menu .top .header h2 {
-	font-size: 1.5rem;
+	font-size: 1.375rem;
 	margin: 0 0 0 0.5rem;
 	/* cursor: pointer; */
 }
 
 .left-menu .top .add {
-	width: 100%;
 	height: 1.5rem;
 	padding: 0;
-	border-radius: 0.5rem;
 }
 
-.left-menu .top .add:hover,
-.left-menu .top .add {
+.left-menu .top .cust-btn:hover,
+.left-menu .top .cust-btn {
+	width: 100%;
 	box-shadow: none;
+	border-radius: 4px;
 }
 
 .menu-item {
@@ -183,4 +191,9 @@ body,
 	overflow-y: auto;
 	margin: 0.25rem 0;
 	/* background-color: aliceblue; */
+}
+
+.modal-content {
+	background-color: #eeeeee;
+	color: black;
 }

@@ -45,7 +45,7 @@ export default function LeftMenu({ listIsClicked }) {
 					<div className='menu-item'>
 						{header('Мои проекты')}
 						{projectsBlock('14rem')}
-						<MDBBtn className='add' color='success' onClick={toggleOpen}>
+						<MDBBtn className='cust-btn add' color='success' onClick={toggleOpen}>
 							Создать проект
 						</MDBBtn>
 						<CreateProject isOpen={basicModal} toggle={toggleOpen} />

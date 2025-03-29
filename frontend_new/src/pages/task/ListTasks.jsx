@@ -7,7 +7,7 @@ export default function ListTasks({ user }) {
 	return (
 		<>
 			{/* <h1>List tasks</h1> */}
-			<Navbar user={user} />
+			<Navbar pageType={'list'} user={user} />
 			<div className='task-area'>
 				<LeftMenu listIsClicked={true} />
 				<div className='main-window'></div>

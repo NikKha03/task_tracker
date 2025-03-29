@@ -9,7 +9,7 @@ import { MDBIcon } from 'mdb-react-ui-kit';
 export default function KanbanBoardsPage({ user }) {
 	return (
 		<>
-			<Navbar user={user} />
+			<Navbar pageType={'board'} user={user} />
 			<div className='task-area'>
 				<LeftMenu listIsClicked={false} />
 				<div className='main-window'>
