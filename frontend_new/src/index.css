@@ -41,7 +41,7 @@ body,
 .navbar .profile-block {
 	display: flex;
 	align-items: center;
-	/* margin: 0 1.5rem 0 0; */
+	margin: 0 1.5rem 0 0;
 
 	height: 100%;
 	width: 20.75rem;
@@ -51,8 +51,38 @@ body,
 .nav-m {
 	display: flex;
 	flex-direction: column;
-	width: calc(100% - 20.75rem);
+	width: calc(100% - 22.25rem);
 	height: 100%;
+}
+
+.nav-m .top,
+.nav-m .bottom {
+	height: 100%;
+	width: 100%;
+	/* margin: 0;
+	padding: 0; */
+}
+
+.nav-m .top {
+}
+
+.nav-m .bottom {
+	display: flex;
+}
+
+.task-status {
+	cursor: pointer;
+	display: flex;
+	color: white;
+	align-items: center;
+	flex: 1; /* Каждый элемент занимает равную часть */
+	justify-content: center;
+
+	border-left: 1px solid black; /* Для наглядности */
+}
+
+.task-status:last-child {
+	border-right: 1px solid black; /* Для наглядности */
 }
 
 .navbar h2 {
@@ -141,7 +171,7 @@ body,
 	border-radius: 8px;
 }
 
-.left-menu .top .header {
+.header {
 	display: flex;
 	color: white;
 	align-items: center;

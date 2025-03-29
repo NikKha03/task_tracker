@@ -10,8 +10,44 @@ export default function Navbar({ pageType, user, project }) {
 	const projBlokForList = () => {
 		return (
 			<>
-				<div></div>
-				<div className=''>{/* <h4>List</h4> */}</div>
+				<div className='top'>{/* <h4>t</h4> */}</div>
+				<div className='bottom'>
+					<div className='task-status'>
+						<div style={{ display: 'flex' }}>
+							<div className='icon'>
+								<MDBIcon far size='lg' icon='folder' />
+							</div>
+							<h2>Нужно сделать</h2>
+						</div>
+					</div>
+
+					<div className='task-status'>
+						<div style={{ display: 'flex' }}>
+							<div className='icon'>
+								<MDBIcon far size='lg' icon='folder' />
+							</div>
+							<h2>В работе</h2>
+						</div>
+					</div>
+
+					<div className='task-status'>
+						<div style={{ display: 'flex' }}>
+							<div className='icon'>
+								<MDBIcon far size='lg' icon='folder' />
+							</div>
+							<h2>Просроченные</h2>
+						</div>
+					</div>
+
+					<div className='task-status'>
+						<div style={{ display: 'flex' }}>
+							<div className='icon'>
+								<MDBIcon far size='lg' icon='folder' />
+							</div>
+							<h2>Завершенные</h2>
+						</div>
+					</div>
+				</div>
 			</>
 		);
 	};
