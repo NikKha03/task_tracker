@@ -30,7 +30,9 @@ export default function Navbar({ pageType, user }) {
 		return (
 			<>
 				<div className='top'>{/* <h4>t</h4> */}</div>
-				<div className='bottom'>{names.map((obj, i) => taskStatus(i, obj.icon, obj.name))}</div>
+				<div className='bottom' style={{ padding: '0' }}>
+					{names.map((obj, i) => taskStatus(i, obj.icon, obj.name))}
+				</div>
 			</>
 		);
 	};

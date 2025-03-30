@@ -6,12 +6,14 @@ import Column from '../../components/task/Column';
 
 import { MDBIcon } from 'mdb-react-ui-kit';
 
-export default function KanbanBoardsPage({ user }) {
+export default function KanbanBoardsPage({ user, projects }) {
+	// const projects = [{ name: 'Пример проекта' }];
+
 	return (
 		<>
 			<Navbar pageType={'board'} user={user} />
 			<div className='task-area'>
-				<LeftMenu listIsClicked={false} />
+				<LeftMenu listIsClicked={false} projects={projects} />
 				<div className='main-window'>
 					<Column status={'AWAITING_COMPLETION'} />
 					<Column status={'IN_PROGRESS'} />

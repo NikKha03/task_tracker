@@ -5,7 +5,7 @@ import { MDBIcon, MDBBtn, MDBBadge } from 'mdb-react-ui-kit';
 
 import CreateProject from './modal/CreateProject';
 
-export default function LeftMenu({ listIsClicked }) {
+export default function LeftMenu({ listIsClicked, projects }) {
 	const header = name => {
 		return (
 			<div className='header'>
@@ -17,8 +17,14 @@ export default function LeftMenu({ listIsClicked }) {
 		);
 	};
 
-	const projectsBlock = maxHeight => {
-		return <div className='proj-block' style={{ maxHeight: maxHeight }}></div>;
+	const projectsBlock = (maxHeight, projects = []) => {
+		return (
+			<div className='proj-block' style={{ maxHeight: maxHeight }}>
+				{projects.map(project => (
+					<a>{project.name}</a>
+				))}
+			</div>
+		);
 	};
 
 	const navigate = useNavigate();
@@ -44,7 +50,8 @@ export default function LeftMenu({ listIsClicked }) {
 
 					<div className='menu-item'>
 						{header('Мои проекты')}
-						{projectsBlock('14rem')}
+						{projectsBlock('14rem', projects)}
+
 						<MDBBtn className='cust-btn add' color='success' onClick={toggleOpen}>
 							Создать проект
 						</MDBBtn>
