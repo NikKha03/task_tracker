@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar';
 import LeftMenu from '../../components/LeftMenu';
 
 export default function ListTasks({ user, projects }) {
+	console.log(projects);
 	return (
 		<>
 			{/* <h1>List tasks</h1> */}

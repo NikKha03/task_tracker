@@ -54,7 +54,7 @@ export default function Navbar({ pageType, user }) {
 		<MDBNavbar className='navbar'>
 			<div className='profile-block' onClick={() => navigate('/profile/')}>
 				<MDBIcon className='user-icon' style={{ cursor: 'pointer' }} size='2x' fas icon='user-circle' />
-				<h2 style={{ cursor: 'pointer' }}>{user.name}</h2>
+				<h2 style={{ cursor: 'pointer' }}>{user.fullName}</h2>
 			</div>
 			<div className='nav-m'>{manageProjBlok()}</div>
 		</MDBNavbar>

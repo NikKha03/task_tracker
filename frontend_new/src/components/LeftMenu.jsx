@@ -20,8 +20,8 @@ export default function LeftMenu({ listIsClicked, projects }) {
 	const projectsBlock = (maxHeight, projects = []) => {
 		return (
 			<div className='proj-block' style={{ maxHeight: maxHeight }}>
-				{projects.map(project => (
-					<a>{project.name}</a>
+				{projects.map((project, i) => (
+					<a key={i}>{project.name}</a>
 				))}
 			</div>
 		);
@@ -50,7 +50,7 @@ export default function LeftMenu({ listIsClicked, projects }) {
 
 					<div className='menu-item'>
 						{header('Мои проекты')}
-						{projectsBlock('14rem', projects)}
+						{projectsBlock('14rem', projects.myProjects)}
 
 						<MDBBtn className='cust-btn add' color='success' onClick={toggleOpen}>
 							Создать проект
@@ -60,6 +60,7 @@ export default function LeftMenu({ listIsClicked, projects }) {
 
 					<div className='menu-item'>
 						{header('Участвую в проектах')}
+						{projectsBlock('14rem', projects.otherProjects)}
 						{projectsBlock('14rem')}
 					</div>
 

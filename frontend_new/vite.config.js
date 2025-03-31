@@ -7,6 +7,6 @@ export default defineConfig({
 	server: {
 		host: true,
 		port: 5175,
-		allowedHosts: ['task.sharpbubbles.ru'],
+		allowedHosts: ['task.sharpbubbles.ru', 'localhost'],
 	},
 });

@@ -1,9 +1,13 @@
 const hostApiGateway = 'localhost';
-const portAuthService = 8090;
+const portApiGateway = 8080;
 
-export const apiTaskController = `http://${hostApiGateway}:${portAuthService}/task-tracker/task`;
-export const apiUserController = `http://${hostApiGateway}:${portAuthService}/task-tracker/user`;
-export const apiAuth = `http://${hostApiGateway}:${portAuthService}/task-tracker/auth`;
+export const userController = `http://${hostApiGateway}:${portApiGateway}/api_gateway/user`;
+export const projectController = `http://${hostApiGateway}:${portApiGateway}/task_service/project`;
+export const apiTaskController = `http://${hostApiGateway}:${portApiGateway}/task-tracker/task`;
+
+export const authPath = `http://${hostApiGateway}:${portApiGateway}/oauth2/authorization/keycloak`;
+export const getUserPath = `${userController}/get`;
+export const getProjectsPath = username => `${projectController}/?username=${username}`;
 
 export const allCompletedTasks = `${apiTaskController}/allCompleted`;
 export const tasksOnTheDay = `${apiTaskController}/onTheDay`;
@@ -17,9 +21,7 @@ export const deleteTaskPath = taskId => `${apiTaskController}/delete/${taskId}`;
 export const changeTaskStatusOnCompletedPath = taskId => `${apiTaskController}/changeStatusOnCompleted/${taskId}`;
 export const changeTaskStatusOnInProgressPath = taskId => `${apiTaskController}/changeStatusOnInProgress/${taskId}`;
 
-export const checkAuthPath = `${apiAuth}/checkAuth`;
+export const userPagePath = () => `${userController}`;
 
-export const userPagePath = () => `${apiUserController}`;
-
-export const userInfoPath = `${apiUserController}/userInfo`;
-export const changeUserInfoPath = `${apiUserController}/changeInfo`;
+export const userInfoPath = `${userController}/userInfo`;
+export const changeUserInfoPath = `${userController}/changeInfo`;
