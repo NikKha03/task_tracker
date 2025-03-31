@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 import { MDBIcon, MDBBtn, MDBBadge } from 'mdb-react-ui-kit';
 
 import CreateProject from './modal/CreateProject';
 
-export default function LeftMenu({ listIsClicked, projects }) {
+export default function LeftMenu({ listIsClicked }) {
+	const navigate = useNavigate();
+	const { user, projects, logout, loading } = useContext(AuthContext);
+	console.log(projects);
+
 	const header = name => {
 		return (
 			<div className='header'>
@@ -26,8 +31,6 @@ export default function LeftMenu({ listIsClicked, projects }) {
 			</div>
 		);
 	};
-
-	const navigate = useNavigate();
 
 	const [basicModal, setBasicModal] = useState(false);
 	const toggleOpen = () => setBasicModal(!basicModal);

@@ -1,29 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';
 
+import { AuthContext } from '../../context/AuthContext';
+import { createProjectPath } from '../../resources/ApiPath';
+
 export default function CreateProject({ isOpen, toggle }) {
+	const { user } = useContext(AuthContext);
+
+	const createProject = async projectName => {
+		try {
+			const response = await axios.post(
+				createProjectPath,
+				{
+					name: projectName,
+					projectOwner: user.name,
+					projectOwnerType: 'INDIVIDUAL_USER',
+					principalUser: user.name,
+				},
+				{ withCredentials: true }
+			);
+			return response.data;
+		} catch (error) {
+			console.error('Error fetching user:', error);
+		}
+	};
+
+	const handleSubmitSave = event => {
+		event.preventDefault();
+		const data = new FormData(event.currentTarget);
+
+		createProject(data.get('projectName'));
+		toggle();
+	};
+
 	return (
 		<>
 			<MDBModal open={isOpen} onClose={toggle} tabIndex='-1'>
-				<MDBModalDialog size='lg'>
-					<MDBModalContent className='modal-content'>
-						<MDBModalHeader>
-							<MDBModalTitle>Создать проект</MDBModalTitle>
-							<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
-						</MDBModalHeader>
+				<form onSubmit={handleSubmitSave}>
+					<MDBModalDialog size='lg'>
+						<MDBModalContent className='modal-content'>
+							<MDBModalHeader>
+								<MDBModalTitle>Создать проект</MDBModalTitle>
+								<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
+							</MDBModalHeader>
 
-						<MDBModalBody>
-							<p style={{ marginBottom: '0.25rem' }}>Название проекта</p>
-							<MDBInput />
-						</MDBModalBody>
+							<MDBModalBody>
+								<p style={{ marginBottom: '0.25rem' }}>Название проекта</p>
+								<MDBInput name='projectName' />
+							</MDBModalBody>
 
-						<MDBModalFooter>
-							<MDBBtn className='cust-btn' color='success'>
-								Создать
-							</MDBBtn>
-						</MDBModalFooter>
-					</MDBModalContent>
-				</MDBModalDialog>
+							<MDBModalFooter>
+								<MDBBtn type='submitSave' className='cust-btn' color='success'>
+									Создать
+								</MDBBtn>
+							</MDBModalFooter>
+						</MDBModalContent>
+					</MDBModalDialog>
+				</form>
 			</MDBModal>
 		</>
 	);

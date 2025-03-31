@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+
+import { AuthContext } from '../../context/AuthContext';
 
 import Navbar from '../../components/Navbar';
 import LeftMenu from '../../components/LeftMenu';
 
-export default function ListTasks({ user, projects }) {
-	console.log(projects);
+export default function ListTasks() {
+	const { user, logout, loading } = useContext(AuthContext);
+
+	// Показываем пустой экран, пока идет проверка авторизации
+	if (loading) return null;
+
 	return (
 		<>
-			{/* <h1>List tasks</h1> */}
-			<Navbar pageType={'list'} user={user} />
-			<div className='task-area'>
-				<LeftMenu listIsClicked={true} projects={projects} />
-				<div className='main-window'></div>
-			</div>
+			<>
+				<Navbar pageType={'list'} />
+				<div className='task-area'>
+					<LeftMenu listIsClicked={true} />
+					<div className='main-window'></div>
+				</div>
+			</>
 		</>
 	);
 }

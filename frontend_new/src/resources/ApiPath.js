@@ -8,6 +8,7 @@ export const apiTaskController = `http://${hostApiGateway}:${portApiGateway}/tas
 export const authPath = `http://${hostApiGateway}:${portApiGateway}/oauth2/authorization/keycloak`;
 export const getUserPath = `${userController}/get`;
 export const getProjectsPath = username => `${projectController}/?username=${username}`;
+export const createProjectPath = `${projectController}/create`;
 
 export const allCompletedTasks = `${apiTaskController}/allCompleted`;
 export const tasksOnTheDay = `${apiTaskController}/onTheDay`;

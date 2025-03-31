@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+import { AuthContext } from '../context/AuthContext';
+
 import { MDBContainer, MDBNavbar, MDBNavbarBrand, MDBInputGroup, MDBInput, MDBIcon, MDBBtn, MDBNavbarLink } from 'mdb-react-ui-kit';
 
-export default function Navbar({ pageType, user }) {
+export default function Navbar({ pageType }) {
+	const { user, logout, loading } = useContext(AuthContext);
 	const navigate = useNavigate();
 
 	const names = [
