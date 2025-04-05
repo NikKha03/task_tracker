@@ -7,21 +7,22 @@ import { AuthContext } from '../../context/AuthContext';
 import { createProjectPath } from '../../resources/ApiPath';
 
 export default function CreateProject({ isOpen, toggle }) {
-	const { user } = useContext(AuthContext);
+	const { user, setTrigger } = useContext(AuthContext);
 
 	const createProject = async projectName => {
+		if (projectName.trim().length < 1) return null;
 		try {
 			const response = await axios.post(
 				createProjectPath,
 				{
-					name: projectName,
+					name: projectName.trim(),
 					projectOwner: user.name,
 					projectOwnerType: 'INDIVIDUAL_USER',
 					principalUser: user.name,
 				},
 				{ withCredentials: true }
 			);
-			return response.data;
+			setTrigger(true);
 		} catch (error) {
 			console.error('Error fetching user:', error);
 		}
@@ -48,7 +49,7 @@ export default function CreateProject({ isOpen, toggle }) {
 
 							<MDBModalBody>
 								<p style={{ marginBottom: '0.25rem' }}>Название проекта</p>
-								<MDBInput name='projectName' />
+								<MDBInput name='projectName' autoComplete='off' />
 							</MDBModalBody>
 
 							<MDBModalFooter>

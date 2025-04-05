@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { AppProvider } from './context/AppContext';
 
 import AppRouter from './AppRouter';
 
@@ -10,9 +11,11 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 function App() {
 	return (
 		<AuthProvider>
-			<BrowserRouter>
-				<AppRouter />
-			</BrowserRouter>
+			<AppProvider>
+				<BrowserRouter>
+					<AppRouter />
+				</BrowserRouter>
+			</AppProvider>
 		</AuthProvider>
 	);
 }

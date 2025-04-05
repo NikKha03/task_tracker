@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { AppContext } from '../context/AppContext';
 
 import { MDBIcon, MDBBtn, MDBBadge } from 'mdb-react-ui-kit';
 
@@ -9,7 +10,6 @@ import CreateProject from './modal/CreateProject';
 export default function LeftMenu({ listIsClicked }) {
 	const navigate = useNavigate();
 	const { user, projects, logout, loading } = useContext(AuthContext);
-	console.log(projects);
 
 	const header = name => {
 		return (
@@ -22,11 +22,19 @@ export default function LeftMenu({ listIsClicked }) {
 		);
 	};
 
+	const { projectIdClicked, setProjectIdClicked } = useContext(AppContext);
+	const openProject = (projectId, id) => {
+		setProjectIdClicked(id);
+		navigate(`/board?project=${projectId.projectId}`);
+	};
+
 	const projectsBlock = (maxHeight, projects = []) => {
 		return (
 			<div className='proj-block' style={{ maxHeight: maxHeight }}>
-				{projects.map((project, i) => (
-					<a key={i}>{project.name}</a>
+				{projects.map(project => (
+					<a className={`a-proj ${projectIdClicked === project.projectId && !listIsClicked ? 'active' : ''}`} key={project.projectId} onClick={() => openProject(project, project.projectId)}>
+						{project.name}
+					</a>
 				))}
 			</div>
 		);

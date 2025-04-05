@@ -8,21 +8,10 @@ export const apiTaskController = `http://${hostApiGateway}:${portApiGateway}/tas
 export const authPath = `http://${hostApiGateway}:${portApiGateway}/oauth2/authorization/keycloak`;
 export const getUserPath = `${userController}/get`;
 export const getProjectsPath = username => `${projectController}/?username=${username}`;
+export const getProjectPath = (id, username) => `${projectController}/${id}?username=${username}`;
 export const createProjectPath = `${projectController}/create`;
-
-export const allCompletedTasks = `${apiTaskController}/allCompleted`;
-export const tasksOnTheDay = `${apiTaskController}/onTheDay`;
-export const tasksOnOtherDays = `${apiTaskController}/onOtherDays`;
-export const tasksIncomplete = `${apiTaskController}/incomplete`;
-export const tasksOnSomeday = `${apiTaskController}/onSomeday`;
-
-export const createTaskPath = () => `${apiTaskController}/create`;
-export const changeTaskPath = taskId => `${apiTaskController}/change/${taskId}`;
-export const deleteTaskPath = taskId => `${apiTaskController}/delete/${taskId}`;
-export const changeTaskStatusOnCompletedPath = taskId => `${apiTaskController}/changeStatusOnCompleted/${taskId}`;
-export const changeTaskStatusOnInProgressPath = taskId => `${apiTaskController}/changeStatusOnInProgress/${taskId}`;
-
-export const userPagePath = () => `${userController}`;
+export const changeProjectPath = id => `${projectController}/change/${id}`;
+export const deleteProjectPath = id => `${projectController}/delete/${id}`;
 
 export const userInfoPath = `${userController}/userInfo`;
 export const changeUserInfoPath = `${userController}/changeInfo`;

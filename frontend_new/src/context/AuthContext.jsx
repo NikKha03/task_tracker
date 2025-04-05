@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [projects, setProjects] = useState([]);
 	const [loading, setLoading] = useState(true); // Для контроля загрузки
+	const [trigger, setTrigger] = useState(false);
 
 	// Функция для загрузки текущего пользователя
 	const getUser = async () => {
@@ -34,7 +35,6 @@ export const AuthProvider = ({ children }) => {
 	const fetchData = async () => {
 		const userData = await getUser(); // Дождаться завершения запроса пользователя
 		if (userData?.name) {
-			console.log('first');
 			await getProjects(userData.name); // Передаём имя из `userData`
 		}
 		setLoading(false);
@@ -44,11 +44,16 @@ export const AuthProvider = ({ children }) => {
 		fetchData();
 	}, []);
 
+	useEffect(() => {
+		setTrigger(false);
+		fetchData();
+	}, [trigger]);
+
 	// Функция для выхода
 	const logout = async () => {
 		await axios.post('/api/logout', {}, { withCredentials: true });
 		setUser(null);
 	};
 
-	return <AuthContext.Provider value={{ user, projects, loading, logout }}>{children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={{ user, projects, loading, logout, setTrigger }}>{children}</AuthContext.Provider>;
 };

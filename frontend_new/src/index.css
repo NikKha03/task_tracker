@@ -89,7 +89,7 @@ body,
 	border-right: 1px solid black; /* Для наглядности */
 }
 
-.navbar h2 {
+.navbar .lite {
 	width: 100%;
 	padding: 0 0 0 0.75rem;
 	margin: 0;
@@ -225,7 +225,7 @@ body,
 	display: flex;
 	flex-direction: column;
 	margin: 0.25rem 0;
-	padding-left: 2rem;
+	padding: 0 2rem;
 	color: white;
 	overflow-y: auto;
 	/* background-color: aliceblue; */
@@ -234,4 +234,30 @@ body,
 .modal-content {
 	background-color: #eeeeee;
 	color: black;
+}
+
+.a-proj {
+	color: white;
+	cursor: pointer;
+	margin-bottom: 0.125rem;
+}
+
+.a-proj:last-child {
+	margin-bottom: 0;
+}
+
+.a-proj:hover {
+	color: white;
+	/* background-color: #5e5e5e;
+	border-radius: 4px; */
+}
+
+.proj-h {
+	display: flex;
+	margin: 0.5rem 0 0 0.5rem;
+	align-items: center;
+}
+
+.proj-h h2 {
+	margin: 0 1rem 0 0;
 }

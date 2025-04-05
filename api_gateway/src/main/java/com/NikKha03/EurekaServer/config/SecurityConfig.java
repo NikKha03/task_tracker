@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .oauth2Login(oauth2 -> oauth2.authenticationSuccessHandler(successHandler()))
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:5175", "http://localhost"));
+                    config.setAllowedOrigins(List.of("http://localhost:5175", "https://task.sharpbubbles.ru"));
                     config.addAllowedHeader("*");
                     config.addAllowedMethod("*");
                     config.setAllowCredentials(true);
