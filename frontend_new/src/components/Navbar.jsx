@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AppContext } from '../context/AppContext';
 import ChangeProject from './modal/ChangeProject';
+import Tab from './task/ Tab';
 
 import { MDBContainer, MDBNavbar, MDBNavbarBrand, MDBInputGroup, MDBInput, MDBIcon, MDBBtn, MDBNavbarLink } from 'mdb-react-ui-kit';
 
@@ -47,11 +48,18 @@ export default function Navbar({ pageType }) {
 	const toggleOpen = () => setBasicModal(!basicModal);
 	const projBlokForBoard = () => {
 		return (
-			<div className='proj-h'>
-				<h2 style={{ fontSize: '1.375rem' }}>{project.name}</h2>
-				<MDBIcon fas icon='cog' size='1x' onClick={toggleOpen} style={{ color: '#b3b3b3', cursor: 'pointer' }} />
-				<ChangeProject isOpen={basicModal} toggle={toggleOpen} />
-			</div>
+			<>
+				<div className='top'>
+					<div className='proj-h'>
+						<h2 style={{ fontSize: '1.375rem' }}>{project.name}</h2>
+						<MDBIcon fas icon='cog' size='1x' onClick={toggleOpen} style={{ color: '#b3b3b3', cursor: 'pointer' }} />
+						<ChangeProject isOpen={basicModal} toggle={toggleOpen} />
+					</div>
+				</div>
+				<div className='bottom'>
+					<Tab />
+				</div>
+			</>
 		);
 	};
 

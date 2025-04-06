@@ -22,8 +22,9 @@ export default function LeftMenu({ listIsClicked }) {
 		);
 	};
 
-	const { projectIdClicked, setProjectIdClicked } = useContext(AppContext);
+	const { projectIdClicked, setProjectIdClicked, setTabIdClicked } = useContext(AppContext);
 	const openProject = (projectId, id) => {
+		setTabIdClicked(null);
 		setProjectIdClicked(id);
 		navigate(`/board?project=${projectId.projectId}`);
 	};

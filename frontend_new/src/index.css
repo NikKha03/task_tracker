@@ -73,6 +73,24 @@ body,
 	overflow-y: auto;
 }
 
+.tab {
+	display: flex;
+	height: 90%;
+	padding: 0 1rem;
+	border-left: 1px solid black;
+	align-items: center;
+	margin-top: auto;
+	cursor: pointer;
+}
+
+.tab:first-child {
+	border-left: 0;
+}
+
+.tab:last-child {
+	border-right: 1px solid black;
+}
+
 .task-status {
 	cursor: pointer;
 	display: flex;
@@ -260,4 +278,10 @@ body,
 
 .proj-h h2 {
 	margin: 0 1rem 0 0;
+}
+
+.task {
+	margin: 0 1rem;
+	border: 1px solid black;
+	height: 4.25rem;
 }

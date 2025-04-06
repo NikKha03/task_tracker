@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import Task from './Task';
+
 export default function Column({ status }) {
 	const column = (style, header, paddingBottom) => {
 		return (
@@ -8,6 +10,10 @@ export default function Column({ status }) {
 					<div className='column-area'>
 						<h2 style={{ paddingBottom: paddingBottom }}>{header}</h2>
 						{header === 'Нужно сделать' ? <p>+ Добавить задачу</p> : null}
+
+						<div className='tasks'>
+							<Task />
+						</div>
 					</div>
 				</div>
 			</>

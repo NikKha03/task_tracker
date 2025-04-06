@@ -1,24 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';
 
 import { AuthContext } from '../../context/AuthContext';
-import { createProjectPath } from '../../resources/ApiPath';
+import { createTabPath } from '../../resources/ApiPath';
 
-export default function CreateProject({ isOpen, toggle }) {
-	const { user, setTrigger } = useContext(AuthContext);
+export default function CreateTab({ isOpen, toggle }) {
+	const [searchParams] = useSearchParams();
+	const { setTrigger } = useContext(AuthContext);
 
-	const createProject = async projectName => {
-		if (projectName.trim().length < 1) return null;
+	const createTab = async tabName => {
+		if (tabName.trim().length < 1) return null;
 		try {
 			const response = await axios.post(
-				createProjectPath,
+				createTabPath,
 				{
-					name: projectName.trim(),
-					projectOwner: user.name,
-					projectOwnerType: 'INDIVIDUAL_USER',
-					principalUser: user.name,
+					name: tabName.trim(),
+					projectId: parseInt(searchParams.get('project')),
 				},
 				{ withCredentials: true }
 			);
@@ -31,7 +31,8 @@ export default function CreateProject({ isOpen, toggle }) {
 	const handleSubmitSave = event => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		createProject(data.get('projectName'));
+
+		createTab(data.get('tabName'));
 		toggle();
 	};
 
@@ -42,17 +43,17 @@ export default function CreateProject({ isOpen, toggle }) {
 					<MDBModalDialog size='lg'>
 						<MDBModalContent className='modal-content'>
 							<MDBModalHeader>
-								<MDBModalTitle>Создать проект</MDBModalTitle>
+								<MDBModalTitle>Создать вкладку</MDBModalTitle>
 								<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
 							</MDBModalHeader>
 
 							<MDBModalBody>
-								<p style={{ marginBottom: '0.25rem' }}>Название проекта</p>
-								<MDBInput name='projectName' autoComplete='off' />
+								<p style={{ marginBottom: '0.25rem' }}>Название вкладки</p>
+								<MDBInput name='tabName' autoComplete='off' />
 							</MDBModalBody>
 
 							<MDBModalFooter>
-								<MDBBtn type='submitSave' className='cust-btn' color='success'>
+								<MDBBtn type='submitSave' style={{ width: '100%', boxShadow: 'none', borderRadius: '4px' }} color='success'>
 									Создать
 								</MDBBtn>
 							</MDBModalFooter>
