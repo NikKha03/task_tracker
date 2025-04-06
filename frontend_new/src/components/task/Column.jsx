@@ -12,7 +12,7 @@ export default function Column({ status }) {
 						{header === 'Нужно сделать' ? <p>+ Добавить задачу</p> : null}
 
 						<div className='tasks'>
-							<Task />
+							<Task status={status} />
 						</div>
 					</div>
 				</div>
