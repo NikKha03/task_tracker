@@ -1,0 +1,50 @@
+.create-task-panel {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 33.3%;
+	max-width: 940px;
+	height: 100vh;
+	background-color: white;
+	z-index: 1000;
+	box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.create-task-panel .header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.create-task-panel .close-btn {
+	background: none;
+	border: none;
+	font-size: 1.5rem;
+	cursor: pointer;
+}
+
+.create-task-panel .content {
+	margin-top: 1rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.create-task-panel input,
+.create-task-panel textarea {
+	width: 100%;
+	padding: 10px;
+	font-size: 1rem;
+}
+
+.create-task-panel .submit-btn {
+	align-self: flex-end;
+	padding: 10px 20px;
+	background-color: #0062cc;
+	color: white;
+	border: none;
+	cursor: pointer;
+}

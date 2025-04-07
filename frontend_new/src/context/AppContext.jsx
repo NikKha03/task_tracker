@@ -32,7 +32,7 @@ export const AppProvider = ({ children }) => {
 
 	if (tabs.length > 0) {
 		tabs = tabs.sort(function (a, b) {
-			return a.tabId > b.tabId;
+			return a.tabId - b.tabId;
 		});
 	}
 

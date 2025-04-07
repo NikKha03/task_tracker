@@ -24,7 +24,7 @@ export default function LeftMenu({ listIsClicked }) {
 
 	const { projectIdClicked, setProjectIdClicked, setTabIdClicked } = useContext(AppContext);
 	const openProject = (projectId, id) => {
-		setTabIdClicked(null);
+		setTabIdClicked(NaN);
 		setProjectIdClicked(id);
 		navigate(`/board?project=${projectId.projectId}`);
 	};
@@ -43,6 +43,7 @@ export default function LeftMenu({ listIsClicked }) {
 
 	const [basicModal, setBasicModal] = useState(false);
 	const toggleOpen = () => setBasicModal(!basicModal);
+	console.log(projects.myProjects);
 
 	return (
 		<>

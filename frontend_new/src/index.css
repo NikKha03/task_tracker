@@ -288,9 +288,9 @@ body,
 
 .task {
 	display: flex;
-	margin: 0 1rem;
+	margin: 0 1rem 0.5rem 1rem;
 	border: 1px solid black;
-	border-radius: 4px;
+	border-radius: 8px;
 	height: 4.25rem;
 	flex-direction: row;
 	color: black;
