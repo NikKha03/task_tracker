@@ -4,6 +4,7 @@ import axios from 'axios';
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput, MDBIcon } from 'mdb-react-ui-kit';
 
 import { AuthContext } from '../../context/AuthContext';
+import { AppContext } from '../../context/AppContext';
 import { changeTabPath, deleteTabPath } from '../../resources/ApiPath';
 
 const btnStyle = width => {
@@ -12,6 +13,7 @@ const btnStyle = width => {
 
 export default function ChangeTab({ tab, isOpen, toggle }) {
 	const { setTrigger } = useContext(AuthContext);
+	const { setTabIdClicked } = useContext(AppContext);
 
 	const changeTab = async (id, tabName) => {
 		if (tabName.trim().length < 1) return null;

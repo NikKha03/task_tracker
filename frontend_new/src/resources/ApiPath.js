@@ -1,14 +1,13 @@
-const hostApiGateway = '109.196.102.221';
-const portApiGateway = 8080;
+const hostApiGateway = 'https://api.sharpbubbles.ru';
+// const hostApiGateway = 'https://api.sharpbubbles.online';
 
-export const userController = `http://${hostApiGateway}:${portApiGateway}/api_gateway/user`;
-export const projectController = `http://${hostApiGateway}:${portApiGateway}/task_service/project`;
-export const tabController = `http://${hostApiGateway}:${portApiGateway}/task_service/tab`;
-export const taskController = `http://${hostApiGateway}:${portApiGateway}/task_service/task`;
+export const userController = `${hostApiGateway}/api_gateway/user`;
+export const projectController = `${hostApiGateway}/task_service/project`;
+export const tabController = `${hostApiGateway}/task_service/tab`;
+export const taskController = `${hostApiGateway}/task_service/task`;
+export const apiTaskController = `${hostApiGateway}/task-tracker/task`;
 
-export const apiTaskController = `http://${hostApiGateway}:${portApiGateway}/task-tracker/task`;
-
-export const authPath = `http://${hostApiGateway}:${portApiGateway}/oauth2/authorization/keycloak`;
+export const authPath = `${hostApiGateway}/oauth2/authorization/keycloak`;
 
 export const getUserPath = `${userController}/get`;
 

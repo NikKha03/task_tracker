@@ -51,7 +51,7 @@ export default function Navbar({ pageType }) {
 			<>
 				<div className='top'>
 					<div className='proj-h'>
-						<h2 style={{ fontSize: '1.375rem' }}>{project.name}</h2>
+						<h2 style={{ fontSize: '1.25rem' }}>{project.name}</h2>
 						<MDBIcon fas icon='cog' size='1x' onClick={toggleOpen} style={{ color: '#b3b3b3', cursor: 'pointer' }} />
 						<ChangeProject isOpen={basicModal} toggle={toggleOpen} />
 					</div>
@@ -78,7 +78,7 @@ export default function Navbar({ pageType }) {
 		<MDBNavbar className='navbar'>
 			<div className='profile-block' onClick={() => navigate('/profile/')}>
 				<MDBIcon className='user-icon' style={{ cursor: 'pointer' }} size='2x' fas icon='user-circle' />
-				<h2 className='lite' style={{ cursor: 'pointer' }}>
+				<h2 className='lite' style={{ cursor: 'pointer', fontSize: '1.375rem' }}>
 					{user.fullName}
 				</h2>
 			</div>

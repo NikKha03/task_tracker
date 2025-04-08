@@ -111,7 +111,7 @@ body,
 	width: 100%;
 	padding: 0 0 0 0.75rem;
 	margin: 0;
-	font-size: 1.375rem;
+	font-size: 1.25rem;
 	font-weight: 300;
 }
 
@@ -173,7 +173,7 @@ body,
 
 .column-area h2 {
 	color: black;
-	font-size: 1.5rem;
+	font-size: 1.375rem;
 	padding-top: 0.5rem;
 	padding-left: 1.25rem;
 	margin: 0;
@@ -218,7 +218,7 @@ body,
 }
 
 .left-menu .top .header h2 {
-	font-size: 1.375rem;
+	font-size: 1.25rem;
 	margin: 0 0 0 0.5rem;
 	/* cursor: pointer; */
 }
