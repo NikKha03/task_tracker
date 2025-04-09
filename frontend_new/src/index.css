@@ -1,67 +1,67 @@
 :root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* Тонкий скролл в Firefox */
 * {
-	scrollbar-width: thin;
-	scrollbar-color: #888 #332d2d;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #332d2d;
 }
 
 html {
-	min-height: 100vh;
+  min-height: 100vh;
 
-	height: 100%;
-	min-width: 100vw;
-	width: 100%;
+  height: 100%;
+  min-width: 100vw;
+  width: 100%;
 }
 
 body,
 #root {
-	height: 100%;
-	width: 100%;
-	max-height: 100vh;
+  height: 100%;
+  width: 100%;
+  max-height: 100vh;
 }
 
 .navbar {
-	display: flex;
-	color: white;
-	/* padding-left: 1.5rem; */
-	padding: 0 0 0 1.5rem;
-	background-color: #454545;
-	width: 100%;
-	height: 4.75rem;
-	border-bottom: 1px solid black;
+  display: flex;
+  color: white;
+  /* padding-left: 1.5rem; */
+  padding: 0 0 0 1.5rem;
+  background-color: #454545;
+  width: 100%;
+  height: 4.75rem;
+  border-bottom: 1px solid black;
 }
 
 .navbar .profile-block {
-	display: flex;
-	align-items: center;
-	/* margin: 0 1.5rem 0 0; */
-	margin-right: 0;
+  display: flex;
+  align-items: center;
+  /* margin: 0 1.5rem 0 0; */
+  margin-right: 0;
 
-	height: 100%;
-	width: 20.75rem;
-	border-right: 1px solid black;
+  height: 100%;
+  width: 19.75rem;
+  border-right: 1px solid black;
 }
 
 .nav-m {
-	display: flex;
-	flex-direction: column;
-	width: calc(100% - 20.75rem);
-	height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 19.75rem);
+  height: 100%;
 }
 
 .nav-m .top,
 .nav-m .bottom {
-	height: 100%;
-	width: 100%;
-	/* margin: 0;
+  height: 100%;
+  width: 100%;
+  /* margin: 0;
 	padding: 0; */
 }
 
@@ -69,275 +69,275 @@ body,
 }
 
 .nav-m .bottom {
-	display: flex;
-	overflow-y: auto;
+  display: flex;
+  overflow-y: auto;
 }
 
 .tab {
-	display: flex;
-	height: 90%;
-	padding: 0 1rem;
-	border-left: 1px solid black;
-	align-items: center;
-	margin-top: auto;
-	cursor: pointer;
+  display: flex;
+  height: 90%;
+  padding: 0 1rem;
+  border-left: 1px solid black;
+  align-items: center;
+  margin-top: auto;
+  cursor: pointer;
 }
 
 .tab:first-child {
-	border-left: 0;
+  border-left: 0;
 }
 
 .tab:last-child {
-	border-right: 1px solid black;
+  border-right: 1px solid black;
 }
 
 .task-status {
-	cursor: pointer;
-	display: flex;
-	color: white;
-	align-items: center;
-	flex: 1; /* Каждый элемент занимает равную часть */
-	justify-content: center;
-	min-width: 12.25rem;
+  cursor: pointer;
+  display: flex;
+  color: white;
+  align-items: center;
+  flex: 1; /* Каждый элемент занимает равную часть */
+  justify-content: center;
+  min-width: 12.25rem;
 
-	border-left: 1px solid black; /* Для наглядности */
+  border-left: 1px solid black; /* Для наглядности */
 }
 
 .task-status:last-child {
-	border-right: 1px solid black; /* Для наглядности */
+  border-right: 1px solid black; /* Для наглядности */
 }
 
 .navbar .lite {
-	width: 100%;
-	padding: 0 0 0 0.75rem;
-	margin: 0;
-	font-size: 1.25rem;
-	font-weight: 300;
+  width: 100%;
+  padding: 0 0 0 0.75rem;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 300;
 }
 
 .task-area {
-	display: flex;
-	height: calc(100% - 4.75rem);
-	width: 100%;
+  display: flex;
+  height: calc(100% - 4.75rem);
+  width: 100%;
 }
 
 .task-area .left-menu {
-	display: flex;
-	flex-direction: column;
-	background-color: #454545;
-	padding: 0 1.5rem;
-	border-right: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  background-color: #454545;
+  padding: 0 1rem;
+  border-right: 1px solid black;
 
-	width: 22.25rem;
-	height: 100%;
-	padding-top: 1rem;
+  width: 21.25rem;
+  height: 100%;
+  padding-top: 1rem;
 }
 
 .left-menu .top {
-	height: 94%;
-	overflow-y: auto;
+  height: 94%;
+  overflow-y: auto;
 }
 
 .left-menu .bottom {
-	display: flex;
-	height: 6%;
-	min-height: 2rem;
-	align-items: center;
-	border-top: 1px solid black;
+  display: flex;
+  height: 6%;
+  min-height: 2rem;
+  align-items: center;
+  border-top: 1px solid black;
 }
 
 .task-area .main-window {
-	display: flex;
-	width: calc(100% - 22.25rem);
-	background-color: #2c2c2c;
-	padding: 1.25rem;
-	overflow-x: auto;
+  display: flex;
+  width: calc(100% - 21.25rem);
+  background-color: #2c2c2c;
+  padding: 1.25rem;
+  overflow-x: auto;
 }
 
 .column-background {
-	margin: 0 0.75rem;
-	width: 33%;
-	height: 100%;
+  margin: 0 0.75rem;
+  width: 33%;
+  height: 100%;
 }
 
 .column-area {
-	flex-direction: column;
-	/* opacity: 0.85;
+  flex-direction: column;
+  /* opacity: 0.85;
 	background-color: white; */
-	background-color: rgba(255, 255, 255, 0.8); /* белый с прозрачностью */
+  background-color: rgba(255, 255, 255, 0.8); /* белый с прозрачностью */
 
-	margin: 1rem 0 0 0;
-	width: 100%;
-	height: calc(100% - 1rem);
+  margin: 1rem 0 0 0;
+  width: 100%;
+  height: calc(100% - 1rem);
 }
 
 .column-area h2 {
-	color: black;
-	font-size: 1.375rem;
-	padding-top: 0.5rem;
-	padding-left: 1.25rem;
-	margin: 0;
+  color: black;
+  font-size: 1.375rem;
+  padding-top: 0.5rem;
+  padding-left: 1.25rem;
+  margin: 0;
 }
 
 .column-area p {
-	margin: 0;
-	font-size: 1.25rem;
-	padding: 0rem 1.5rem 0.75rem;
-	color: #0d99ff;
+  margin: 0;
+  font-size: 1.25rem;
+  padding: 0rem 1.5rem 0.75rem;
+  color: #0d99ff;
 }
 
 .column-background,
 .column-area {
-	display: flex;
-	max-width: 30.75rem;
-	min-width: 21rem;
-	border-radius: 8px;
+  display: flex;
+  max-width: 30.75rem;
+  min-width: 21rem;
+  border-radius: 8px;
 }
 
 .header {
-	display: flex;
-	color: white;
-	align-items: center;
+  display: flex;
+  color: white;
+  align-items: center;
+  padding: 0.25rem;
+}
+
+.menu-item {
+  margin-bottom: 0.25rem;
 }
 
 .left-menu .top .header .icon {
-	display: flex;
-	color: #0d99ff;
-	width: 1.5rem;
-	justify-content: center;
+  display: flex;
+  color: #0d99ff;
+  width: 1.5rem;
+  justify-content: center;
 }
 
 .h-btn {
-	cursor: pointer;
-	margin-bottom: 0.75rem;
+  cursor: pointer;
 }
 
 .active {
-	background-color: #5e5e5e; /* Фон после клика */
-	border-radius: 4px;
+  background-color: #5e5e5e; /* Фон после клика */
+  border-radius: 4px;
 }
 
 .left-menu .top .header h2 {
-	font-size: 1.25rem;
-	margin: 0 0 0 0.5rem;
-	/* cursor: pointer; */
+  font-size: 1.25rem;
+  margin: 0 0 0 0.5rem;
+  /* cursor: pointer; */
 }
 
 .left-menu .top .add {
-	height: 1.5rem;
-	padding: 0;
+  height: 1.5rem;
+  padding: 0;
 }
 
 .left-menu .top .cust-btn:hover,
 .left-menu .top .cust-btn {
-	width: 100%;
-	box-shadow: none;
-	border-radius: 4px;
+  width: 100%;
+  box-shadow: none;
+  border-radius: 4px;
 }
 
-.menu-item {
-	margin-bottom: 0.75rem;
-}
-
-.menu-item .proj-block {
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	margin: 0.25rem 0;
-	padding: 0 2rem;
-	color: white;
-	overflow-y: auto;
-	/* background-color: aliceblue; */
+.proj-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* margin: 0.25rem 0; */
+  color: white;
+  overflow-y: auto;
+  /* background-color: aliceblue; */
 }
 
 .modal-content {
-	background-color: #eeeeee;
-	color: black;
+  background-color: #eeeeee;
+  color: black;
 }
 
 .a-proj {
-	color: white;
-	cursor: pointer;
-	margin-bottom: 0.125rem;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 0.125rem;
+  padding-left: 2.25rem;
 }
 
 .a-proj:last-child {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .a-proj:hover {
-	color: white;
-	/* background-color: #5e5e5e;
+  color: white;
+  /* background-color: #5e5e5e;
 	border-radius: 4px; */
 }
 
 .proj-h {
-	display: flex;
-	margin: 0.5rem 0 0 0.5rem;
-	align-items: center;
+  display: flex;
+  margin: 0.5rem 0 0 0.5rem;
+  align-items: center;
 }
 
 .proj-h h2 {
-	margin: 0 1rem 0 0;
+  margin: 0 1rem 0 0;
 }
 
 .tasks {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .task {
-	display: flex;
-	margin: 0 1rem 0.5rem 1rem;
-	border: 1px solid black;
-	border-radius: 8px;
-	height: 4.25rem;
-	flex-direction: row;
-	color: black;
-	background-color: white;
+  display: flex;
+  margin: 0 1rem 0.5rem 1rem;
+  border: 1px solid black;
+  border-radius: 8px;
+  height: 4.25rem;
+  flex-direction: row;
+  color: black;
+  background-color: white;
 
-	/* align-items: last baseline; */
+  /* align-items: last baseline; */
 }
 
 .task .doneIcon {
-	display: flex;
-	height: 100%;
-	justify-content: center;
-	align-items: center;
-	margin: 0 1rem 0 0.5rem;
-	/* color: #797979; */
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 0 1rem 0 0.5rem;
+  /* color: #797979; */
 }
 
 .task h3 {
-	font-size: 1.25rem;
-	margin-bottom: 0;
+  font-size: 1.25rem;
+  margin-bottom: 0;
 }
 
 .task .bot,
 .task .top {
-	display: flex;
-	height: 100%;
+  display: flex;
+  height: 100%;
 }
 
 .main .top {
-	/* align-items: last baseline; */
-	align-items: center;
+  /* align-items: last baseline; */
+  align-items: center;
 }
 
 .main .bot {
-	align-items: first baseline;
+  align-items: first baseline;
 }
 
 .right {
-	display: flex;
-	flex-direction: column;
-	margin-left: auto;
-	align-items: center;
-	margin-right: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  align-items: center;
+  margin-right: 0.5rem;
 }
 
 .right .top,
 .right .bot {
-	/* display: flex; */
-	align-items: center;
+  /* display: flex; */
+  align-items: center;
 }

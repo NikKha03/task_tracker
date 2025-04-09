@@ -6,20 +6,20 @@ import Navbar from '../../components/Navbar';
 import LeftMenu from '../../components/LeftMenu';
 
 export default function ListTasks() {
-	const { user, logout, loading } = useContext(AuthContext);
+  const { user, logout, loading } = useContext(AuthContext);
 
-	// Показываем пустой экран, пока идет проверка авторизации
-	if (loading) return null;
+  // Показываем пустой экран, пока идет проверка авторизации
+  if (loading) return null;
 
-	return (
-		<>
-			<>
-				<Navbar pageType={'list'} />
-				<div className='task-area'>
-					<LeftMenu listIsClicked={true} />
-					<div className='main-window'></div>
-				</div>
-			</>
-		</>
-	);
+  return (
+    <>
+      <>
+        <Navbar pageType={'list'} />
+        <div className="task-area">
+          <LeftMenu listIsClicked={true} />
+          <div className="main-window"></div>
+        </div>
+      </>
+    </>
+  );
 }
