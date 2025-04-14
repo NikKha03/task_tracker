@@ -1,15 +1,14 @@
 const hostApiGateway = 'https://api.sharpbubbles.ru';
 // const hostApiGateway = 'https://api.sharpbubbles.online';
 
-export const userController = `${hostApiGateway}/api_gateway/user`;
+export const userController = `${hostApiGateway}/user_service`;
 export const projectController = `${hostApiGateway}/task_service/project`;
 export const tabController = `${hostApiGateway}/task_service/tab`;
 export const taskController = `${hostApiGateway}/task_service/task`;
 export const apiTaskController = `${hostApiGateway}/task-tracker/task`;
 
 export const authPath = `${hostApiGateway}/oauth2/authorization/keycloak`;
-
-export const getUserPath = `${userController}/get`;
+export const getUserPath = `${userController}/authorized`;
 
 export const getProjectsPath = username => `${projectController}/?username=${username}`;
 export const getProjectPath = (id, username) => `${projectController}/${id}?username=${username}`;
