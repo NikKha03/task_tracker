@@ -16,8 +16,7 @@ export default function CreateProject({ isOpen, toggle }) {
 				createProjectPath,
 				{
 					name: projectName.trim(),
-					projectOwner: user.name,
-					projectOwnerType: 'INDIVIDUAL_USER',
+					projectType: 'INDIVIDUAL_USER',
 					principalUser: user.name,
 				},
 				{ withCredentials: true }

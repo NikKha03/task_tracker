@@ -143,6 +143,7 @@ body,
 .left-menu .bottom {
 	display: flex;
 	height: 6%;
+	padding: 0 0.25rem;
 	min-height: 2rem;
 	align-items: center;
 	border-top: 1px solid black;

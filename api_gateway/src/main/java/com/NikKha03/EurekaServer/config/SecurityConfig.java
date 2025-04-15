@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
 
@@ -14,10 +15,6 @@ import java.util.List;
 @EnableWebFluxSecurity
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
-
-
-    @Value("${dop-urls.main-page}")
-    private String frontendMainPage;
 
     @Value("#{'${dop-urls.allowed-origins}'.split(', ')}")
     private List<String> allowedOrigins;
@@ -27,6 +24,14 @@ public class SecurityConfig {
         return http
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/**").permitAll())
+                .cors(cors -> cors.configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(List.of("http://localhost:5175", "https://tracker.sharpbubbles.ru"));
+                    config.addAllowedHeader("*");
+                    config.addAllowedMethod("*");
+                    config.setAllowCredentials(true);
+                    return config;
+                }))
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .build();
     }

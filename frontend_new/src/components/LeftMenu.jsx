@@ -81,7 +81,10 @@ export default function LeftMenu({ listIsClicked }) {
 					</div>
 				</div>
 				<div className='bottom'>
-					<a href='#!'>
+					<a>
+						<MDBIcon style={{ color: '#0d99ff' }} fas icon='briefcase' size='lg' />
+					</a>
+					<a href='#!' style={{ marginLeft: 'auto' }}>
 						<MDBIcon style={{ color: '#0d99ff' }} far icon='bell' size='lg' />
 						<MDBBadge color='danger' notification pill>
 							1
