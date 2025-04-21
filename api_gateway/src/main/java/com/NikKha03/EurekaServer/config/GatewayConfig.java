@@ -14,6 +14,9 @@ public class GatewayConfig {
                 .route("task_service", r -> r.path("/task_service/**")
                         .uri("lb://TASKSERVICE")  // lb:// для балансировки нагрузки через Eureka
                 )
+                .route("task_service", r -> r.path("/swagger-ui/**")
+                        .uri("lb://TASKSERVICE")  // lb:// для балансировки нагрузки через Eureka
+                )
                 .route("user_service", r -> r.path("/user_service/**")
                         .uri("lb://USERSERVICE")  // lb:// для балансировки нагрузки через Eureka
                 ) .route("user_service", r -> r.path("/login/**")
