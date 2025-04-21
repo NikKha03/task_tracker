@@ -9,6 +9,7 @@ export const apiTaskController = `${hostApiGateway}/task-tracker/task`;
 
 export const authPath = `${hostApiGateway}/oauth2/authorization/keycloak`;
 export const getUserPath = `${userController}/authorized`;
+export const getUsersByUsernamePath = `${userController}/users`;
 
 export const getProjectsPath = username => `${projectController}/?username=${username}`;
 export const getProjectPath = (id, username) => `${projectController}/${id}?username=${username}`;
@@ -21,6 +22,9 @@ export const changeTabPath = id => `${tabController}/change/${id}`;
 export const deleteTabPath = id => `${tabController}/delete/${id}`;
 
 export const getTasksByTabIdPath = tabId => `${taskController}/byTab/${tabId}`;
+export const createTaskPath = creatorUsername => `${taskController}/create/${creatorUsername}`;
+export const changeTaskPath = taskId => `${taskController}/change/${taskId}`;
+export const deleteTaskPath = taskId => `${taskController}/delete/${taskId}`;
 
 export const userInfoPath = `${userController}/userInfo`;
 export const changeUserInfoPath = `${userController}/changeInfo`;

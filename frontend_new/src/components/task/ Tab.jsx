@@ -5,7 +5,7 @@ import { AppContext } from '../../context/AppContext';
 import CreateTab from '../modal/CreateTab';
 import ChangeTab from '../modal/ChangeTab';
 
-import { MDBContainer, MDBNavbar, MDBNavbarBrand, MDBInputGroup, MDBInput, MDBIcon, MDBBtn, MDBNavbarLink } from 'mdb-react-ui-kit';
+import { MDBIcon } from 'mdb-react-ui-kit';
 
 export default function Tab() {
 	const navigate = useNavigate();

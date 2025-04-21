@@ -1,38 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import CreateTaskPanel from '../modal/CreateTaskPanel';
+import React, { useState } from 'react';
+import CreateTask from '../modal/CreateTask';
+import ChangeTask from '../modal/ChangeTask';
 
 import Task from './Task';
 
 export default function Column({ status, tasks = [] }) {
-	const [topRightModal, setTopRightModal] = useState(false);
-	const toggleOpen = () => setTopRightModal(!topRightModal);
+	const [createModal, setCreateModal] = useState(false);
+	const toggleOpenCreate = () => setCreateModal(!createModal);
 
-	const addTask = () => {};
+	const [changeModal, setChangeModal] = useState(false);
+	const toggleOpenChange = () => setChangeModal(!changeModal);
+	const [changeTask, setChangeTask] = useState(null);
+
 	const column = (style, header, paddingBottom) => {
 		return (
 			<>
 				<div className='column-background' style={style}>
 					<div className='column-area'>
 						<h2 style={{ paddingBottom: paddingBottom }}>{header}</h2>
-						{header === 'Нужно сделать' ? <p onClick={toggleOpen}>+ Добавить задачу</p> : null}
+						{header === 'Нужно сделать' ? <p onClick={toggleOpenCreate}>+ Добавить задачу</p> : null}
 
 						{tasks.map(task => {
 							return (
 								<div className='tasks' key={task.taskId}>
-									<Task task={task} />
+									<Task task={task} setChangeTask={setChangeTask} toggleOpen={toggleOpenChange} />
 								</div>
 							);
 						})}
 					</div>
 				</div>
-				<CreateTaskPanel toggleOpen={toggleOpen} topRightModal={topRightModal} setTopRightModal={setTopRightModal} />
+				<CreateTask toggleOpen={toggleOpenCreate} topRightModal={createModal} setTopRightModal={setCreateModal} />
+				<ChangeTask task={changeTask} topRightModal={changeModal} setTopRightModal={setChangeModal} />;
 			</>
 		);
 	};
-
-	// useEffect(() => {
-
-	// }, []);
 
 	switch (status) {
 		case 'AWAITING_COMPLETION':

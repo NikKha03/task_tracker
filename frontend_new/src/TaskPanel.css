@@ -1,4 +1,5 @@
 .create-task-panel {
+	color: white;
 	display: flex;
 	flex-direction: column;
 	position: fixed;
@@ -14,6 +15,7 @@
 }
 
 .create-task-panel .header {
+	padding: 0;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;

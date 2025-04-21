@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../context/AuthContext';
@@ -7,10 +6,11 @@ import { AppContext } from '../context/AppContext';
 import ChangeProject from './modal/ChangeProject';
 import Tab from './task/ Tab';
 
-import { MDBContainer, MDBNavbar, MDBNavbarBrand, MDBInputGroup, MDBInput, MDBIcon, MDBBtn, MDBNavbarLink } from 'mdb-react-ui-kit';
+import { MDBNavbar, MDBIcon } from 'mdb-react-ui-kit';
 
 const names = [
 	{ name: 'Нужно сделать', icon: <MDBIcon far size='lg' icon='folder' /> },
+	{ name: 'Без сроков', icon: <MDBIcon far size='lg' icon='folder' /> },
 	{ name: 'В работе', icon: <MDBIcon far size='lg' icon='folder' /> },
 	{ name: 'Просроченные', icon: <MDBIcon far size='lg' icon='folder' /> },
 	{ name: 'Завершенные', icon: <MDBIcon far size='lg' icon='folder' /> },
@@ -18,7 +18,7 @@ const names = [
 
 export default function Navbar({ pageType }) {
 	const navigate = useNavigate();
-	const { user, logout, loading } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
 	const { project } = useContext(AppContext);
 
 	const [idClicked, setIdClicked] = useState(0);

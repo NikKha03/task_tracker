@@ -2,12 +2,22 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { AuthContext } from './AuthContext';
-import { authPath, getUserPath, getProjectPath } from '../resources/ApiPath';
+import { getProjectPath, getUsersByUsernamePath } from '../resources/ApiPath';
 
 export const AppContext = createContext(null);
 
+const getUsersByUsername = async (usernames, setUsernameAndName) => {
+	try {
+		const response = await axios.post(getUsersByUsernamePath, usernames, { withCredentials: true });
+		setUsernameAndName(response.data);
+	} catch (error) {
+		console.error('Error fetching projects:', error);
+	}
+};
+
 export const AppProvider = ({ children }) => {
-	const { user, logout } = useContext(AuthContext);
+	const { user } = useContext(AuthContext);
+	const [trigger, setTrigger] = useState(false);
 
 	const getProject = async (id, username) => {
 		try {
@@ -36,6 +46,9 @@ export const AppProvider = ({ children }) => {
 		});
 	}
 
+	const [usernameAndName, setUsernameAndName] = useState({});
+	const usernames = [];
+
 	useEffect(() => {
 		if (!user) return;
 		if (isNaN(projectIdClicked)) return;
@@ -43,5 +56,10 @@ export const AppProvider = ({ children }) => {
 		getProject(projectIdClicked, user.name);
 	}, [projectIdClicked, user]);
 
-	return <AppContext.Provider value={{ projectIdClicked, setProjectIdClicked, project, tabIdClicked, setTabIdClicked, tabs }}>{children}</AppContext.Provider>;
+	useEffect(() => {
+		if (project.team !== undefined) project.team.forEach(i => usernames.push(i.username));
+		if (usernames.length > 0) getUsersByUsername(usernames, setUsernameAndName);
+	}, [project]);
+
+	return <AppContext.Provider value={{ trigger, setTrigger, projectIdClicked, setProjectIdClicked, project, tabIdClicked, setTabIdClicked, tabs, usernameAndName }}>{children}</AppContext.Provider>;
 };

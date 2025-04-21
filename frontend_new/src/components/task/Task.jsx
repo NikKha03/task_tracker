@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
 
-import { MDBContainer, MDBNavbar, MDBNavbarBrand, MDBInputGroup, MDBInput, MDBIcon, MDBBtn, MDBNavbarLink } from 'mdb-react-ui-kit';
+import ChangeTask from '../modal/ChangeTask';
+
+import { MDBIcon } from 'mdb-react-ui-kit';
 
 /*
 	НЕОБХОДИМО УЧИТЫВАТЬ, ЧТО ЕСЛИ ПОЛЬЗОВАТЕЛЬ ОДИН В ПРОЕКТЕ, 
 	ТО ОН ПОЛУЧАЕТ ЗАДАЧИ ПО HTTP ЗАПРОСУ, ИНАЧЕ НЕОБХОДИМО ПОДКЛЮЧИТЬ К WEBSOCKET 
 */
 
-export default function Task({ task }) {
+export default function Task({ task, setChangeTask, toggleOpen }) {
 	const iconColor = {
 		color: '#797979',
 	};
 	if (task.taskStatus === 'COMPLETED') iconColor.color = '#22ac55';
+
+	const click = () => {
+		setChangeTask(task);
+		toggleOpen();
+	};
+
 	return (
 		<>
 			<div className='task'>
@@ -24,7 +32,7 @@ export default function Task({ task }) {
 				</div>
 				<div className='right'>
 					<div className='top'>
-						<MDBIcon fas icon='ellipsis-v' style={{ height: '1rem', width: '1rem', textAlign: 'center' }} />
+						<MDBIcon fas icon='ellipsis-v' style={{ cursor: 'pointer', height: '1rem', width: '1rem', textAlign: 'center' }} onClick={() => click()} />
 					</div>
 					<div className='bot'>
 						<MDBIcon className='user-icon' style={{ cursor: 'pointer' }} size='lg' fas icon='user-circle' />

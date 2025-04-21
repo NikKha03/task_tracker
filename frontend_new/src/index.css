@@ -168,6 +168,7 @@ body,
 	/* opacity: 0.85;
 	background-color: white; */
 	background-color: rgba(255, 255, 255, 0.8); /* белый с прозрачностью */
+	overflow-y: auto;
 
 	margin: 1rem 0 0 0;
 	width: 100%;

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AppContext } from '../context/AppContext';
 
-import { MDBIcon, MDBBtn, MDBBadge } from 'mdb-react-ui-kit';
+import { MDBIcon, MDBBadge } from 'mdb-react-ui-kit';
 
 import CreateProject from './modal/CreateProject';
 

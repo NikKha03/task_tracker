@@ -9,11 +9,9 @@ import { AuthContext } from '../../context/AuthContext';
 import { AppContext } from '../../context/AppContext';
 import { getTasksByTabIdPath } from '../../resources/ApiPath';
 
-import { MDBIcon } from 'mdb-react-ui-kit';
-
 export default function KanbanBoardsPage() {
-	const { user, logout, loading } = useContext(AuthContext);
-	const { tabIdClicked, projectIdClicked } = useContext(AppContext);
+	const { loading } = useContext(AuthContext);
+	const { trigger, setTrigger, tabIdClicked, projectIdClicked } = useContext(AppContext);
 
 	const [tasks, setTasks] = useState([]);
 
@@ -29,8 +27,9 @@ export default function KanbanBoardsPage() {
 	if (loading) return null; // Показываем пустой экран, пока идет проверка авторизации
 
 	useEffect(() => {
+		if (trigger) setTrigger(false);
 		if (!isNaN(tabIdClicked)) getTasks(tabIdClicked);
-	}, [tabIdClicked]);
+	}, [trigger, tabIdClicked]);
 
 	useEffect(() => {
 		setTasks([]);
@@ -44,6 +43,7 @@ export default function KanbanBoardsPage() {
 				<div className='main-window'>
 					{!isNaN(tabIdClicked) ? (
 						<>
+							{/* <Column status={'AWAITING_COMPLETION'} tasks={tasks.AWAITING_COMPLETION !== undefined ? tasks.AWAITING_COMPLETION.concat(tasks.WITHOUT_DATE_IMPL) : []} /> */}
 							<Column status={'AWAITING_COMPLETION'} tasks={tasks.AWAITING_COMPLETION} />
 							<Column status={'IN_PROGRESS'} tasks={tasks.IN_PROGRESS} />
 							<Column status={'COMPLETED'} tasks={tasks.COMPLETED} />
