@@ -16,6 +16,7 @@ export const getProjectPath = (id, username) => `${projectController}/${id}?user
 export const createProjectPath = `${projectController}/create`;
 export const changeProjectPath = id => `${projectController}/change/${id}`;
 export const deleteProjectPath = id => `${projectController}/delete/${id}`;
+export const inviteInProjectPath = (id, username) => `${projectController}/invite/${id}/${username}`;
 
 export const createTabPath = `${tabController}/create`;
 export const changeTabPath = id => `${tabController}/change/${id}`;

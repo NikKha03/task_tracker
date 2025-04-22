@@ -30,7 +30,7 @@ export default function Column({ status, tasks = [] }) {
 					</div>
 				</div>
 				<CreateTask toggleOpen={toggleOpenCreate} topRightModal={createModal} setTopRightModal={setCreateModal} />
-				<ChangeTask task={changeTask} topRightModal={changeModal} setTopRightModal={setChangeModal} />;
+				<ChangeTask task={changeTask} topRightModal={changeModal} setTopRightModal={setChangeModal} />
 			</>
 		);
 	};

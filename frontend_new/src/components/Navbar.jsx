@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AppContext } from '../context/AppContext';
 import ChangeProject from './modal/ChangeProject';
+import TeamModal from './modal/TeamModal';
 import Tab from './task/ Tab';
 
 import { MDBNavbar, MDBIcon } from 'mdb-react-ui-kit';
@@ -44,16 +45,23 @@ export default function Navbar({ pageType }) {
 		);
 	};
 
-	const [basicModal, setBasicModal] = useState(false);
-	const toggleOpen = () => setBasicModal(!basicModal);
+	const [changeProjectModal, setChangeProjectModal] = useState(false);
+	const toggleOpenChangeProject = () => setChangeProjectModal(!changeProjectModal);
+
+	const [teamModal, setTeamModal] = useState(false);
+	const toggleOpenTeamModal = () => setTeamModal(!teamModal);
 	const projBlokForBoard = () => {
 		return (
 			<>
 				<div className='top'>
 					<div className='proj-h'>
 						<h2 style={{ fontSize: '1.25rem' }}>{project.name}</h2>
-						<MDBIcon fas icon='cog' size='1x' onClick={toggleOpen} style={{ color: '#b3b3b3', cursor: 'pointer' }} />
-						<ChangeProject isOpen={basicModal} toggle={toggleOpen} />
+
+						<MDBIcon fas icon='cog' size='1x' onClick={toggleOpenChangeProject} style={{ color: '#b3b3b3', cursor: 'pointer' }} />
+						<ChangeProject isOpen={changeProjectModal} toggle={toggleOpenChangeProject} />
+
+						<MDBIcon fas icon='user-friends' size='1x' onClick={toggleOpenTeamModal} style={{ color: '#b3b3b3', cursor: 'pointer', marginLeft: '0.5rem' }} />
+						<TeamModal isOpen={teamModal} toggle={toggleOpenTeamModal} />
 					</div>
 				</div>
 				<div className='bottom'>
