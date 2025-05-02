@@ -7,12 +7,12 @@ import { AuthContext } from '../../context/AuthContext';
 import { createProjectPath } from '../../resources/ApiPath';
 
 export default function CreateProject({ isOpen, toggle }) {
-	const { user, setTrigger } = useContext(AuthContext);
+	const { user, setProjectTrigger } = useContext(AuthContext);
 
 	const createProject = async projectName => {
 		if (projectName.trim().length < 1) return null;
 		try {
-			const response = await axios.post(
+			await axios.post(
 				createProjectPath,
 				{
 					name: projectName.trim(),
@@ -21,7 +21,7 @@ export default function CreateProject({ isOpen, toggle }) {
 				},
 				{ withCredentials: true }
 			);
-			setTrigger(true);
+			setProjectTrigger(true);
 		} catch (error) {
 			console.error('Error fetching user:', error);
 		}

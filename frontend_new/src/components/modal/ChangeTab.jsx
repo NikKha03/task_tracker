@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput, MDBIcon } from 'mdb-react-ui-kit';
 
@@ -12,8 +13,10 @@ const btnStyle = width => {
 };
 
 export default function ChangeTab({ tab, isOpen, toggle }) {
-	const { setTrigger } = useContext(AuthContext);
-	const { setTabIdClicked } = useContext(AppContext);
+	const navigate = useNavigate();
+
+	const { setProjectTrigger } = useContext(AuthContext);
+	const { projectIdClicked, tabIdClicked, setTabIdClicked } = useContext(AppContext);
 
 	const changeTab = async (id, tabName) => {
 		if (tabName.trim().length < 1) return null;
@@ -25,7 +28,7 @@ export default function ChangeTab({ tab, isOpen, toggle }) {
 				},
 				{ withCredentials: true }
 			);
-			setTrigger(true);
+			setProjectTrigger(true);
 		} catch (error) {
 			console.error('Error fetching user:', error);
 		}
@@ -33,8 +36,10 @@ export default function ChangeTab({ tab, isOpen, toggle }) {
 
 	const deleteTab = async id => {
 		try {
-			const response = await axios.delete(deleteTabPath(id), { withCredentials: true });
-			setTrigger(true);
+			await axios.delete(deleteTabPath(id), { withCredentials: true });
+			setProjectTrigger(true);
+			setTabIdClicked(NaN);
+			tabIdClicked === id && navigate(`/board?project=${projectIdClicked}`);
 		} catch (error) {
 			console.error('Error fetching user:', error);
 		}

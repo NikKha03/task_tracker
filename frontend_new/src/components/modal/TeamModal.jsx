@@ -20,15 +20,15 @@ const teamList = usernameAndName => {
 
 export default function TeamModal({ isOpen, toggle }) {
 	const { project, projectIdClicked, usernameAndName } = useContext(AppContext);
-	const { user, setTrigger } = useContext(AuthContext);
+	const { setProjectTrigger } = useContext(AuthContext);
 
 	console.log(project.team);
 	console.log(usernameAndName);
 
 	const inviteInProject = async (projectIdClicked, username) => {
 		try {
-			const response = await axios.post(inviteInProjectPath(username, projectIdClicked), { withCredentials: true });
-			setTrigger(true);
+			await axios.post(inviteInProjectPath(username, projectIdClicked), { withCredentials: true });
+			setProjectTrigger(true);
 		} catch (error) {
 			console.error('Error fetching user:', error);
 		}

@@ -7,9 +7,9 @@ import { MDBIcon, MDBBadge } from 'mdb-react-ui-kit';
 
 import CreateProject from './modal/CreateProject';
 
-export default function LeftMenu({ listIsClicked }) {
+export default function LeftMenu({ listIsClicked = false }) {
 	const navigate = useNavigate();
-	const { user, projects, logout, loading } = useContext(AuthContext);
+	const { projects } = useContext(AuthContext);
 
 	const header = name => {
 		return (

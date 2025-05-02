@@ -13,7 +13,7 @@ const btnStyle = width => {
 };
 
 export default function ChangeProject({ isOpen, toggle }) {
-	const { user, setTrigger } = useContext(AuthContext);
+	const { setProjectTrigger } = useContext(AuthContext);
 	const { project } = useContext(AppContext);
 	const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ export default function ChangeProject({ isOpen, toggle }) {
 				},
 				{ withCredentials: true }
 			);
-			setTrigger(true);
+			setProjectTrigger(true);
 		} catch (error) {
 			console.error('Error fetching user:', error);
 		}
@@ -35,9 +35,9 @@ export default function ChangeProject({ isOpen, toggle }) {
 
 	const deleteProject = async () => {
 		try {
-			const response = await axios.delete(deleteProjectPath(project.projectId), { withCredentials: true });
+			await axios.delete(deleteProjectPath(project.projectId), { withCredentials: true });
 			navigate('/list/');
-			setTrigger(true);
+			setProjectTrigger(true);
 		} catch (error) {
 			console.error('Error fetching user:', error);
 		}

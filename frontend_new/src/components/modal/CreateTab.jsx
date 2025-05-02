@@ -9,12 +9,12 @@ import { createTabPath } from '../../resources/ApiPath';
 
 export default function CreateTab({ isOpen, toggle }) {
 	const [searchParams] = useSearchParams();
-	const { setTrigger } = useContext(AuthContext);
+	const { setProjectTrigger } = useContext(AuthContext);
 
 	const createTab = async tabName => {
 		if (tabName.trim().length < 1) return null;
 		try {
-			const response = await axios.post(
+			await axios.post(
 				createTabPath,
 				{
 					name: tabName.trim(),
@@ -22,7 +22,7 @@ export default function CreateTab({ isOpen, toggle }) {
 				},
 				{ withCredentials: true }
 			);
-			setTrigger(true);
+			setProjectTrigger(true);
 		} catch (error) {
 			console.error('Error fetching user:', error);
 		}

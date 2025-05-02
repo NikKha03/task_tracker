@@ -16,8 +16,8 @@ const getUsersByUsername = async (usernames, setUsernameAndName) => {
 };
 
 export const AppProvider = ({ children }) => {
-	const { user } = useContext(AuthContext);
-	const [trigger, setTrigger] = useState(false);
+	const { user, projectTrigger } = useContext(AuthContext);
+	const [taskTrigger, setTaskTrigger] = useState(false);
 
 	const getProject = async (id, username) => {
 		try {
@@ -52,14 +52,13 @@ export const AppProvider = ({ children }) => {
 	useEffect(() => {
 		if (!user) return;
 		if (isNaN(projectIdClicked)) return;
-
 		getProject(projectIdClicked, user.name);
-	}, [projectIdClicked, user]);
+	}, [projectIdClicked, projectTrigger, user]);
 
 	useEffect(() => {
 		if (project.team !== undefined) project.team.forEach(i => usernames.push(i.username));
 		if (usernames.length > 0) getUsersByUsername(usernames, setUsernameAndName);
 	}, [project]);
 
-	return <AppContext.Provider value={{ trigger, setTrigger, projectIdClicked, setProjectIdClicked, project, tabIdClicked, setTabIdClicked, tabs, usernameAndName }}>{children}</AppContext.Provider>;
+	return <AppContext.Provider value={{ taskTrigger, setTaskTrigger, projectIdClicked, setProjectIdClicked, project, tabIdClicked, setTabIdClicked, tabs, usernameAndName }}>{children}</AppContext.Provider>;
 };

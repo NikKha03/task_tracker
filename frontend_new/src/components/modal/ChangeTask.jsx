@@ -12,13 +12,13 @@ import { MDBBtn, MDBIcon, MDBModal, MDBInput, MDBTextArea } from 'mdb-react-ui-k
 
 export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 	const { user } = useContext(AuthContext);
-	const { setTrigger, tabIdClicked } = useContext(AppContext);
+	const { setTaskTrigger, tabIdClicked } = useContext(AppContext);
 	const [implementer, setImplementer] = useState('');
 	const [status, setStatus] = useState('AWAITING_COMPLETION');
 
 	const changeTask = async (taskId, header, comment, deadline, taskStatus, implementer) => {
 		try {
-			const response = await axios.put(
+			await axios.put(
 				changeTaskPath(taskId),
 				{
 					tabId: tabIdClicked,
@@ -30,7 +30,7 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 				},
 				{ withCredentials: true }
 			);
-			setTrigger(true);
+			setTaskTrigger(true);
 		} catch (error) {
 			console.error('Error fetching user:', error);
 		}
@@ -38,8 +38,8 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 
 	const deleteTask = async taskId => {
 		try {
-			const response = await axios.delete(deleteTaskPath(taskId), { withCredentials: true });
-			setTrigger(true);
+			await axios.delete(deleteTaskPath(taskId), { withCredentials: true });
+			setTaskTrigger(true);
 			setTopRightModal(false);
 		} catch (error) {
 			console.error('Error fetching user:', error);

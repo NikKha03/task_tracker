@@ -8,8 +8,9 @@ export const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [projects, setProjects] = useState([]);
+
 	const [loading, setLoading] = useState(true); // Для контроля загрузки
-	const [trigger, setTrigger] = useState(false);
+	const [projectTrigger, setProjectTrigger] = useState(false);
 
 	// Функция для загрузки текущего пользователя
 	const getUser = async () => {
@@ -45,9 +46,9 @@ export const AuthProvider = ({ children }) => {
 	}, []);
 
 	useEffect(() => {
-		setTrigger(false);
-		fetchData();
-	}, [trigger]);
+		setProjectTrigger(false);
+		getProjects(user?.name);
+	}, [projectTrigger]);
 
 	// Функция для выхода
 	const logout = async () => {
@@ -55,5 +56,5 @@ export const AuthProvider = ({ children }) => {
 		setUser(null);
 	};
 
-	return <AuthContext.Provider value={{ user, projects, loading, logout, setTrigger }}>{children}</AuthContext.Provider>;
+	return <AuthContext.Provider value={{ user, projects, loading, logout, projectTrigger, setProjectTrigger }}>{children}</AuthContext.Provider>;
 };

@@ -21,14 +21,14 @@ const getCurrentDate = () => {
 
 export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal }) {
 	const { user } = useContext(AuthContext);
-	const { setTrigger, tabIdClicked } = useContext(AppContext);
+	const { setTaskTrigger, tabIdClicked } = useContext(AppContext);
 	const [implementer, setImplementer] = useState('');
 	const [status, setStatus] = useState('AWAITING_COMPLETION');
 
 	const createTask = async (creatorUsername, header, comment, deadline, taskStatus, implementer) => {
 		if (creatorUsername.trim().length < 1) return null;
 		try {
-			const response = await axios.post(
+			await axios.post(
 				createTaskPath(creatorUsername),
 				{
 					tabId: tabIdClicked,
@@ -40,7 +40,7 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 				},
 				{ withCredentials: true }
 			);
-			setTrigger(true);
+			setTaskTrigger(true);
 		} catch (error) {
 			console.error('Error fetching user:', error);
 		}
