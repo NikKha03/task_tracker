@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 
-import { AuthContext } from '../../context/AuthContext';
 import { AppContext } from '../../context/AppContext';
 import Implementer from '../task/Implementer';
 import TaskStatus from '../task/TaskStatus';
@@ -11,7 +10,6 @@ import './../../../src/TaskPanel.css';
 import { MDBBtn, MDBIcon, MDBModal, MDBInput, MDBTextArea } from 'mdb-react-ui-kit';
 
 export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
-	const { user } = useContext(AuthContext);
 	const { setTaskTrigger, tabIdClicked } = useContext(AppContext);
 	const [implementer, setImplementer] = useState('');
 	const [status, setStatus] = useState('AWAITING_COMPLETION');

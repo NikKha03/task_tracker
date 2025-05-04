@@ -29,20 +29,15 @@ export const AuthProvider = ({ children }) => {
 			const response = await axios.get(getProjectsPath(username), { withCredentials: true });
 			setProjects(response.data);
 		} catch (error) {
-			console.error('Error fetching projects:', error);
+			console.error('Ошибка при загрузке проекта:', error);
 		}
-	};
-
-	const fetchData = async () => {
-		const userData = await getUser(); // Дождаться завершения запроса пользователя
-		if (userData?.name) {
-			await getProjects(userData.name); // Передаём имя из `userData`
-		}
-		setLoading(false);
 	};
 
 	useEffect(() => {
-		fetchData();
+		getUser().then(user => {
+			user?.name && getProjects(user.name);
+			setLoading(false);
+		});
 	}, []);
 
 	useEffect(() => {
@@ -50,7 +45,7 @@ export const AuthProvider = ({ children }) => {
 		getProjects(user?.name);
 	}, [projectTrigger]);
 
-	// Функция для выхода
+	// TODO: Функция для выхода
 	const logout = async () => {
 		await axios.post('/api/logout', {}, { withCredentials: true });
 		setUser(null);

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,7 +21,7 @@ export default function ChangeTab({ tab, isOpen, toggle }) {
 	const changeTab = async (id, tabName) => {
 		if (tabName.trim().length < 1) return null;
 		try {
-			const response = await axios.put(
+			await axios.put(
 				changeTabPath(id),
 				{
 					name: tabName.trim(),
