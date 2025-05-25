@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import CreateTask from '../modal/CreateTask';
-import ChangeTask from '../modal/ChangeTask';
+import { useState } from 'react';
+import CreateTask from '../modal-window/task/CreateTask';
+import ChangeTask from '../modal-window/task/ChangeTask';
 
-import Task from './Task';
+import Task from '../task/Task';
 
 export default function Column({ status, tasks = [] }) {
 	const [createModal, setCreateModal] = useState(false);

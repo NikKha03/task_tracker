@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
-import { AppContext } from '../context/AppContext';
+import { AuthContext } from '../../context/AuthContext';
+import { AppContext } from '../../context/AppContext';
 
 import { MDBIcon, MDBBadge } from 'mdb-react-ui-kit';
 
-import CreateProject from './modal/CreateProject';
+import CreateProject from '../modal-window/project/CreateProject';
 
 export default function LeftMenu({ listIsClicked = false }) {
 	const navigate = useNavigate();
@@ -44,7 +44,6 @@ export default function LeftMenu({ listIsClicked = false }) {
 
 	const [basicModal, setBasicModal] = useState(false);
 	const toggleOpen = () => setBasicModal(!basicModal);
-	console.log(projects.myProjects);
 
 	return (
 		<>
@@ -54,7 +53,7 @@ export default function LeftMenu({ listIsClicked = false }) {
 						<div
 							className={`header h-btn ${listIsClicked ? 'active' : ''}`}
 							onClick={() => {
-								navigate('/list/');
+								navigate('/list');
 							}}
 						>
 							<div className='icon'>

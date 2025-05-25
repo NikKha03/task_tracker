@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';
 
-import { AuthContext } from '../../context/AuthContext';
-import { createTabPath } from '../../resources/ApiPath';
+import { AuthContext } from '../../../context/AuthContext';
+import { createTabPath } from '../../../resources/ApiPath';
 
 export default function CreateTab({ isOpen, toggle }) {
 	const [searchParams] = useSearchParams();
@@ -39,14 +39,13 @@ export default function CreateTab({ isOpen, toggle }) {
 	return (
 		<>
 			<MDBModal open={isOpen} onClose={toggle} tabIndex='-1'>
-				<form onSubmit={handleSubmitSave}>
-					<MDBModalDialog size='lg'>
-						<MDBModalContent className='modal-content'>
-							<MDBModalHeader>
-								<MDBModalTitle>Создать вкладку</MDBModalTitle>
-								<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
-							</MDBModalHeader>
-
+				<MDBModalDialog size='lg'>
+					<MDBModalContent className='modal-content'>
+						<MDBModalHeader>
+							<MDBModalTitle>Создать вкладку</MDBModalTitle>
+							<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
+						</MDBModalHeader>
+						<form onSubmit={handleSubmitSave}>
 							<MDBModalBody>
 								<p style={{ marginBottom: '0.25rem' }}>Название вкладки</p>
 								<MDBInput name='tabName' autoComplete='off' />
@@ -57,9 +56,9 @@ export default function CreateTab({ isOpen, toggle }) {
 									Создать
 								</MDBBtn>
 							</MDBModalFooter>
-						</MDBModalContent>
-					</MDBModalDialog>
-				</form>
+						</form>
+					</MDBModalContent>
+				</MDBModalDialog>
 			</MDBModal>
 		</>
 	);

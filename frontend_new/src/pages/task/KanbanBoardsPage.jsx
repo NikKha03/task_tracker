@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import Navbar from '../../components/Navbar';
-import LeftMenu from '../../components/LeftMenu';
-import Column from '../../components/task/Column';
+import Navbar from '../../components/navigate/Navbar';
+import LeftMenu from '../../components/navigate/LeftMenu';
+import Column from '../../components/project/Column';
 
 import { AppContext } from '../../context/AppContext';
 import { getTasksByTabIdPath } from '../../resources/ApiPath';

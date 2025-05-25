@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
-import { AuthContext } from '../../context/AuthContext';
-import { AppContext } from '../../context/AppContext';
-import Implementer from '../task/Implementer';
-import TaskStatus from '../task/TaskStatus';
-import { createTaskPath } from '../../resources/ApiPath';
+import { AuthContext } from '../../../context/AuthContext';
+import { AppContext } from '../../../context/AppContext';
+import Implementer from '../../task/Implementer';
+import TaskStatus from '../../task/TaskStatus';
+import { createTaskPath } from '../../../resources/ApiPath';
 
-import './../../../src/TaskPanel.css';
+import '../../../styles/TaskPanel.css';
 import { MDBBtn, MDBModal, MDBInput, MDBTextArea } from 'mdb-react-ui-kit';
 
 const getCurrentDate = () => {
@@ -56,13 +56,13 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 	return (
 		<>
 			<MDBModal animationDirection='right' open={topRightModal} onClose={() => setTopRightModal(false)}>
-				<form onSubmit={handleSubmitSave}>
-					<div className='create-task-panel'>
-						<div className='header'>
-							<h2 style={{ fontSize: '1.375rem', margin: '0' }}>Создать задачу</h2>
-							<MDBBtn className='btn-close' color='none' onClick={() => setTopRightModal(false)}></MDBBtn>
-						</div>
+				<div className='create-task-panel'>
+					<div className='header'>
+						<h2 style={{ fontSize: '1.375rem', margin: '0' }}>Создать задачу</h2>
+						<MDBBtn className='btn-close btn-close-white' color='none' onClick={() => setTopRightModal(false)}></MDBBtn>
+					</div>
 
+					<form style={{ height: '100%', position: 'relative' }} onSubmit={handleSubmitSave}>
 						<div className='content'>
 							<div>
 								<h2 style={{ fontSize: '1.25rem' }}>Заголовок</h2>
@@ -80,7 +80,7 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 									name='deadline'
 									type='date'
 									autoComplete='off'
-									defaultValue={getCurrentDate()}
+									defaultValue={null}
 									style={{ width: '100%', height: '2.25rem', backgroundColor: '#ffffff' }}
 									// size='small'
 									// style={{ height: '2.25rem', backgroundColor: '#ffffff' }}
@@ -104,8 +104,8 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 								Создать
 							</MDBBtn>
 						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</MDBModal>
 		</>
 	);

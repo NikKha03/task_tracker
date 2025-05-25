@@ -1,31 +1,38 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { AuthContext } from '../context/AuthContext';
-import { AppContext } from '../context/AppContext';
-import ChangeProject from './modal/ChangeProject';
-import TeamModal from './modal/TeamModal';
-import Tab from './task/ Tab';
+import { AuthContext } from '../../context/AuthContext';
+import { AppContext } from '../../context/AppContext';
+import ChangeProject from '../modal-window/project/ChangeProject';
+import TeamModal from '../modal-window/project/TeamModal';
+import Tab from '../tab/Tab';
 
 import { MDBNavbar, MDBIcon } from 'mdb-react-ui-kit';
 
-const names = [
-	{ name: 'Нужно сделать', icon: <MDBIcon far size='lg' icon='folder' /> },
-	{ name: 'Без сроков', icon: <MDBIcon far size='lg' icon='folder' /> },
-	{ name: 'В работе', icon: <MDBIcon far size='lg' icon='folder' /> },
-	{ name: 'Просроченные', icon: <MDBIcon far size='lg' icon='folder' /> },
-	{ name: 'Завершенные', icon: <MDBIcon far size='lg' icon='folder' /> },
+export const names = [
+	{ i: 0, name: 'Нужно сделать', apiName: 'awaitingCompletionTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
+	{ i: 1, name: 'Без сроков', apiName: 'withoutDateImplTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
+	{ i: 2, name: 'В работе', apiName: 'inProgressTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
+	{ i: 3, name: 'Просроченные', apiName: 'incompleteTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
+	{ i: 4, name: 'Завершенные', apiName: 'completedTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
 ];
 
 export default function Navbar({ pageType }) {
 	const navigate = useNavigate();
+	let [searchParams, setSearchParams] = useSearchParams();
 	const { user } = useContext(AuthContext);
-	const { project } = useContext(AppContext);
+	const { project, taskStatusId, setTaskStatusId } = useContext(AppContext);
 
-	const [idClicked, setIdClicked] = useState(0);
+	// const [idClicked, setIdClicked] = useState(0);
+
+	const clickTaskStatus = id => {
+		setTaskStatusId(id);
+		setSearchParams({ status: names[id].apiName });
+	};
+
 	const taskStatus = (id, icon, name) => {
 		return (
-			<div className={`task-status ${idClicked === id ? 'active' : ''}`} key={id} onClick={() => setIdClicked(id)}>
+			<div className={`task-status ${taskStatusId === id ? 'active' : ''}`} key={id} onClick={() => clickTaskStatus(id)}>
 				<div style={{ display: 'flex' }}>
 					<div className='icon'>{icon}</div>
 					<h2 className='lite'>{name}</h2>
@@ -39,7 +46,7 @@ export default function Navbar({ pageType }) {
 			<>
 				<div className='top'>{/* <h4>t</h4> */}</div>
 				<div className='bottom' style={{ padding: '0' }}>
-					{names.map((obj, i) => taskStatus(i, obj.icon, obj.name))}
+					{names.map(obj => taskStatus(obj.i, obj.icon, obj.name))}
 				</div>
 			</>
 		);

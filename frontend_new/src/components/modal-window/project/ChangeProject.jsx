@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput, MDBIcon } from 'mdb-react-ui-kit';
 
-import { AuthContext } from '../../context/AuthContext';
-import { AppContext } from '../../context/AppContext';
-import { changeProjectPath, deleteProjectPath } from '../../resources/ApiPath';
+import { AuthContext } from '../../../context/AuthContext';
+import { AppContext } from '../../../context/AppContext';
+import { changeProjectPath, deleteProjectPath } from '../../../resources/ApiPath';
 
 const btnStyle = width => {
 	return { width: width, boxShadow: 'none', borderRadius: '4px' };
@@ -54,14 +54,13 @@ export default function ChangeProject({ isOpen, toggle }) {
 	return (
 		<>
 			<MDBModal open={isOpen} onClose={toggle} tabIndex='-1'>
-				<form onSubmit={handleSubmitSave}>
-					<MDBModalDialog size='lg'>
-						<MDBModalContent className='modal-content'>
-							<MDBModalHeader>
-								<MDBModalTitle>Редактировать проект</MDBModalTitle>
-								<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
-							</MDBModalHeader>
-
+				<MDBModalDialog size='lg'>
+					<MDBModalContent className='modal-content'>
+						<MDBModalHeader>
+							<MDBModalTitle>Редактировать проект</MDBModalTitle>
+							<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
+						</MDBModalHeader>
+						<form onSubmit={handleSubmitSave}>
 							<MDBModalBody>
 								<p style={{ marginBottom: '0.25rem' }}>Название проекта</p>
 								<MDBInput name='projectName' defaultValue={project.name} autoComplete='off' />
@@ -75,9 +74,9 @@ export default function ChangeProject({ isOpen, toggle }) {
 									<MDBIcon far icon='trash-alt' />
 								</MDBBtn>
 							</MDBModalFooter>
-						</MDBModalContent>
-					</MDBModalDialog>
-				</form>
+						</form>
+					</MDBModalContent>
+				</MDBModalDialog>
 			</MDBModal>
 		</>
 	);

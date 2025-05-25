@@ -3,8 +3,8 @@ import axios from 'axios';
 
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';
 
-import { AuthContext } from '../../context/AuthContext';
-import { createProjectPath } from '../../resources/ApiPath';
+import { AuthContext } from '../../../context/AuthContext';
+import { createProjectPath } from '../../../resources/ApiPath';
 
 export default function CreateProject({ isOpen, toggle }) {
 	const { user, setProjectTrigger } = useContext(AuthContext);
@@ -37,14 +37,13 @@ export default function CreateProject({ isOpen, toggle }) {
 	return (
 		<>
 			<MDBModal open={isOpen} onClose={toggle} tabIndex='-1'>
-				<form onSubmit={handleSubmitSave}>
-					<MDBModalDialog size='lg'>
-						<MDBModalContent className='modal-content'>
-							<MDBModalHeader>
-								<MDBModalTitle>Создать проект</MDBModalTitle>
-								<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
-							</MDBModalHeader>
-
+				<MDBModalDialog size='lg'>
+					<MDBModalContent className='modal-content'>
+						<MDBModalHeader>
+							<MDBModalTitle>Создать проект</MDBModalTitle>
+							<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
+						</MDBModalHeader>
+						<form onSubmit={handleSubmitSave}>
 							<MDBModalBody>
 								<p style={{ marginBottom: '0.25rem' }}>Название проекта</p>
 								<MDBInput name='projectName' autoComplete='off' />
@@ -55,9 +54,9 @@ export default function CreateProject({ isOpen, toggle }) {
 									Создать
 								</MDBBtn>
 							</MDBModalFooter>
-						</MDBModalContent>
-					</MDBModalDialog>
-				</form>
+						</form>
+					</MDBModalContent>
+				</MDBModalDialog>
 			</MDBModal>
 		</>
 	);

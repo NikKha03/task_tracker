@@ -7,6 +7,7 @@ export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
+	console.log(user);
 	const [projects, setProjects] = useState([]);
 
 	const [loading, setLoading] = useState(true); // Для контроля загрузки

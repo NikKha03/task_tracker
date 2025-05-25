@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { AppContext } from '../context/AppContext';
+import { AppContext } from '../../context/AppContext';
 import RolesInProject from './RolesInProject';
 
 import { MDBIcon, MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';

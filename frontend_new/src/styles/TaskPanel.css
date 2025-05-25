@@ -29,5 +29,10 @@
 }
 
 .create-task-panel .footer {
-	margin-top: auto;
+	/* абсолютное позиционирование */
+	position: absolute;
+	/* прижимаем блок к нижней границе относительно блока с position: relative*/
+	bottom: 0;
+	width: 100%;
+	/* margin-top: auto; */
 }

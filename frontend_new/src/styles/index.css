@@ -198,6 +198,15 @@ body,
 	border-radius: 8px;
 }
 
+.list-area {
+	flex-direction: column;
+	overflow-y: auto;
+
+	margin: 0rem 0 0 0;
+	width: 50%;
+	height: calc(100% - 1rem);
+}
+
 .header {
 	display: flex;
 	color: white;
@@ -292,18 +301,19 @@ body,
 
 .task {
 	display: flex;
-	margin: 0 1rem 0.5rem 1rem;
+	margin: 0 0.75rem 0.5rem 0.75rem;
 	border: 1px solid black;
 	border-radius: 8px;
 	height: 4.25rem;
 	flex-direction: row;
 	color: black;
 	background-color: white;
+	/* background-color: rgba(255, 255, 255, 0.8); белый с прозрачностью */
 
 	/* align-items: last baseline; */
 }
 
-.task .doneIcon {
+.doneIcon {
 	display: flex;
 	height: 100%;
 	justify-content: center;

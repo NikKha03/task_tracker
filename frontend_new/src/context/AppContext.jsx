@@ -1,7 +1,10 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
 import axios from 'axios';
 
 import { AuthContext } from './AuthContext';
+import { names } from '../components/navigate/Navbar';
 import { getProjectPath, getUsersByUsernamePath } from '../resources/ApiPath';
 
 export const AppContext = createContext(null);
@@ -16,8 +19,10 @@ const getUsersByUsername = async (usernames, setUsernameAndName) => {
 };
 
 export const AppProvider = ({ children }) => {
+	let params = new URLSearchParams(document.location.search);
 	const { user, projectTrigger } = useContext(AuthContext);
 	const [taskTrigger, setTaskTrigger] = useState(false);
+	const [taskStatusId, setTaskStatusId] = useState(names.find(obj => obj.apiName === params.get('status'))?.i);
 
 	const getProject = async (id, username) => {
 		try {
@@ -33,7 +38,6 @@ export const AppProvider = ({ children }) => {
 		}
 	};
 
-	let params = new URLSearchParams(document.location.search);
 	const [projectIdClicked, setProjectIdClicked] = useState(parseInt(params.get('project')));
 	const [project, setProject] = useState({});
 
@@ -50,6 +54,12 @@ export const AppProvider = ({ children }) => {
 	const usernames = [];
 
 	useEffect(() => {
+		if (isNaN(taskStatusId)) {
+			setTaskStatusId(0);
+		}
+	}, []);
+
+	useEffect(() => {
 		if (!user) return;
 		if (isNaN(projectIdClicked)) return;
 		getProject(projectIdClicked, user.name);
@@ -60,5 +70,9 @@ export const AppProvider = ({ children }) => {
 		if (usernames.length > 0) getUsersByUsername(usernames, setUsernameAndName);
 	}, [project]);
 
-	return <AppContext.Provider value={{ taskTrigger, setTaskTrigger, projectIdClicked, setProjectIdClicked, project, tabIdClicked, setTabIdClicked, tabs, usernameAndName }}>{children}</AppContext.Provider>;
+	return (
+		<AppContext.Provider value={{ taskTrigger, setTaskTrigger, projectIdClicked, setProjectIdClicked, project, tabIdClicked, setTabIdClicked, tabs, taskStatusId, setTaskStatusId, usernameAndName }}>
+			{children}
+		</AppContext.Provider>
+	);
 };

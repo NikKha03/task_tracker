@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 
-import ChangeTask from '../modal/ChangeTask';
+import ChangeTask from '../modal-window/task/ChangeTask';
+import GroupByDate from './GroupByDate';
+import { dateParser } from '../../resources/utils/DateUtils';
 
-import { MDBIcon } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 
 /*
 	НЕОБХОДИМО УЧИТЫВАТЬ, ЧТО ЕСЛИ ПОЛЬЗОВАТЕЛЬ ОДИН В ПРОЕКТЕ, 
 	ТО ОН ПОЛУЧАЕТ ЗАДАЧИ ПО HTTP ЗАПРОСУ, ИНАЧЕ НЕОБХОДИМО ПОДКЛЮЧИТЬ К WEBSOCKET 
 */
 
-export default function Task({ task, setChangeTask, toggleOpen }) {
+export default function Task({ task, tasks = [], setChangeTask, toggleOpen, displayMethod }) {
 	const iconColor = {
 		color: '#797979',
 	};
@@ -20,10 +22,38 @@ export default function Task({ task, setChangeTask, toggleOpen }) {
 		toggleOpen();
 	};
 
+	let borderColor = '#EEEEEE';
+	if (displayMethod === 'list' && task.taskStatus === 'COMPLETED') {
+		if (task.deadline !== null) {
+			const datePlannedImplementation = Date.parse(task.deadline.substring(0, 10));
+			const dateExecution = Date.parse(task.executionDate.substring(0, 10));
+			const currenDate = dateParser(new Date());
+
+			datePlannedImplementation === dateExecution || currenDate < datePlannedImplementation ? (borderColor = '#A5D6A7') : (borderColor = '#FFCC80');
+		}
+		if (task.deadline === null) {
+			borderColor = '#A5D6A7';
+		}
+	} else if (displayMethod === 'list') {
+		if (task.deadline !== null) {
+			const datePlannedImplementation = Date.parse(task.deadline.substring(0, 10));
+			const currenDate = dateParser(new Date());
+
+			datePlannedImplementation < currenDate ? (borderColor = '#EF9A9A') : null;
+		}
+	}
+
+	const listStyle = () => {
+		return displayMethod === 'list' ? { backgroundColor: borderColor } : {};
+	};
+
 	return (
 		<>
-			<div className='task'>
+			{displayMethod === 'list' && <GroupByDate tasks={tasks} task={task} />}
+			<div className='task' style={listStyle()}>
+				{/* <MDBBtn floating className='doneIcon' color='white' tag='a' onClick={() => null}> */}
 				<MDBIcon className='doneIcon' fas icon='check-circle' size='2x' style={iconColor} />
+				{/* </MDBBtn> */}
 				<div className='main'>
 					<div className='top'>
 						<h3>{task.header}</h3>

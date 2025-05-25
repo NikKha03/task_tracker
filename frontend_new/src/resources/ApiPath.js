@@ -26,6 +26,11 @@ export const getTasksByTabIdPath = tabId => `${taskController}/byTab/${tabId}`;
 export const createTaskPath = creatorUsername => `${taskController}/create/${creatorUsername}`;
 export const changeTaskPath = taskId => `${taskController}/change/${taskId}`;
 export const deleteTaskPath = taskId => `${taskController}/delete/${taskId}`;
+export const awaitingCompletionTaskPath = implementer => `${taskController}/awaitingCompletionTasks?implementer=${implementer}`;
+export const withoutDateImplTasksPath = implementer => `${taskController}/withoutDateImplTasks?implementer=${implementer}`;
+export const inProgressTasksPath = implementer => `${taskController}/inProgressTasks?implementer=${implementer}`;
+export const incompleteTasksPath = implementer => `${taskController}/incompleteTasks?implementer=${implementer}`;
+export const completedTasksPath = implementer => `${taskController}/completedTasks?implementer=${implementer}`;
 
 export const userInfoPath = `${userController}/userInfo`;
 export const changeUserInfoPath = `${userController}/changeInfo`;

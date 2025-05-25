@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 
-import { AppContext } from '../../context/AppContext';
-import { AuthContext } from '../../context/AuthContext';
-import { inviteInProjectPath } from '../../resources/ApiPath';
-import TeamTable from '../TeamTable';
+import { AppContext } from '../../../context/AppContext';
+import { AuthContext } from '../../../context/AuthContext';
+import { inviteInProjectPath } from '../../../resources/ApiPath';
+import TeamTable from '../../project/TeamTable';
 
 import { MDBBtn, MDBIcon, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';
 

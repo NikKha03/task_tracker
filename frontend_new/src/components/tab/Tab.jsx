@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { AppContext } from '../../context/AppContext';
-import CreateTab from '../modal/CreateTab';
-import ChangeTab from '../modal/ChangeTab';
+import CreateTab from '../modal-window/tab/CreateTab';
+import ChangeTab from '../modal-window/tab/ChangeTab';
 
 import { MDBIcon } from 'mdb-react-ui-kit';
 
