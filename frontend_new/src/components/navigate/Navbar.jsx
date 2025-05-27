@@ -13,8 +13,8 @@ export const names = [
 	{ i: 0, name: 'Нужно сделать', apiName: 'awaitingCompletionTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
 	{ i: 1, name: 'Без сроков', apiName: 'withoutDateImplTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
 	{ i: 2, name: 'В работе', apiName: 'inProgressTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
-	{ i: 3, name: 'Просроченные', apiName: 'incompleteTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
-	{ i: 4, name: 'Завершенные', apiName: 'completedTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
+	// { i: 3, name: 'Просроченные', apiName: 'incompleteTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
+	{ i: 3, name: 'Завершенные', apiName: 'completedTasks', icon: <MDBIcon far size='lg' icon='folder' /> },
 ];
 
 export default function Navbar({ pageType }) {
@@ -27,7 +27,7 @@ export default function Navbar({ pageType }) {
 
 	const clickTaskStatus = id => {
 		setTaskStatusId(id);
-		setSearchParams({ status: names[id].apiName });
+		setSearchParams({ status: names.find(o => o.i === id).apiName });
 	};
 
 	const taskStatus = (id, icon, name) => {

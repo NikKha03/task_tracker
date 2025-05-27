@@ -22,24 +22,24 @@ export default function Task({ task, tasks = [], setChangeTask, toggleOpen, disp
 		toggleOpen();
 	};
 
-	let borderColor = '#EEEEEE';
+	let borderColor = '#F5F5F5';
 	if (displayMethod === 'list' && task.taskStatus === 'COMPLETED') {
 		if (task.deadline !== null) {
 			const datePlannedImplementation = Date.parse(task.deadline.substring(0, 10));
 			const dateExecution = Date.parse(task.executionDate.substring(0, 10));
 			const currenDate = dateParser(new Date());
 
-			datePlannedImplementation === dateExecution || currenDate < datePlannedImplementation ? (borderColor = '#A5D6A7') : (borderColor = '#FFCC80');
+			datePlannedImplementation === dateExecution || currenDate < datePlannedImplementation ? (borderColor = '#C8E6C9') : (borderColor = '#FFE0B2');
 		}
 		if (task.deadline === null) {
-			borderColor = '#A5D6A7';
+			borderColor = '#C8E6C9';
 		}
 	} else if (displayMethod === 'list') {
 		if (task.deadline !== null) {
 			const datePlannedImplementation = Date.parse(task.deadline.substring(0, 10));
 			const currenDate = dateParser(new Date());
 
-			datePlannedImplementation < currenDate ? (borderColor = '#EF9A9A') : null;
+			datePlannedImplementation < currenDate ? (borderColor = '#FFCDD2') : null;
 		}
 	}
 
