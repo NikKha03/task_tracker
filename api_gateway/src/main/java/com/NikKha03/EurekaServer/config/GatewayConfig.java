@@ -25,6 +25,9 @@ public class GatewayConfig {
                 .route("user_service", r -> r.path("/oauth2/**")
                         .uri("lb://USERSERVICE")  // lb:// для балансировки нагрузки через Eureka
                 )
+                .route("notification_service", r -> r.path("/notification_service/**")
+                        .uri("lb://NOTIFICATIONSERVICE")  // lb:// для балансировки нагрузки через Eureka
+                )
                 .build();
     }
 }
