@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 
 import { AppContext } from '../../../context/AppContext';
 import { AuthContext } from '../../../context/AuthContext';
-import { inviteInProjectPath } from '../../../resources/ApiPath';
+import { inviteInProjectPath } from '../../../api/apiPath';
 import TeamTable from '../../project/TeamTable';
 
 import { MDBBtn, MDBIcon, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';
@@ -19,11 +19,11 @@ const teamList = usernameAndName => {
 };
 
 export default function TeamModal({ isOpen, toggle }) {
-	const { project, projectIdClicked, usernameAndName } = useContext(AppContext);
+	const { api, project, projectIdClicked, usernameAndName } = useContext(AppContext);
 	const { setProjectTrigger } = useContext(AuthContext);
 
-	console.log(project.team);
-	console.log(usernameAndName);
+	// console.log(project.team);
+	// console.log(usernameAndName);
 
 	const inviteInProject = async (projectIdClicked, username) => {
 		try {

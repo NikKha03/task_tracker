@@ -6,7 +6,7 @@ import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBM
 
 import { AuthContext } from '../../../context/AuthContext';
 import { AppContext } from '../../../context/AppContext';
-import { changeProjectPath, deleteProjectPath } from '../../../resources/ApiPath';
+import { changeProjectPath, deleteProjectPath } from '../../../api/apiPath';
 
 const btnStyle = width => {
 	return { width: width, boxShadow: 'none', borderRadius: '4px' };

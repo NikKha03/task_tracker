@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { AppProvider } from '../../context/AppContext';
-import { authPath } from '../../resources/ApiPath';
+import { authPath } from '../../api/apiPath';
 
 const LoginPage = ({ children }) => {
 	const { user, loading } = useContext(AuthContext);

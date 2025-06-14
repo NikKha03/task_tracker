@@ -2,19 +2,24 @@ import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 
 import { AppContext } from '../../../context/AppContext';
-import Implementer from '../../task/Implementer';
+import SelectFromMembers from '../../task/SelectFromMembers';
 import TaskStatus from '../../task/TaskStatus';
-import { changeTaskPath, deleteTaskPath } from '../../../resources/ApiPath';
+import Vedlegg from '../../task/Vedlegg';
+import Tags from '../../task/Tags';
+import { Creator } from '../../task/Creator';
+import { changeTaskPath, deleteTaskPath } from '../../../api/apiPath';
 
 import '../../../styles/TaskPanel.css';
 import { MDBBtn, MDBIcon, MDBModal, MDBInput, MDBTextArea } from 'mdb-react-ui-kit';
 
 export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
-	const { setTaskTrigger, tabIdClicked } = useContext(AppContext);
-	const [implementer, setImplementer] = useState('');
+	const { setTaskTrigger } = useContext(AppContext);
+	const [implementer, setImplementer] = useState(null);
 	const [status, setStatus] = useState('AWAITING_COMPLETION');
+	const [urls, setUrls] = useState([]);
+	const [tags, setTags] = useState([]);
 
-	const changeTask = async (taskId, header, comment, deadline, taskStatus, implementer) => {
+	const changeTask = async (taskId, header, comment, deadline, taskStatus, implementer, makeUrlsObj, makeTagsObj) => {
 		try {
 			await axios.put(
 				changeTaskPath(taskId),
@@ -24,6 +29,8 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 					deadline: deadline.length < 10 ? null : deadline,
 					taskStatus: taskStatus,
 					implementer: implementer === '' ? null : implementer,
+					urlsObj: makeUrlsObj,
+					tags: makeTagsObj,
 				},
 				{ withCredentials: true }
 			);
@@ -47,14 +54,36 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 	const handleSubmitSave = event => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		changeTask(task.taskId, data.get('header'), data.get('comment'), data.get('deadline') + ' 00:00', status, implementer);
+
+		let startValue = '';
+		urls.forEach(url => (startValue += `${startValue.length < 1 ? '' : ', '}"${url}"`));
+		const makeUrlsObj = '{ "urls": [' + startValue + '] }';
+
+		let startValueTag = '';
+		tags.forEach(tag => (startValueTag += `${startValueTag.length < 1 ? '' : ', '}"${tag}"`));
+		const makeTagsObj = '{ "tags": [' + startValueTag + '] }';
+
+		changeTask(task.taskId, data.get('header'), data.get('comment'), data.get('deadline') + ' 00:00', status, implementer, makeUrlsObj, makeTagsObj);
 	};
 
 	useEffect(() => {
 		if (task !== null) {
-			console.log(task);
 			setImplementer(task.implementer !== null ? task.implementer : '');
 			setStatus(task.taskStatus);
+
+			if (task.urlsObj !== null) {
+				const fixedUrlsObj = JSON.parse(task.urlsObj);
+				setUrls(fixedUrlsObj.urls);
+			} else {
+				setUrls([]);
+			}
+
+			if (task.tags !== null) {
+				const fixedTagsObj = JSON.parse(task.tags);
+				setTags(fixedTagsObj.tags);
+			} else {
+				setTags([]);
+			}
 		}
 	}, [task]);
 
@@ -79,8 +108,7 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 									<MDBTextArea style={{ height: '5rem', backgroundColor: '#ffffff' }} name='comment' defaultValue={task.comment} />
 								</div>
 								<div>
-									<h2 style={{ fontSize: '1.25rem' }}>Дата сдачи</h2>
-									{/* TextField */}
+									<h2 style={{ fontSize: '1.25rem' }}>Дедлайн</h2>
 									<MDBInput
 										id='date'
 										name='deadline'
@@ -97,12 +125,15 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 								</div>
 								<div>
 									<h2 style={{ fontSize: '1.25rem' }}>Исполнитель</h2>
-									<Implementer implementer={implementer} setImplementer={setImplementer} />
+									<SelectFromMembers member={implementer} setMember={setImplementer} />
 								</div>
+								<Creator username={task.creator} />
 								<div>
 									<h2 style={{ fontSize: '1.25rem' }}>Статус</h2>
 									<TaskStatus status={status} setStatus={setStatus} />
 								</div>
+								<Vedlegg urls={urls} setUrls={setUrls} />
+								<Tags tags={tags} setTags={setTags} />
 							</div>
 
 							<div className='footer'>

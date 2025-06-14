@@ -333,6 +333,10 @@ body,
 	height: 100%;
 }
 
+.task .bot {
+	min-width: 20px;
+}
+
 .main .top {
 	/* align-items: last baseline; */
 	align-items: center;

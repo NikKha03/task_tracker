@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
-
-import ChangeTask from '../modal-window/task/ChangeTask';
 import GroupByDate from './GroupByDate';
-import { dateParser } from '../../resources/utils/DateUtils';
+import { dateParser } from '../../utils/DateUtils';
 
 import { MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
 
@@ -64,9 +61,7 @@ export default function Task({ task, tasks = [], setChangeTask, toggleOpen, disp
 					<div className='top'>
 						<MDBIcon fas icon='ellipsis-v' style={{ cursor: 'pointer', height: '1rem', width: '1rem', textAlign: 'center' }} onClick={() => click()} />
 					</div>
-					<div className='bot'>
-						<MDBIcon className='user-icon' style={{ cursor: 'pointer' }} size='lg' fas icon='user-circle' />
-					</div>
+					<div className='bot'>{task.implementer !== null && <MDBIcon className='user-icon' style={{ cursor: 'pointer' }} size='lg' fas icon='user-circle' />}</div>
 				</div>
 			</div>
 		</>

@@ -1,11 +1,13 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 
 import { AuthContext } from '../../../context/AuthContext';
 import { AppContext } from '../../../context/AppContext';
-import Implementer from '../../task/Implementer';
+import SelectFromMembers from '../../task/SelectFromMembers';
 import TaskStatus from '../../task/TaskStatus';
-import { createTaskPath } from '../../../resources/ApiPath';
+import Vedlegg from '../../task/Vedlegg';
+import Tags from '../../task/Tags';
+import { createTaskPath } from '../../../api/apiPath';
 
 import '../../../styles/TaskPanel.css';
 import { MDBBtn, MDBModal, MDBInput, MDBTextArea } from 'mdb-react-ui-kit';
@@ -24,8 +26,10 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 	const { setTaskTrigger, tabIdClicked } = useContext(AppContext);
 	const [implementer, setImplementer] = useState('');
 	const [status, setStatus] = useState('AWAITING_COMPLETION');
+	const [urls, setUrls] = useState([]);
+	const [tags, setTags] = useState([]);
 
-	const createTask = async (creatorUsername, header, comment, deadline, taskStatus, implementer) => {
+	const createTask = async (creatorUsername, header, comment, deadline, taskStatus, implementer, makeUrlsObj, makeTagsObj) => {
 		if (creatorUsername.trim().length < 1) return null;
 		try {
 			await axios.post(
@@ -37,6 +41,8 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 					deadline: deadline.length < 10 ? null : deadline,
 					taskStatus: taskStatus,
 					implementer: implementer === '' ? null : implementer,
+					urlsObj: makeUrlsObj,
+					tags: makeTagsObj,
 				},
 				{ withCredentials: true }
 			);
@@ -49,7 +55,16 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 	const handleSubmitSave = event => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		createTask(user.name, data.get('header'), data.get('comment'), data.get('deadline') + ' 00:00', status, implementer);
+
+		let startValue = '';
+		urls.forEach(url => (startValue += `${startValue.length < 1 ? '' : ', '}"${url}"`));
+		const makeUrlsObj = '{ "urls": [' + startValue + '] }';
+
+		let startValueTag = '';
+		tags.forEach(tag => (startValueTag += `${startValueTag.length < 1 ? '' : ', '}"${tag}"`));
+		const makeTagsObj = '{ "tags": [' + startValueTag + '] }';
+
+		createTask(user.name, data.get('header'), data.get('comment'), data.get('deadline') + ' 00:00', status, implementer, makeUrlsObj, makeTagsObj);
 		console.log(user.name);
 	};
 
@@ -73,8 +88,7 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 								<MDBTextArea style={{ height: '5rem', backgroundColor: '#ffffff' }} name='comment' />
 							</div>
 							<div>
-								<h2 style={{ fontSize: '1.25rem' }}>Дата сдачи</h2>
-								{/* TextField */}
+								<h2 style={{ fontSize: '1.25rem' }}>Дедлайн</h2>
 								<MDBInput
 									id='date'
 									name='deadline'
@@ -91,12 +105,14 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 							</div>
 							<div>
 								<h2 style={{ fontSize: '1.25rem' }}>Исполнитель</h2>
-								<Implementer implementer={implementer} setImplementer={setImplementer} />
+								<SelectFromMembers member={implementer} setMember={setImplementer} />
 							</div>
 							<div>
 								<h2 style={{ fontSize: '1.25rem' }}>Статус</h2>
 								<TaskStatus status={status} setStatus={setStatus} />
 							</div>
+							<Vedlegg urls={urls} setUrls={setUrls} />
+							<Tags tags={tags} setTags={setTags} />
 						</div>
 
 						<div className='footer'>

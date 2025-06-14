@@ -6,7 +6,7 @@ import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBM
 
 import { AuthContext } from '../../../context/AuthContext';
 import { AppContext } from '../../../context/AppContext';
-import { changeTabPath, deleteTabPath } from '../../../resources/ApiPath';
+import { changeTabPath, deleteTabPath } from '../../../api/apiPath';
 
 const btnStyle = width => {
 	return { width: width, boxShadow: 'none', borderRadius: '4px' };
@@ -58,12 +58,12 @@ export default function ChangeTab({ tab, isOpen, toggle }) {
 				<MDBModalDialog size='lg'>
 					<MDBModalContent className='modal-content'>
 						<MDBModalHeader>
-							<MDBModalTitle>Редактировать вкладку</MDBModalTitle>
+							<MDBModalTitle>Редактировать доску</MDBModalTitle>
 							<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
 						</MDBModalHeader>
 						<form onSubmit={handleSubmitSave}>
 							<MDBModalBody>
-								<p style={{ marginBottom: '0.25rem' }}>Название вкладки</p>
+								<p style={{ marginBottom: '0.25rem' }}>Название доски</p>
 								<MDBInput name='tabName' defaultValue={tab.name} autoComplete='off' />
 							</MDBModalBody>
 

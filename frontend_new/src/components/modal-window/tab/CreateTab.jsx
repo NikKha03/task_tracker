@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';
 
 import { AuthContext } from '../../../context/AuthContext';
-import { createTabPath } from '../../../resources/ApiPath';
+import { createTabPath } from '../../../api/apiPath';
 
 export default function CreateTab({ isOpen, toggle }) {
 	const [searchParams] = useSearchParams();
@@ -42,12 +42,12 @@ export default function CreateTab({ isOpen, toggle }) {
 				<MDBModalDialog size='lg'>
 					<MDBModalContent className='modal-content'>
 						<MDBModalHeader>
-							<MDBModalTitle>Создать вкладку</MDBModalTitle>
+							<MDBModalTitle>Создать доску</MDBModalTitle>
 							<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
 						</MDBModalHeader>
 						<form onSubmit={handleSubmitSave}>
 							<MDBModalBody>
-								<p style={{ marginBottom: '0.25rem' }}>Название вкладки</p>
+								<p style={{ marginBottom: '0.25rem' }}>Название доски</p>
 								<MDBInput name='tabName' autoComplete='off' />
 							</MDBModalBody>
 

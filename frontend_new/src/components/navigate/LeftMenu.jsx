@@ -4,12 +4,16 @@ import { AuthContext } from '../../context/AuthContext';
 import { AppContext } from '../../context/AppContext';
 
 import { MDBIcon, MDBBadge } from 'mdb-react-ui-kit';
+import Notification from '../modal-window/Notification';
 
 import CreateProject from '../modal-window/project/CreateProject';
 
 export default function LeftMenu({ listIsClicked = false }) {
 	const navigate = useNavigate();
 	const { projects } = useContext(AuthContext);
+
+	const [changeProjectModal, setChangeProjectModal] = useState(false);
+	const toggleOpenChangeProject = () => setChangeProjectModal(!changeProjectModal);
 
 	const header = name => {
 		return (
@@ -74,21 +78,22 @@ export default function LeftMenu({ listIsClicked = false }) {
 						{projectsBlock('14rem', projects.otherProjects)}
 					</div>
 
-					<div className='menu-item' style={{ marginBottom: '0', paddingBottom: '0' }}>
+					{/* <div className='menu-item' style={{ marginBottom: '0', paddingBottom: '0' }}>
 						{header('Отслеживаю проекты')}
 						{projectsBlock('9rem')}
-					</div>
+					</div> */}
 				</div>
 				<div className='bottom'>
-					<a>
+					{/* <a>
 						<MDBIcon style={{ color: '#0d99ff' }} fas icon='briefcase' size='lg' />
-					</a>
-					<a href='#!' style={{ marginLeft: 'auto' }}>
+					</a> */}
+					<a onClick={toggleOpenChangeProject}>
 						<MDBIcon style={{ color: '#0d99ff' }} far icon='bell' size='lg' />
 						<MDBBadge color='danger' notification pill>
-							1
+							{/* * */}
 						</MDBBadge>
 					</a>
+					<Notification isOpen={changeProjectModal} toggle={toggleOpenChangeProject} />
 				</div>
 			</div>
 		</>

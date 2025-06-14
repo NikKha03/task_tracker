@@ -2,7 +2,7 @@ import { useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 
-import { userInfoPath, changeUserInfoPath } from '../../resources/ApiPath';
+import { userInfoPath, changeUserInfoPath } from '../../api/apiPath';
 
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardImage, MDBCardText, MDBCardBody, MDBTypography, MDBIcon, MDBBtn, MDBListGroupItem } from 'mdb-react-ui-kit';
 import Grid from '@mui/material/Grid';
@@ -63,7 +63,7 @@ export default function Profile() {
 										</MDBListGroupItem>
 										<hr className='mt-0 mb-4' />
 										<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
-											<MDBCardImage src='https://avatars.githubusercontent.com/u/94893802?s=96&v=4' alt='avatar' className='rounded-circle' style={{ width: '150px' }} fluid />
+											<MDBCardImage src='/img/profile2.jpg' alt='avatar' className='rounded-circle' style={{ width: '150px' }} fluid />
 										</div>
 
 										<MDBRow className='pt-1'>
