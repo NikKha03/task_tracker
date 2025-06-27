@@ -1,17 +1,43 @@
-import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 
-export default function EmptyPageMassage({ command }) {
-	switch (command) {
-		case 1:
-			return <Typography variant='h3'>На сегодня нет задач</Typography>;
-		case 2:
-			return <Typography variant='h3'>Нет задач в планах</Typography>;
-		case 3:
-			return <Typography variant='h3'>Нет отложенных задач</Typography>;
-		case 4:
-			return <Typography variant='h3'>Нет завершенных задач</Typography>;
-		case 5:
-			return <Typography variant='h3'>Нет просроченных задач</Typography>;
+const style = { color: '#ffffff', marginTop: 1, marginLeft: 3 };
+
+export default function EmptyPageMassage() {
+	let [searchParams, setSearchParams] = useSearchParams();
+	const statusParam = searchParams.get('status');
+	// console.log(statusParam);
+
+	switch (statusParam) {
+		case 'awaitingCompletionTasks':
+			return (
+				<Typography variant='h4' sx={style}>
+					У вас нет запланированных задач
+				</Typography>
+			);
+		case 'withoutDateImplTasks':
+			return (
+				<Typography variant='h4' sx={style}>
+					У вас нет задач с неуказанной датой выполнения
+				</Typography>
+			);
+		case 'inProgressTasks':
+			return (
+				<Typography variant='h4' sx={style}>
+					У вас нет задач в работе
+				</Typography>
+			);
+		case 'incompleteTasks':
+			return (
+				<Typography variant='h4' sx={style}>
+					У вас нет просроченных задач
+				</Typography>
+			);
+		case 'completedTasks':
+			return (
+				<Typography variant='h4' sx={style}>
+					У вас нет завершенных задач
+				</Typography>
+			);
 	}
 }
