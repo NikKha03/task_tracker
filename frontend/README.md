@@ -1,2 +1,1 @@
-# Task-tracker
-
+# Frontend приложения task tracker

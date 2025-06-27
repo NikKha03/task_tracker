@@ -1,37 +1,13 @@
 import axios from 'axios';
-import {
-	awaitingCompletionTaskPath,
-	withoutDateImplTasksPath,
-	inProgressTasksPath,
-	incompleteTasksPath,
-	completedTasksPath,
-	getProjectPath,
-	getUserByUsernamePath,
-	getUsersByUsernamePath,
-	kickedOutPath,
-} from './apiPath';
-
-const buildPath = (status, implementer) => {
-	switch (status) {
-		case 'awaitingCompletionTasks':
-			return awaitingCompletionTaskPath(implementer);
-		case 'withoutDateImplTasks':
-			return withoutDateImplTasksPath(implementer);
-		case 'inProgressTasks':
-			return inProgressTasksPath(implementer);
-		case 'incompleteTasks':
-			return incompleteTasksPath(implementer);
-		case 'completedTasks':
-			return completedTasksPath(implementer);
-	}
-};
+import { getProjectPath, getUserByUsernamePath, getUsersByUsernamePath, kickedOutPath } from './apiPath';
+import { buildGetTasksPath } from './apiBuilder';
 
 export default class apiHandlers {
 	constructor() {}
 
 	getTasks = async (taskStatus, username, setTasks) => {
 		try {
-			const response = await axios.get(buildPath(taskStatus, username), { withCredentials: true });
+			const response = await axios.get(buildGetTasksPath(taskStatus, username), { withCredentials: true });
 			setTasks(response.data);
 		} catch (error) {
 			console.error('Error fetching projects:', error);
