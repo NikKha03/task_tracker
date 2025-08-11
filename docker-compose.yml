@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  eureka-server:
+    image: eureka_server:v1
+    container_name: eureka_server
+    ports:
+      - "8761:8761"
+    networks:
+      - task-tracker-net
+
+  api-gateway:
+    image: api_gateway:v1
+    container_name: api_gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - task-tracker-net
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+
+networks:
+  task-tracker-net:
+    driver: bridge

@@ -26,7 +26,7 @@ public class SecurityConfig {
                         .pathMatchers("/**").permitAll())
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:5175", "https://tracker.sharpbubbles.ru"));
+                    config.setAllowedOrigins(List.of("http://localhost", "https://tracker.sharpbubbles.ru"));
                     config.addAllowedHeader("*");
                     config.addAllowedMethod("*");
                     config.setAllowCredentials(true);

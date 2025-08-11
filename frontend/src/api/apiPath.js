@@ -1,3 +1,4 @@
+// const hostApiGateway = 'https://localhost:8080';
 const hostApiGateway = 'https://api.sharpbubbles.ru';
 // const hostApiGateway = 'https://api.sharpbubbles.online';
 
