@@ -17,6 +17,11 @@ services:
       - task-tracker-net
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - DOP_URLS_ALLOWED_ORIGINS=http://angular-frontend:4200,https://tracker.sharpbubbles.ru
+    
+  angular-frontend:
+    networks:
+      - task-tracker-net
 
 networks:
   task-tracker-net:

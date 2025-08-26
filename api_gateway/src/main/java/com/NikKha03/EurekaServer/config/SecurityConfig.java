@@ -16,7 +16,7 @@ import java.util.List;
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
 
-    @Value("#{'${dop-urls.allowed-origins}'.split(', ')}")
+    @Value("#{'${dop-urls.allowed-origins}'.split(',')}")
     private List<String> allowedOrigins;
 
     @Bean
@@ -26,7 +26,7 @@ public class SecurityConfig {
                         .pathMatchers("/**").permitAll())
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost", "https://tracker.sharpbubbles.ru"));
+                    config.setAllowedOrigins(allowedOrigins);
                     config.addAllowedHeader("*");
                     config.addAllowedMethod("*");
                     config.setAllowCredentials(true);
