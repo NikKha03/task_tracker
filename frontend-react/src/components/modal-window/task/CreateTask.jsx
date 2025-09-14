@@ -111,8 +111,8 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 								<h2 style={{ fontSize: '1.25rem' }}>Статус</h2>
 								<TaskStatus status={status} setStatus={setStatus} />
 							</div>
-							<Vedlegg urls={urls} setUrls={setUrls} />
-							<Tags tags={tags} setTags={setTags} />
+							{/* <Vedlegg urls={urls} setUrls={setUrls} /> */}
+							{/* <Tags tags={tags} setTags={setTags} /> */}
 						</div>
 
 						<div className='footer'>

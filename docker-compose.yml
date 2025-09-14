@@ -17,11 +17,39 @@ services:
       - task-tracker-net
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
-      - DOP_URLS_ALLOWED_ORIGINS=http://angular-frontend:4200,https://tracker.sharpbubbles.ru
-    
-  angular-frontend:
+      - APP_ENV_ALLOWED_ORIGINS=https://tracker.sharpbubbles.ru,http://192.168.31.28:8080
+
+  frontend-react:
+    image: frontend_react:v2.0
+    container_name: frontend_react
+    ports:
+      - "5175:80"
     networks:
       - task-tracker-net
+    environment:
+      - API_URL=http://api-gateway:8080/api
+  
+  task-service:
+    image: task_service:v1
+    container_name: task_service
+    ports: 
+      - "8081:8081"
+    networks:
+      - task-tracker-net
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - APP_ENV_ALLOWED_ORIGINS=http://user-service:8081, https://tracker.sharpbubbles.ru, https://api.sharpbubbles.ru
+
+  user-service:
+    image: user_service:v1
+    container_name: user_service
+    ports: 
+      - "8082:8082"
+    networks:
+      - task-tracker-net
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - APP_ENV_FRONT_PAGE=https://tracker.sharpbubbles.ru/app/list?status=awaitingCompletionTasks
 
 networks:
   task-tracker-net:

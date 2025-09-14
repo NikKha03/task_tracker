@@ -11,21 +11,21 @@ public class GatewayConfig {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("task_service", r -> r.path("/task_service/**")
+                .route("task_service", r -> r.path("/api/task_service/**")
                         .uri("lb://TASKSERVICE")  // lb:// для балансировки нагрузки через Eureka
                 )
-                .route("task_service", r -> r.path("/swagger-ui/**")
+                .route("task_service", r -> r.path("/api/swagger-ui/**")
                         .uri("lb://TASKSERVICE")  // lb:// для балансировки нагрузки через Eureka
                 )
-                .route("user_service", r -> r.path("/user_service/**")
+                .route("user_service", r -> r.path("/api/user_service/**")
                         .uri("lb://USERSERVICE")  // lb:// для балансировки нагрузки через Eureka
-                ) .route("user_service", r -> r.path("/login/**")
-                        .uri("lb://USERSERVICE")  // lb:// для балансировки нагрузки через Eureka
-                )
-                .route("user_service", r -> r.path("/oauth2/**")
+                ) .route("user_service", r -> r.path("/api/login/**")
                         .uri("lb://USERSERVICE")  // lb:// для балансировки нагрузки через Eureka
                 )
-                .route("notification_service", r -> r.path("/notification_service/**")
+                .route("user_service", r -> r.path("/api/oauth2/**")
+                        .uri("lb://USERSERVICE")  // lb:// для балансировки нагрузки через Eureka
+                )
+                .route("notification_service", r -> r.path("/api/notification_service/**")
                         .uri("lb://NOTIFICATIONSERVICE")  // lb:// для балансировки нагрузки через Eureka
                 )
                 .build();

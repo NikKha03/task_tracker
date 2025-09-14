@@ -16,7 +16,7 @@ import java.util.List;
 @EnableReactiveMethodSecurity
 public class SecurityConfig {
 
-    @Value("#{'${dop-urls.allowed-origins}'.split(',')}")
+    @Value("#{'${app-env.allowed-origins}'.split(',')}")
     private List<String> allowedOrigins;
 
     @Bean

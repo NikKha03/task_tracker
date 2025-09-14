@@ -132,15 +132,20 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 									<h2 style={{ fontSize: '1.25rem' }}>Статус</h2>
 									<TaskStatus status={status} setStatus={setStatus} />
 								</div>
-								<Vedlegg urls={urls} setUrls={setUrls} />
-								<Tags tags={tags} setTags={setTags} />
+								{/* <Vedlegg urls={urls} setUrls={setUrls} /> */}
+								{/* <Tags tags={tags} setTags={setTags} /> */}
 							</div>
 
 							<div className='footer'>
 								<MDBBtn type='submitSave' color='success' style={{ width: 'calc(100% - 4.5rem)', boxShadow: 'none', borderRadius: '4px' }}>
 									Сохранить
 								</MDBBtn>
-								<MDBBtn type='submitDelete' style={{ width: '4rem', marginLeft: '0.5rem', boxShadow: 'none', borderRadius: '4px' }} color='danger' onClick={() => deleteTask(task.taskId)}>
+								<MDBBtn
+									type='submitDelete'
+									style={{ width: '4rem', marginLeft: '0.5rem', boxShadow: 'none', borderRadius: '4px' }}
+									color='danger'
+									onClick={() => deleteTask(task.taskId)}
+								>
 									<MDBIcon far icon='trash-alt' />
 								</MDBBtn>
 							</div>

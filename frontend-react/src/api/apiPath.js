@@ -1,6 +1,7 @@
-// const hostApiGateway = 'https://localhost:8080';
-const hostApiGateway = 'https://api.sharpbubbles.ru';
+// const hostApiGateway = process.env.API_URL;
+const hostApiGateway = 'https://api.sharpbubbles.ru/api';
 // const hostApiGateway = 'https://api.sharpbubbles.online';
+// const hostApiGateway = '/api';
 
 export const userController = `${hostApiGateway}/user_service`;
 export const projectController = `${hostApiGateway}/task_service/project`;
