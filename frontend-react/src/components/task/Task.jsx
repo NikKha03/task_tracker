@@ -1,7 +1,6 @@
 import GroupByDate from './GroupByDate';
 import { dateParser } from '../../utils/DateUtils';
-
-import { MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
+import { MDBIcon } from 'mdb-react-ui-kit';
 
 /*
 	НЕОБХОДИМО УЧИТЫВАТЬ, ЧТО ЕСЛИ ПОЛЬЗОВАТЕЛЬ ОДИН В ПРОЕКТЕ, 
@@ -48,14 +47,11 @@ export default function Task({ task, tasks = [], setChangeTask, toggleOpen, disp
 		<>
 			{displayMethod === 'list' && <GroupByDate tasks={tasks} task={task} />}
 			<div className='task' style={listStyle()}>
-				{/* <MDBBtn floating className='doneIcon' color='white' tag='a' onClick={() => null}> */}
 				<MDBIcon className='doneIcon' fas icon='check-circle' size='2x' style={iconColor} />
-				{/* </MDBBtn> */}
 				<div className='main'>
 					<div className='top'>
 						<h3>{task.header}</h3>
 					</div>
-					{/* <div className='bot'>описание</div> */}
 				</div>
 				<div className='right'>
 					<div className='top'>

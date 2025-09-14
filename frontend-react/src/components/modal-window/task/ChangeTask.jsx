@@ -4,8 +4,6 @@ import axios from 'axios';
 import { AppContext } from '../../../context/AppContext';
 import SelectFromMembers from '../../task/SelectFromMembers';
 import TaskStatus from '../../task/TaskStatus';
-import Vedlegg from '../../task/Vedlegg';
-import Tags from '../../task/Tags';
 import { Creator } from '../../task/Creator';
 import { changeTaskPath, deleteTaskPath } from '../../../api/apiPath';
 
@@ -116,11 +114,6 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 										autoComplete='off'
 										defaultValue={task.deadline === null ? '' : task.deadline.substring(0, 10)}
 										style={{ width: '100%', height: '2.25rem', backgroundColor: '#ffffff' }}
-										// size='small'
-										// style={{ height: '2.25rem', backgroundColor: '#ffffff' }}
-										// InputLabelProps={{
-										// 	shrink: true,
-										// }}
 									/>
 								</div>
 								<div>
@@ -132,8 +125,6 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 									<h2 style={{ fontSize: '1.25rem' }}>Статус</h2>
 									<TaskStatus status={status} setStatus={setStatus} />
 								</div>
-								{/* <Vedlegg urls={urls} setUrls={setUrls} /> */}
-								{/* <Tags tags={tags} setTags={setTags} /> */}
 							</div>
 
 							<div className='footer'>

@@ -42,7 +42,6 @@ export default function KanbanBoardsPage() {
 				<div className='main-window'>
 					{!isNaN(tabIdClicked) && (
 						<>
-							{/* <Column status={'AWAITING_COMPLETION'} tasks={tasks.AWAITING_COMPLETION !== undefined ? tasks.AWAITING_COMPLETION.concat(tasks.WITHOUT_DATE_IMPL) : []} /> */}
 							<Column status={'AWAITING_COMPLETION'} tasks={tasks.AWAITING_COMPLETION} />
 							<Column status={'IN_PROGRESS'} tasks={tasks.IN_PROGRESS} />
 							<Column status={'COMPLETED'} tasks={tasks.COMPLETED} />

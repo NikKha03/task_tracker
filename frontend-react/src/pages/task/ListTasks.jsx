@@ -27,7 +27,6 @@ export default function ListTasks() {
 	}, [taskTrigger, taskStatusId]);
 
 	useEffect(() => {
-		// params.set('status', names.find(obj => obj.i === 0).apiName);
 		setSearchParams({ status: names.find(obj => obj.i === 0).apiName });
 	}, []);
 

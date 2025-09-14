@@ -6,7 +6,6 @@ const style = { color: '#ffffff', marginTop: 1, marginLeft: 3 };
 export default function EmptyPageMassage() {
 	let [searchParams, setSearchParams] = useSearchParams();
 	const statusParam = searchParams.get('status');
-	// console.log(statusParam);
 
 	switch (statusParam) {
 		case 'awaitingCompletionTasks':

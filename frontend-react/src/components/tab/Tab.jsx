@@ -27,17 +27,6 @@ export default function Tab() {
 		navigate(params + '&tab=' + id);
 	};
 
-	// if (searchParams.has('project') && !searchParams.has('tab') && sortedTabs.length > 0) {
-	// 	clickTab(sortedTabs[0].tabId);
-	// }
-
-	// useEffect(() => {
-	// 	if (sortedTabs === undefined || sortedTabs.length <= 0) return;
-	// 	if (!searchParams.has('tab') && sortedTabs.length > 0) {
-	// 		clickTab(sortedTabs[0].tabId);
-	// 	}
-	// }, [projectIdClicked]);
-
 	const changeTab = tab => {
 		setTabToEdit(tab);
 		toggleOpenTab();
@@ -46,8 +35,6 @@ export default function Tab() {
 	useEffect(() => {
 		if (tabs === undefined || tabs.length <= 0) return;
 	}, [tabs]);
-
-	// console.log(searchParams.has('tab'));
 
 	return (
 		<>

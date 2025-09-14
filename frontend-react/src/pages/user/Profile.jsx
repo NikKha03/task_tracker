@@ -1,9 +1,7 @@
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
-
-import { userInfoPath, changeUserInfoPath } from '../../api/apiPath';
-
+import { changeUserInfoPath } from '../../api/apiPath';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardImage, MDBCardText, MDBCardBody, MDBTypography, MDBIcon, MDBBtn, MDBListGroupItem } from 'mdb-react-ui-kit';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/system';
@@ -35,9 +33,6 @@ export default function Profile() {
 			});
 	};
 
-	// useEffect(() => {
-	// }, []);
-
 	const handleSubmitSave = event => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -57,9 +52,6 @@ export default function Profile() {
 											<MDBTypography tag='h6' style={{ marginBottom: 0 }}>
 												Информация
 											</MDBTypography>
-											{/* <MDBBtn floating color='white' size='sm' onClick={() => navigate('/habit-tracker/redaction-profile/', { state: principalUser })}>
-												<MDBIcon fas color='#1e1e1e' size='2x' icon='cog' />
-											</MDBBtn> */}
 										</MDBListGroupItem>
 										<hr className='mt-0 mb-4' />
 										<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
@@ -92,12 +84,6 @@ export default function Profile() {
 												<MDBCardText style={{ textAlign: 'right' }}>{user.name}</MDBCardText>
 											</MDBCol>
 										</MDBRow>
-										{/* <MDBRow className='pt-1'>
-											<MDBCol size='6' className='mb-3' style={{ width: '100%' }}>
-												<MDBTypography tag='h6'>Tg</MDBTypography>
-												<MDBCardText>@{}</MDBCardText>
-											</MDBCol>
-										</MDBRow> */}
 									</MDBCardBody>
 								</MDBCol>
 							</MDBRow>

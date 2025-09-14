@@ -5,8 +5,6 @@ import { AuthContext } from '../../../context/AuthContext';
 import { AppContext } from '../../../context/AppContext';
 import SelectFromMembers from '../../task/SelectFromMembers';
 import TaskStatus from '../../task/TaskStatus';
-import Vedlegg from '../../task/Vedlegg';
-import Tags from '../../task/Tags';
 import { createTaskPath } from '../../../api/apiPath';
 
 import '../../../styles/TaskPanel.css';
@@ -65,7 +63,6 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 		const makeTagsObj = '{ "tags": [' + startValueTag + '] }';
 
 		createTask(user.name, data.get('header'), data.get('comment'), data.get('deadline') + ' 00:00', status, implementer, makeUrlsObj, makeTagsObj);
-		console.log(user.name);
 	};
 
 	return (
@@ -89,19 +86,7 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 							</div>
 							<div>
 								<h2 style={{ fontSize: '1.25rem' }}>Дедлайн</h2>
-								<MDBInput
-									id='date'
-									name='deadline'
-									type='date'
-									autoComplete='off'
-									defaultValue={null}
-									style={{ width: '100%', height: '2.25rem', backgroundColor: '#ffffff' }}
-									// size='small'
-									// style={{ height: '2.25rem', backgroundColor: '#ffffff' }}
-									// InputLabelProps={{
-									// 	shrink: true,
-									// }}
-								/>
+								<MDBInput id='date' name='deadline' type='date' autoComplete='off' defaultValue={null} style={{ width: '100%', height: '2.25rem', backgroundColor: '#ffffff' }} />
 							</div>
 							<div>
 								<h2 style={{ fontSize: '1.25rem' }}>Исполнитель</h2>
@@ -111,8 +96,6 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 								<h2 style={{ fontSize: '1.25rem' }}>Статус</h2>
 								<TaskStatus status={status} setStatus={setStatus} />
 							</div>
-							{/* <Vedlegg urls={urls} setUrls={setUrls} /> */}
-							{/* <Tags tags={tags} setTags={setTags} /> */}
 						</div>
 
 						<div className='footer'>

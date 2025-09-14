@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { AuthContext } from '../../context/AuthContext';
@@ -22,8 +22,6 @@ export default function Navbar({ pageType }) {
 	let [searchParams, setSearchParams] = useSearchParams();
 	const { user } = useContext(AuthContext);
 	const { project, taskStatusId, setTaskStatusId } = useContext(AppContext);
-
-	// const [idClicked, setIdClicked] = useState(0);
 
 	const clickTaskStatus = id => {
 		setTaskStatusId(id);
@@ -64,26 +62,11 @@ export default function Navbar({ pageType }) {
 					<div className='proj-h'>
 						<h2 style={{ fontSize: '1.25rem' }}>{project.name}</h2>
 
-						{
-							// если участник не админ, то он не может управлять проектом
-							project !== undefined &&
-							project.team !== undefined &&
-							project.team
-								.map(m => {
-									if (m.username === user.name) {
-										return m.roles.filter(r => r.name === 'ADMIN').length;
-									}
-								})
-								.at(0) > 0 ? (
-								<>
-									<MDBIcon fas icon='cog' size='1x' onClick={toggleOpenChangeProject} style={{ color: '#b3b3b3', cursor: 'pointer' }} />
-									<ChangeProject isOpen={changeProjectModal} toggle={toggleOpenChangeProject} />
+						<MDBIcon fas icon='cog' size='1x' onClick={toggleOpenChangeProject} style={{ color: '#b3b3b3', cursor: 'pointer' }} />
+						<ChangeProject isOpen={changeProjectModal} toggle={toggleOpenChangeProject} />
 
-									<MDBIcon fas icon='user-friends' size='1x' onClick={toggleOpenTeamModal} style={{ color: '#b3b3b3', cursor: 'pointer', marginLeft: '0.5rem' }} />
-									<TeamModal isOpen={teamModal} toggle={toggleOpenTeamModal} />
-								</>
-							) : null
-						}
+						<MDBIcon fas icon='user-friends' size='1x' onClick={toggleOpenTeamModal} style={{ color: '#b3b3b3', cursor: 'pointer', marginLeft: '0.5rem' }} />
+						<TeamModal isOpen={teamModal} toggle={toggleOpenTeamModal} />
 					</div>
 				</div>
 				<div className='bottom'>
@@ -101,8 +84,6 @@ export default function Navbar({ pageType }) {
 				return projBlokForBoard();
 		}
 	};
-
-	// useEffect(() => {}, []);
 
 	return (
 		<MDBNavbar className='navbar'>

@@ -1,6 +1,5 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import axios from 'axios';
-
 import { AppContext } from '../../../context/AppContext';
 import { AuthContext } from '../../../context/AuthContext';
 import { inviteInProjectPath } from '../../../api/apiPath';
@@ -19,11 +18,8 @@ const teamList = usernameAndName => {
 };
 
 export default function TeamModal({ isOpen, toggle }) {
-	const { api, project, projectIdClicked, usernameAndName } = useContext(AppContext);
+	const { projectIdClicked } = useContext(AppContext);
 	const { setProjectTrigger } = useContext(AuthContext);
-
-	// console.log(project.team);
-	// console.log(usernameAndName);
 
 	const inviteInProject = async (projectIdClicked, username) => {
 		try {
@@ -57,7 +53,6 @@ export default function TeamModal({ isOpen, toggle }) {
 								<div style={{ display: 'flex' }}>
 									<MDBInput name='usernameInvite' autoComplete='off' />
 
-									{/* <RolesInProject /> */}
 									<MDBBtn color='success' style={{ width: '4rem', marginLeft: '0.5rem', boxShadow: 'none', borderRadius: '4px' }}>
 										<MDBIcon fas icon='share-square' />
 									</MDBBtn>
@@ -66,8 +61,7 @@ export default function TeamModal({ isOpen, toggle }) {
 						</MDBModalBody>
 
 						<MDBModalFooter style={{ justifyContent: 'start', padding: '0' }} id='team-list'>
-							{/* {teamList(usernameAndName).map(element => element)} */}
-							<TeamTable team={teamList} />
+							<TeamTable />
 						</MDBModalFooter>
 					</MDBModalContent>
 				</MDBModalDialog>
