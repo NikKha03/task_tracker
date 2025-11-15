@@ -1,6 +1,6 @@
 // const hostApiGateway = process.env.API_URL;
-const hostApiGateway = 'https://api.sharpbubbles.ru/api';
-// const hostApiGateway = 'https://api.sharpbubbles.online';
+const hostApiGateway = 'https://api.khalimendik.ru/api';
+// const hostApiGateway = 'https://api.khalimendik.ru';
 // const hostApiGateway = '/api';
 
 export const userController = `${hostApiGateway}/user_service`;

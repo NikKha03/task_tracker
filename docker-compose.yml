@@ -1,10 +1,10 @@
-version: "3.9"
+version: '3.9'
 services:
   eureka-server:
     image: eureka_server:v1
     container_name: eureka_server
     ports:
-      - "8761:8761"
+      - '8761:8761'
     networks:
       - task-tracker-net
 
@@ -12,44 +12,47 @@ services:
     image: api_gateway:v1
     container_name: api_gateway
     ports:
-      - "8080:8080"
+      - '8080:8080'
     networks:
       - task-tracker-net
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
-      - APP_ENV_ALLOWED_ORIGINS=https://tracker.sharpbubbles.ru,http://192.168.31.28:8080
+      - APP_ENV_ALLOWED_ORIGINS=https://tracker.khalimendik.ru,http://192.168.31.28:8080
+      - APP_ENV_GATEWAY_SECRET=
 
   frontend-react:
     image: frontend_react:v2.0
     container_name: frontend_react
     ports:
-      - "5175:80"
+      - '5175:80'
     networks:
       - task-tracker-net
     environment:
       - API_URL=http://api-gateway:8080/api
-  
+
   task-service:
     image: task_service:v1
     container_name: task_service
-    ports: 
-      - "8081:8081"
+    ports:
+      - '8081:8081'
     networks:
       - task-tracker-net
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
-      - APP_ENV_ALLOWED_ORIGINS=http://user-service:8081, https://tracker.sharpbubbles.ru, https://api.sharpbubbles.ru
+      - APP_ENV_ALLOWED_ORIGINS=http://user-service:8081, https://tracker.khalimendik.ru, https://api.khalimendik.ru
+      - APP_ENV_GATEWAY_SECRET=
 
   user-service:
     image: user_service:v1
     container_name: user_service
-    ports: 
-      - "8082:8082"
+    ports:
+      - '8082:8082'
     networks:
       - task-tracker-net
     environment:
       - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
-      - APP_ENV_FRONT_PAGE=https://tracker.sharpbubbles.ru/app/list?status=awaitingCompletionTasks
+      - APP_ENV_FRONT_PAGE=https://tracker.khalimendik.ru/app/list?status=awaitingCompletionTasks
+      - APP_ENV_GATEWAY_SECRET=
 
 networks:
   task-tracker-net:

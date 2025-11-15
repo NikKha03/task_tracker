@@ -55,7 +55,7 @@ export default function Profile() {
 										</MDBListGroupItem>
 										<hr className='mt-0 mb-4' />
 										<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
-											<MDBCardImage src='/src/img/profile.jpg' alt='avatar' className='rounded-circle' style={{ width: '150px' }} fluid />
+											<MDBCardImage src='/profile.jpg' alt='avatar' className='rounded-circle' style={{ width: '150px' }} fluid />
 										</div>
 
 										<MDBRow className='pt-1'>
