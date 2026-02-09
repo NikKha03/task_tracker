@@ -39,7 +39,7 @@ public class JwtAuthenticationFilter implements GatewayFilter, Ordered {
         // Запрос к Auth-service
         return webClient.get()
                 .uri(userServiceUrl)
-                .header(HttpHeaders.AUTHORIZATION, authHeader)
+                .header(HttpHeaders.AUTHORIZATION, authHeader) // Bearer
                 .header("X-Gateway-Secret", gatewaySecret)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, response -> Mono.error(new RuntimeException("Token invalid")))

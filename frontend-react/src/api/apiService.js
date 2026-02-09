@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getProjectPath, getUserByUsernamePath, getUsersByUsernamePath, kickedOutPath } from './apiPath';
 import { buildGetTasksPath } from './apiBuilder';
 
-export default class apiHandlers {
+export default class apiService {
 	constructor() {}
 
 	getTasks = async (taskStatus, username, setTasks) => {
@@ -10,18 +10,15 @@ export default class apiHandlers {
 			const response = await axios.get(buildGetTasksPath(taskStatus, username), { withCredentials: true });
 			setTasks(response.data);
 		} catch (error) {
-			console.error('Error fetching projects:', error);
+			console.error('Error fetching tasks:', error);
 		}
 	};
 
-	getProject = async (projectId, username, setProject, setTabs) => {
+	getProject = async (projectId, username) => {
 		try {
 			const response = await axios.get(getProjectPath(projectId, username), { withCredentials: true });
 			if (response.data.body !== null) {
-				setProject(response.data.body);
-				setTabs(response.data.body.tabs);
-			} else {
-				setProject({});
+				return response.data.body;
 			}
 		} catch (error) {
 			console.error('Error fetching projects:', error);
@@ -42,16 +39,16 @@ export default class apiHandlers {
 			const response = await axios.get(getUserByUsernamePath(username), { withCredentials: true });
 			setFullName(`${response.data.firstName} ${response.data.lastName}`);
 		} catch (error) {
-			console.error('Error fetching projects:', error);
+			console.error('Error fetching user:', error);
 		}
 	};
 
-	getUsersByUsername = async (usernames, setUsernameAndName) => {
+	getUsersByUsername = async usernames => {
 		try {
 			const response = await axios.post(getUsersByUsernamePath, usernames, { withCredentials: true });
-			setUsernameAndName(response.data);
+			return response.data;
 		} catch (error) {
-			console.error('Error fetching projects:', error);
+			console.error('Error fetching users:', error);
 		}
 	};
 }

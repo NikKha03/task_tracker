@@ -1,15 +1,16 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 
 import { AuthContext } from './AuthContext';
-import apiHandlers from '../api/apiHandlers';
+import apiService from '../api/apiService';
 import { names } from '../components/navigate/Navbar';
 
 export const AppContext = createContext(null);
 
 export const AppProvider = ({ children }) => {
-	// объявляем класс для вызова запросов на api
-	const api = new apiHandlers();
-	// получаем параметры из URL
+	/** Сервис для вызова запросов на api */
+	const api = new apiService();
+
+	/** Получаем параметры из URL */
 	let params = new URLSearchParams(document.location.search);
 
 	const { user, projectTrigger } = useContext(AuthContext);
@@ -27,7 +28,7 @@ export const AppProvider = ({ children }) => {
 			return a.tabId - b.tabId;
 		});
 	}
-	// для получения имени и фамилии пользователя из username
+	/** Для получения имени и фамилии пользователя из username  */
 	const [usernameAndName, setUsernameAndName] = useState({});
 	const usernames = [];
 
@@ -37,19 +38,37 @@ export const AppProvider = ({ children }) => {
 		}
 	}, []);
 
-	useEffect(() => {
+	useEffect(async () => {
 		if (!user) return;
 		if (isNaN(projectIdClicked)) return;
-		api.getProject(projectIdClicked, user.name, setProject, setTabs);
+
+		const project = await api.getProject(projectIdClicked, user.name, setProject);
+		setProject(project);
+		project && setTabs(project?.tabs);
 	}, [projectIdClicked, projectTrigger, user]);
 
-	useEffect(() => {
+	useEffect(async () => {
 		if (project.team !== undefined) project.team.forEach(i => usernames.push(i.username));
-		if (usernames.length > 0) api.getUsersByUsername(usernames, setUsernameAndName);
+		if (usernames.length > 0) setUsernameAndName(await api.getUsersByUsername(usernames));
 	}, [project]);
 
 	return (
-		<AppContext.Provider value={{ api, taskTrigger, setTaskTrigger, projectIdClicked, setProjectIdClicked, project, tabIdClicked, setTabIdClicked, tabs, taskStatusId, setTaskStatusId, usernameAndName }}>
+		<AppContext.Provider
+			value={{
+				api,
+				taskTrigger,
+				setTaskTrigger,
+				projectIdClicked,
+				setProjectIdClicked,
+				project,
+				tabIdClicked,
+				setTabIdClicked,
+				tabs,
+				taskStatusId,
+				setTaskStatusId,
+				usernameAndName,
+			}}
+		>
 			{children}
 		</AppContext.Provider>
 	);
