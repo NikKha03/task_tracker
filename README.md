@@ -2,6 +2,8 @@
 
 Веб-приложение для управления проектами и задачами.
 
+[Предыдущая версия](https://github.com/NikKha03/task_tracker/tree/old_develop)
+
 ## Стек технологий
 
 **Frontend:** JS React
