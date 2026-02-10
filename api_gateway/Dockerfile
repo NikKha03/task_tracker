@@ -1,11 +1,13 @@
  # Используем официальный OpenJDK образ для запуска приложения
-FROM openjdk:21-jdk-slim
+FROM eclipse-temurin:21-jdk
+
+ARG JAR_FILE
 
 # Указываем рабочую директорию внутри контейнера
 WORKDIR /app
 
 # Копируем jar файл из локальной машины в контейнер
-COPY target/EurekaServer-0.0.1-SNAPSHOT.jar ApiGateway.jar
+COPY ${JAR_FILE} ApiGateway.jar
 
 # Команда для запуска приложения в контейнере
 ENTRYPOINT ["java", "-jar", "ApiGateway.jar"]

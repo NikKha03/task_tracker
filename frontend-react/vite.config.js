@@ -7,10 +7,10 @@ export default defineConfig({
 	server: {
 		host: true,
 		port: 5175,
-		allowedHosts: ['tracker.sharpbubbles.ru', 'localhost:5175', '10.66.66.3:5175'],
+		allowedHosts: ['localhost:6175', '10.66.66.3:6175'],
 		proxy: {
 			'/api': {
-				target: 'http://localhost:8080',
+				target: 'http://localhost:9080',
 				changeOrigin: true,
 				secure: false,
 			},

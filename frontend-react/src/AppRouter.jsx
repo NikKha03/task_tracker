@@ -14,7 +14,7 @@ export default function AppRouter() {
 				<Routes>
 					<Route path='/' element={<StartPage />} />
 					<Route path='/auth/login' element={<LoginPage />} />
-					// нужна аутентификация
+					/** Далее нужна аутентификация */
 					<Route
 						path='/list'
 						element={

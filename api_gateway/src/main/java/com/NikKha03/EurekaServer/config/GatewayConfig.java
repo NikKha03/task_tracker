@@ -19,7 +19,8 @@ public class GatewayConfig {
                 )
                 .route("user_service", r -> r.path("/api/user_service/**")
                         .uri("lb://USERSERVICE")  // lb:// для балансировки нагрузки через Eureka
-                ) .route("user_service", r -> r.path("/api/login/**")
+                ) 
+                .route("user_service", r -> r.path("/api/login/**")
                         .uri("lb://USERSERVICE")  // lb:// для балансировки нагрузки через Eureka
                 )
                 .route("user_service", r -> r.path("/api/oauth2/**")

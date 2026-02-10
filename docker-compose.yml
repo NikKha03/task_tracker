@@ -1,56 +1,122 @@
 version: "3.9"
 services:
   eureka-server:
-    image: eureka_server:v1
+    build:
+      context: .
+      dockerfile: ./packs/eureka_server/Dockerfile
+      args:
+        JAR_FILE: ./packs/eureka_server/EurekaServer.jar
     container_name: eureka_server
     ports:
-      - "8761:8761"
+      - "${EUREKA_PORT}:8761"
+    restart: always
     networks:
       - task-tracker-net
 
   api-gateway:
-    image: api_gateway:v1
+    build:
+      context: .
+      dockerfile: ./packs/api_gateway/Dockerfile
+      args:
+        JAR_FILE: ./packs/api_gateway/apiGateway.v1.jar
     container_name: api_gateway
     ports:
-      - "8080:8080"
+      - "${API_PORT}:8080"
+    restart: always
     networks:
       - task-tracker-net
     environment:
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
-      - APP_ENV_ALLOWED_ORIGINS=https://tracker.sharpbubbles.ru,http://192.168.31.28:8080
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=${EUREKA_DEFAULTZONE}
+      - APP_ENV_ALLOWED_ORIGINS=${API_ALLOWED_ORIGINS}
 
   frontend-react:
-    image: frontend_react:v2.0
+    build:
+      context: ./frontend-react
+      dockerfile: ./Dockerfile
     container_name: frontend_react
     ports:
-      - "5175:80"
+      - "${FRONTEND_PORT}:80"
+    restart: always
     networks:
       - task-tracker-net
-    environment:
-      - API_URL=http://api-gateway:8080/api
   
   task-service:
-    image: task_service:v1
+    build:
+      context: .
+      dockerfile: ./packs/task_service/Dockerfile
+      args:
+        JAR_FILE: ./packs/task_service/taskTracker.v1.jar
     container_name: task_service
     ports: 
-      - "8081:8081"
+      - "${TASK_PORT}:8081"
+    restart: always
     networks:
       - task-tracker-net
     environment:
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
-      - APP_ENV_ALLOWED_ORIGINS=http://user-service:8081, https://tracker.sharpbubbles.ru, https://api.sharpbubbles.ru
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=${EUREKA_DEFAULTZONE}
+      - APP_ENV_ALLOWED_ORIGINS=http://user-service:${USER_PORT},http://frontend-react:${FRONTEND_PORT},http://api-gateway:${API_PORT}
+      - SPRING_DATASOURCE_URL=${TASK_DATASOURCE_URL}
+      - SPRING_DATASOURCE_USERNAME=${TASK_DATASOURCE_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${TASK_DATASOURCE_PASSWORD}
 
   user-service:
-    image: user_service:v1
+    build:
+      context: .
+      dockerfile: ./packs/user_service/Dockerfile
+      args:
+        JAR_FILE: ./packs/user_service/authService.v1.jar
     container_name: user_service
     ports: 
-      - "8082:8082"
+      - "9082:8082"
+    restart: always
     networks:
       - task-tracker-net
     environment:
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:8761/eureka/
-      - APP_ENV_FRONT_PAGE=https://tracker.sharpbubbles.ru/app/list?status=awaitingCompletionTasks
+      # Отключаем автоконфигурацию БД
+      - SPRING_AUTOCONFIGURE_EXCLUDE=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=${EUREKA_DEFAULTZONE}
+      - APP_ENV_FRONT_PAGE=http://keycloak-ru:${KEYCLOAK_PORT}/app/list?status=awaitingCompletionTasks
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=${KEYCLOAK_PROVIDER_ISSUER_URI}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_ID=${KEYCLOAK_CLIENT_ID}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_REDIRECT_URI=${KEYCLOAK_CLIENT_REDIRECT_URI}
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI=${KEYCLOAK_PROVIDER_ISSUER_URI}
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_USER_NAME_ATTRIBUTE=${KEYCLOAK_PROVIDER_USER_NAME_ATTRIBUTE}
+
+
+  postgres:
+    container_name: tas-tracker-db
+    image: postgres:15.6
+    volumes:
+      - keycloak_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+
+  keycloak-ru:
+    container_name: keycloak
+    image: playaru/keycloak-russian:24.0.1.2
+    command: start-dev
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      PROXY_ADDRESS_FORWARDING: true
+      KC_PROXY: edge
+    depends_on:
+      - postgres
+    ports:
+      - "${KEYCLOAK_PORT}:8080"
 
 networks:
   task-tracker-net:
     driver: bridge
+
+volumes:
+  keycloak_data:
