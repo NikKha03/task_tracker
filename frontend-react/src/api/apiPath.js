@@ -1,4 +1,4 @@
-const hostApiGateway = 'http://localhost:9080/api';
+const hostApiGateway = 'http://192.168.1.124:9090/api';
 
 export const userController = `${hostApiGateway}/user_service`;
 export const projectController = `${hostApiGateway}/task_service/project`;
