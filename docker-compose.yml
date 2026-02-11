@@ -1,17 +1,87 @@
 version: "3.9"
 services:
+  postgres:
+    container_name: task-tracker-db
+    image: postgres:15.6
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    networks:
+      - keycloak-net
+    restart: always
+
+  keycloak-ru:
+    container_name: keycloak-ru
+    image: playaru/keycloak-russian:24.0.1.2
+    command: start-dev
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_PORT: 5432
+      KC_DB_URL_DATABASE: ${POSTGRES_DB:-keycloak}
+      KC_DB_USERNAME: ${POSTGRES_USER:-postgres}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:-admin}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-admin}
+      KC_PROXY: edge
+      KC_HOSTNAME_STRICT: "false"
+      KC_HTTP_ENABLED: "true"
+      KC_HEALTH_ENABLED: "true"
+      KC_LOG_LEVEL: INFO
+      JAVA_OPTS_APPEND: "-Xms512m -Xmx1024m -Djava.net.preferIPv4Stack=true"
+    depends_on:
+      - postgres
+    ports:
+      - "${KEYCLOAK_PORT:-8080}:8080"
+    networks:
+      - keycloak-net
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/localhost/8080 && echo -e 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && cat <&3 | grep -q '200 OK' || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 20
+      start_period: 120s
+
+  frontend-react:
+    build:
+      context: ./frontend-react
+      dockerfile: ./Dockerfile
+    container_name: frontend-react
+    ports:
+      - "${FRONTEND_PORT:-3000}:80"
+    restart: always
+    networks:
+      - task-tracker-net
+
   eureka-server:
     build:
       context: .
       dockerfile: ./packs/eureka_server/Dockerfile
       args:
         JAR_FILE: ./packs/eureka_server/EurekaServer.jar
-    container_name: eureka_server
+    container_name: eureka-server
+    environment:
+      - SERVER_PORT=9761
+      - EUREKA_INSTANCE_HOSTNAME=eureka-server
+      - EUREKA_CLIENT_REGISTER_WITH_EUREKA=false
+      - EUREKA_CLIENT_FETCH_REGISTRY=false
     ports:
-      - "${EUREKA_PORT}:8761"
+      - "${EUREKA_PORT:-8761}:9761"
     restart: always
     networks:
       - task-tracker-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9761/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   api-gateway:
     build:
@@ -19,26 +89,31 @@ services:
       dockerfile: ./packs/api_gateway/Dockerfile
       args:
         JAR_FILE: ./packs/api_gateway/apiGateway.v1.jar
-    container_name: api_gateway
+    container_name: api-gateway
     ports:
-      - "${API_PORT}:8080"
+      - "${API_PORT:-9090}:9090"
     restart: always
     networks:
       - task-tracker-net
     environment:
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=${EUREKA_DEFAULTZONE}
-      - APP_ENV_ALLOWED_ORIGINS=${API_ALLOWED_ORIGINS}
-
-  frontend-react:
-    build:
-      context: ./frontend-react
-      dockerfile: ./Dockerfile
-    container_name: frontend_react
-    ports:
-      - "${FRONTEND_PORT}:80"
-    restart: always
-    networks:
-      - task-tracker-net
+      - SERVER_PORT=9090
+      - SPRING_APPLICATION_NAME=API-GATEWAY
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:9761/eureka/
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=false
+      - EUREKA_INSTANCE_HOSTNAME=api-gateway
+      - EUREKA_INSTANCE_INSTANCE_ID=api-gateway:9090
+      - APP_ENV_ALLOWED_ORIGINS=${API_ALLOWED_ORIGINS:-http://localhost:3000}
+      - SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED=true
+      - SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_LOWER_CASE_SERVICE_ID=true
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
   
   task-service:
     build:
@@ -46,18 +121,34 @@ services:
       dockerfile: ./packs/task_service/Dockerfile
       args:
         JAR_FILE: ./packs/task_service/taskTracker.v1.jar
-    container_name: task_service
+    container_name: task-service
     ports: 
-      - "${TASK_PORT}:8081"
+      - "${TASK_PORT:-9081}:9081"
     restart: always
     networks:
       - task-tracker-net
     environment:
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=${EUREKA_DEFAULTZONE}
-      - APP_ENV_ALLOWED_ORIGINS=http://user-service:${USER_PORT},http://frontend-react:${FRONTEND_PORT},http://api-gateway:${API_PORT}
-      - SPRING_DATASOURCE_URL=${TASK_DATASOURCE_URL}
-      - SPRING_DATASOURCE_USERNAME=${TASK_DATASOURCE_USERNAME}
-      - SPRING_DATASOURCE_PASSWORD=${TASK_DATASOURCE_PASSWORD}
+      - SERVER_PORT=9081
+      - SPRING_APPLICATION_NAME=TASKSERVICE
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:9761/eureka/
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=false
+      - EUREKA_INSTANCE_HOSTNAME=task-service
+      - EUREKA_INSTANCE_INSTANCE_ID=task-service:9081
+      - APP_ENV_ALLOWED_ORIGINS=http://user-service:9082,http://frontend-react:80,http://api-gateway:9090
+      - SPRING_DATASOURCE_URL=${TASK_DATASOURCE_URL:-jdbc:postgresql://postgres:5432/taskdb}
+      - SPRING_DATASOURCE_USERNAME=${TASK_DATASOURCE_USERNAME:-postgres}
+      - SPRING_DATASOURCE_PASSWORD=${TASK_DATASOURCE_PASSWORD:-postgres}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=${SPRING_JPA_HIBERNATE_DDL_AUTO:-update}
+      - SPRING_JPA_SHOW_SQL=${SPRING_JPA_SHOW_SQL:-false}
+    depends_on:
+      eureka-server:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9081/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
 
   user-service:
     build:
@@ -65,58 +156,50 @@ services:
       dockerfile: ./packs/user_service/Dockerfile
       args:
         JAR_FILE: ./packs/user_service/authService.v1.jar
-    container_name: user_service
+    container_name: user-service
     ports: 
-      - "9082:8082"
+      - "${USER_PORT:-9082}:9082"
     restart: always
     networks:
       - task-tracker-net
+      - keycloak-net
     environment:
-      # Отключаем автоконфигурацию БД
+      - SERVER_PORT=9082
+      - SPRING_APPLICATION_NAME=USERSERVICE
       - SPRING_AUTOCONFIGURE_EXCLUDE=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=${EUREKA_DEFAULTZONE}
-      - APP_ENV_FRONT_PAGE=http://keycloak-ru:${KEYCLOAK_PORT}/app/list?status=awaitingCompletionTasks
-      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=${KEYCLOAK_PROVIDER_ISSUER_URI}
-      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_ID=${KEYCLOAK_CLIENT_ID}
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://eureka-server:9761/eureka/
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=false
+      - EUREKA_INSTANCE_HOSTNAME=user-service
+      - EUREKA_INSTANCE_INSTANCE_ID=user-service:9082
+      - APP_ENV_FRONT_PAGE=http://localhost:9175/app/list?status=awaitingCompletionTasks
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=${KEYCLOAK_PROVIDER_ISSUER_URI:-http://keycloak-ru:8080/realms/task-tracker}
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_ID=${KEYCLOAK_CLIENT_ID:-task-tracker-client}
       - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_SECRET=${KEYCLOAK_CLIENT_SECRET}
-      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_REDIRECT_URI=${KEYCLOAK_CLIENT_REDIRECT_URI}
-      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI=${KEYCLOAK_PROVIDER_ISSUER_URI}
-      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_USER_NAME_ATTRIBUTE=${KEYCLOAK_PROVIDER_USER_NAME_ATTRIBUTE}
-
-
-  postgres:
-    container_name: tas-tracker-db
-    image: postgres:15.6
-    volumes:
-      - keycloak_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-    ports:
-      - "${POSTGRES_PORT}:5432"
-
-  keycloak-ru:
-    container_name: keycloak
-    image: playaru/keycloak-russian:24.0.1.2
-    command: start-dev
-    environment:
-      KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
-      KC_DB_USERNAME: ${POSTGRES_USER}
-      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
-      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
-      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-      PROXY_ADDRESS_FORWARDING: true
-      KC_PROXY: edge
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_REDIRECT_URI=${KEYCLOAK_CLIENT_REDIRECT_URI:-http://localhost:9090/login/oauth2/code/keycloak}
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI=${KEYCLOAK_PROVIDER_ISSUER_URI:-http://keycloak-ru:8080/realms/task-tracker}
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_USER_NAME_ATTRIBUTE=${KEYCLOAK_PROVIDER_USER_NAME_ATTRIBUTE:-preferred_username}
+      # ✓ Authorization URI - для браузера (ВНЕШНИЙ)
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_AUTHORIZATION_URI=${KEYCLOAK_EXTERNAL_URL:-http://localhost:8080}/realms/NikKha03/protocol/openid-connect/auth
+      # ✓ Token URI - для сервера (ВНУТРЕННИЙ)
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_TOKEN_URI=http://keycloak-ru:8080/realms/NikKha03/protocol/openid-connect/token
     depends_on:
-      - postgres
-    ports:
-      - "${KEYCLOAK_PORT}:8080"
+      eureka-server:
+        condition: service_healthy
+      keycloak-ru:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9082/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
 
 networks:
   task-tracker-net:
     driver: bridge
+  keycloak-net:
+    driver: bridge
 
 volumes:
-  keycloak_data:
+  postgres_data:
+    driver: local
