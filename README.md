@@ -2,7 +2,10 @@
 
 Веб-приложение для управления проектами и задачами.
 
-[Предыдущая версия](https://github.com/NikKha03/task_tracker/tree/old_develop)
+#### Версии
+
+- [v0](https://github.com/NikKha03/task_tracker/tree/old_develop)
+- release/v1.0 (текущая)
 
 ## Стек технологий
 
