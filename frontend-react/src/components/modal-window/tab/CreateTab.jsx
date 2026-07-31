@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';
 
 import { AuthContext } from '../../../context/AuthContext';
-import { createTabPath } from '../../../api/apiPath';
+import { createTabPath } from '../../../api/api-path';
 
 export default function CreateTab({ isOpen, toggle }) {
 	const [searchParams] = useSearchParams();

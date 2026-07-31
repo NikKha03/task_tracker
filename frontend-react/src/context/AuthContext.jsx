@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { getUserPath, getProjectsPath } from '../api/apiPath';
+import { getUserPath, getProjectsPath } from '../api/api-path';
 
 export const AuthContext = createContext(null);
 

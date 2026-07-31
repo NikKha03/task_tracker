@@ -4,7 +4,7 @@ import axios from 'axios';
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';
 
 import { AuthContext } from '../../../context/AuthContext';
-import { createProjectPath } from '../../../api/apiPath';
+import { createProjectPath } from '../../../api/api-path';
 
 export default function CreateProject({ isOpen, toggle }) {
 	const { user, setProjectTrigger } = useContext(AuthContext);

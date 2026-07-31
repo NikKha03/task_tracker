@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import axios from 'axios';
 import { AppContext } from '../../../context/AppContext';
 import { AuthContext } from '../../../context/AuthContext';
-import { inviteInProjectPath } from '../../../api/apiPath';
+import { inviteInProjectPath } from '../../../api/api-path';
 import TeamTable from '../../project/TeamTable';
 
 import { MDBBtn, MDBIcon, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';

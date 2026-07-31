@@ -8,7 +8,7 @@ import Column from '../../components/project/Column';
 
 import { AppContext } from '../../context/AppContext';
 import { AuthContext } from '../../context/AuthContext';
-import { getTasksByTabIdPath } from '../../api/apiPath';
+import { getTasksByTabIdPath } from '../../api/api-path';
 
 export default function KanbanBoardsPage() {
 	let [searchParams, setSearchParams] = useSearchParams();

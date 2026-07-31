@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "es2022",
+        "module": "es2022",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true, // Разрешает компилировать JavaScript-файлы
+        "checkJs": false, // Отключите проверку ошибок в JS-файлах на старте, чтобы избежать спама ошибками
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strictNullChecks": false, // Отключит ругань на возможные null и undefined
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "noEmit": true,
+        "jsx": "react-jsx"
+    },
+    "include": ["src"]
+}

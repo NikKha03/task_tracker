@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import api from '../../api/ApiHandlers';
 import { AppContext } from '../../context/AppContext';
 import { AuthContext } from '../../context/AuthContext';
 
@@ -12,46 +13,52 @@ import ChangeTask from '../../components/modal-window/task/ChangeTask';
 import EmptyPageMassage from '../../components/task/EmptyPageMassage';
 
 export default function ListTasks() {
-	let [searchParams, setSearchParams] = useSearchParams();
-	const { api, taskTrigger, setTaskTrigger, taskStatusId } = useContext(AppContext);
-	const { user } = useContext(AuthContext);
-	const [tasks, setTasks] = useState([]);
+    let [searchParams, setSearchParams] = useSearchParams();
+    const { taskTrigger, setTaskTrigger, taskStatusId } = useContext(AppContext);
+    const { user } = useContext(AuthContext);
+    const [tasks, setTasks] = useState([]);
 
-	const [changeModal, setChangeModal] = useState(false);
-	const toggleOpenChange = () => setChangeModal(!changeModal);
-	const [changeTask, setChangeTask] = useState(null);
+    const [changeModal, setChangeModal] = useState(false);
+    const toggleOpenChange = () => setChangeModal(!changeModal);
+    const [changeTask, setChangeTask] = useState(null);
 
-	useEffect(() => {
-		if (taskTrigger) setTaskTrigger(false);
-		if (!isNaN(taskStatusId)) api.getTasks(names[taskStatusId].apiName, user.name, setTasks);
-	}, [taskTrigger, taskStatusId]);
+    useEffect(() => {
+        if (taskTrigger) setTaskTrigger(false);
+        const fetchTask = async () => {
+            if (!isNaN(taskStatusId)) {
+                const task = await api.getTasks(names[taskStatusId].apiName, user.name);
+                if (task) setTasks(task);
+            }
+        };
+        fetchTask();
+    }, [taskTrigger, taskStatusId]);
 
-	useEffect(() => {
-		setSearchParams({ status: names.find(obj => obj.i === 0).apiName });
-	}, []);
+    useEffect(() => {
+        setSearchParams({ status: names.find((obj) => obj.i === 0).apiName });
+    }, []);
 
-	return (
-		<>
-			<Navbar pageType={'list'} />
-			<div className='task-area'>
-				<LeftMenu listIsClicked={true} />
-				<div className='main-window'>
-					{tasks.length === 0 ? (
-						<EmptyPageMassage />
-					) : (
-						<div className='list-area'>
-							{tasks.map(task => {
-								return (
-									<div className='tasks' key={task.taskId}>
-										<Task task={task} tasks={tasks} displayMethod='list' setChangeTask={setChangeTask} toggleOpen={toggleOpenChange} />
-									</div>
-								);
-							})}
-						</div>
-					)}
-				</div>
-				<ChangeTask task={changeTask} topRightModal={changeModal} setTopRightModal={setChangeModal} />
-			</div>
-		</>
-	);
+    return (
+        <>
+            <Navbar pageType={'list'} />
+            <div className="task-area">
+                <LeftMenu listIsClicked={true} />
+                <div className="main-window">
+                    {tasks.length === 0 ? (
+                        <EmptyPageMassage />
+                    ) : (
+                        <div className="list-area">
+                            {tasks.map((task) => {
+                                return (
+                                    <div className="tasks" key={task.taskId}>
+                                        <Task task={task} tasks={tasks} displayMethod="list" setChangeTask={setChangeTask} toggleOpen={toggleOpenChange} />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    )}
+                </div>
+                <ChangeTask task={changeTask} topRightModal={changeModal} setTopRightModal={setChangeModal} />
+            </div>
+        </>
+    );
 }

@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
-import { changeUserInfoPath } from '../../api/apiPath';
+import { changeUserInfoPath } from '../../api/api-path';
 import { MDBCol, MDBContainer, MDBRow, MDBCard, MDBCardImage, MDBCardText, MDBCardBody, MDBTypography, MDBIcon, MDBBtn, MDBListGroupItem } from 'mdb-react-ui-kit';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/system';

@@ -359,3 +359,11 @@ body,
 	/* display: flex; */
 	align-items: center;
 }
+
+.selector {
+	border: 1px solid #5a5a5a !important;
+}
+.selector, .selector:focus {
+	background-color: #454545 !important;
+	color: #f2f2f2;
+}

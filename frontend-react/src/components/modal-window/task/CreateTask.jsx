@@ -5,7 +5,7 @@ import { AuthContext } from '../../../context/AuthContext';
 import { AppContext } from '../../../context/AppContext';
 import SelectFromMembers from '../../task/SelectFromMembers';
 import TaskStatus from '../../task/TaskStatus';
-import { createTaskPath } from '../../../api/apiPath';
+import { createTaskPath } from '../../../api/api-path';
 
 import '../../../styles/TaskPanel.css';
 import { MDBBtn, MDBModal, MDBInput, MDBTextArea } from 'mdb-react-ui-kit';

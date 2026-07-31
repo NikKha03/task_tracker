@@ -1,4 +1,4 @@
-import { awaitingCompletionTaskPath, withoutDateImplTasksPath, inProgressTasksPath, incompleteTasksPath, completedTasksPath } from './apiPath';
+import { awaitingCompletionTaskPath, withoutDateImplTasksPath, inProgressTasksPath, incompleteTasksPath, completedTasksPath } from './api-path';
 
 export const buildGetTasksPath = (status, implementer) => {
 	switch (status) {

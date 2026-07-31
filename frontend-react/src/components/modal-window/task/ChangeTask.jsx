@@ -5,7 +5,7 @@ import { AppContext } from '../../../context/AppContext';
 import SelectFromMembers from '../../task/SelectFromMembers';
 import TaskStatus from '../../task/TaskStatus';
 import { Creator } from '../../task/Creator';
-import { changeTaskPath, deleteTaskPath } from '../../../api/apiPath';
+import { changeTaskPath, deleteTaskPath } from '../../../api/api-path';
 
 import '../../../styles/TaskPanel.css';
 import { MDBBtn, MDBIcon, MDBModal, MDBInput, MDBTextArea } from 'mdb-react-ui-kit';
@@ -99,11 +99,11 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 							<div className='content'>
 								<div>
 									<h2 style={{ fontSize: '1.25rem' }}>Заголовок</h2>
-									<MDBInput style={{ height: '2.25rem', backgroundColor: '#ffffff' }} name='header' type='text' autoComplete='off' defaultValue={task.header} />
+									<MDBInput className='selector' style={{ height: '2.25rem' }} name='header' type='text' autoComplete='off' defaultValue={task.header} />
 								</div>
 								<div>
 									<h2 style={{ fontSize: '1.25rem' }}>Описание</h2>
-									<MDBTextArea style={{ height: '5rem', backgroundColor: '#ffffff' }} name='comment' defaultValue={task.comment} />
+									<MDBTextArea className='selector' style={{ height: '5rem' }} name='comment' defaultValue={task.comment} />
 								</div>
 								<div>
 									<h2 style={{ fontSize: '1.25rem' }}>Дедлайн</h2>
@@ -113,7 +113,8 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 										type='date'
 										autoComplete='off'
 										defaultValue={task.deadline === null ? '' : task.deadline.substring(0, 10)}
-										style={{ width: '100%', height: '2.25rem', backgroundColor: '#ffffff' }}
+										className='selector'
+										style={{ width: '100%', height: '2.25rem' }}
 									/>
 								</div>
 								<div>
@@ -121,6 +122,7 @@ export default function ChangeTask({ task, topRightModal, setTopRightModal }) {
 									<SelectFromMembers member={implementer} setMember={setImplementer} />
 								</div>
 								<Creator username={task.creator} />
+
 								<div>
 									<h2 style={{ fontSize: '1.25rem' }}>Статус</h2>
 									<TaskStatus status={status} setStatus={setStatus} />
