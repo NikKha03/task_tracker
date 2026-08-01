@@ -7,17 +7,7 @@ const LoginPage = ({ children }) => {
     const { user, loading } = useContext(AuthContext);
 
     if (loading) return <h3>Loading...</h3>; // Пока данные загружаются — ничего не рендерим
-
-    return user ? (
-        <AppProvider>{children}</AppProvider>
-    ) : (
-        <>
-            <h3>Loading...</h3>
-            <script>{(window.location.href = authPath)}</script>
-        </>
-    );
-
-    // return <AppProvider>{children}</AppProvider>;
+    if (user) return <AppProvider>{children}</AppProvider>;
 };
 
 export default LoginPage;

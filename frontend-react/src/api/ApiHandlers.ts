@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+    authPath,
     changeProjectPath,
     changeTabPath,
     changeTaskPath,
@@ -28,6 +29,9 @@ class ApiHandlers {
     async getUser(): Promise<any> {
         try {
             const response = await axios.get(getUserPath, { withCredentials: true });
+            if (!response.data) {
+                window.location.href = authPath;
+            }
             return response.data;
         } catch (error) {
             throw error;
