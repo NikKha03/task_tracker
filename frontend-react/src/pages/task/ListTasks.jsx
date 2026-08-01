@@ -24,13 +24,11 @@ export default function ListTasks() {
 
     useEffect(() => {
         if (taskTrigger) setTaskTrigger(false);
-        const fetchTask = async () => {
-            if (!isNaN(taskStatusId)) {
-                const task = await api.getTasks(names[taskStatusId].apiName, user.name);
+        if (!isNaN(taskStatusId)) {
+            api.getTasks(names[taskStatusId].apiName, user.name).then((task) => {
                 if (task) setTasks(task);
-            }
-        };
-        fetchTask();
+            });
+        }
     }, [taskTrigger, taskStatusId]);
 
     useEffect(() => {

@@ -1,71 +1,78 @@
 import { useContext } from 'react';
-import axios from 'axios';
+import api from '../../../api/ApiHandlers';
 import { AppContext } from '../../../context/AppContext';
 import { AuthContext } from '../../../context/AuthContext';
-import { inviteInProjectPath } from '../../../api/api-path';
 import TeamTable from '../../project/TeamTable';
 
-import { MDBBtn, MDBIcon, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';
+import {
+    MDBBtn,
+    MDBIcon,
+    MDBModal,
+    MDBModalDialog,
+    MDBModalContent,
+    MDBModalHeader,
+    MDBModalTitle,
+    MDBModalBody,
+    MDBModalFooter,
+    MDBInput,
+} from 'mdb-react-ui-kit';
 
-const teamList = usernameAndName => {
-	const elements = [];
-	if (Object.keys(usernameAndName).length > 0) {
-		for (var key in usernameAndName) {
-			elements.push(<div key={key}>{usernameAndName[key]}</div>);
-		}
-	}
-	return elements;
+const teamList = (usernameAndName) => {
+    const elements = [];
+    if (Object.keys(usernameAndName).length > 0) {
+        for (var key in usernameAndName) {
+            elements.push(<div key={key}>{usernameAndName[key]}</div>);
+        }
+    }
+    return elements;
 };
 
 export default function TeamModal({ isOpen, toggle }) {
-	const { projectIdClicked } = useContext(AppContext);
-	const { setProjectTrigger } = useContext(AuthContext);
+    const { projectIdClicked } = useContext(AppContext);
+    const { setProjectTrigger } = useContext(AuthContext);
 
-	const inviteInProject = async (projectIdClicked, username) => {
-		try {
-			await axios.post(inviteInProjectPath(username, projectIdClicked), { withCredentials: true });
-			setProjectTrigger(true);
-		} catch (error) {
-			console.error('Error fetching user:', error);
-		}
-	};
+    const inviteInProject = (projectIdClicked, username) => {
+        api.inviteInProject(username, projectIdClicked).then((isInvited) => {
+            if (isInvited) setProjectTrigger(true);
+        });
+    };
 
-	const handleIncite = event => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
+    const handleIncite = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
 
-		inviteInProject(projectIdClicked, data.get('usernameInvite'));
-	};
+        inviteInProject(projectIdClicked, data.get('usernameInvite'));
+    };
 
-	return (
-		<>
-			<MDBModal open={isOpen} onClose={toggle} tabIndex='-1'>
-				<MDBModalDialog size='lg'>
-					<MDBModalContent className='modal-content'>
-						<MDBModalHeader>
-							<MDBModalTitle>Управление доступом</MDBModalTitle>
-							<MDBBtn className='btn-close' color='none' onClick={toggle}></MDBBtn>
-						</MDBModalHeader>
+    return (
+        <>
+            <MDBModal open={isOpen} onClose={toggle} tabIndex="-1">
+                <MDBModalDialog size="lg">
+                    <MDBModalContent className="modal-content">
+                        <MDBModalHeader>
+                            <MDBModalTitle>Управление доступом</MDBModalTitle>
+                            <MDBBtn className="btn-close" color="none" onClick={toggle}></MDBBtn>
+                        </MDBModalHeader>
 
-						<MDBModalBody style={{ padding: '1rem 1.4em' }}>
-							<p style={{ marginBottom: '0.25rem' }}>Username пользователя</p>
-							<form onSubmit={handleIncite}>
-								<div style={{ display: 'flex' }}>
-									<MDBInput name='usernameInvite' autoComplete='off' />
+                        <MDBModalBody style={{ padding: '1rem 1.4em' }}>
+                            <p style={{ marginBottom: '0.25rem' }}>Username пользователя</p>
+                            <form onSubmit={handleIncite}>
+                                <div style={{ display: 'flex' }}>
+                                    <MDBInput name="usernameInvite" autoComplete="off" />
 
-									<MDBBtn color='success' style={{ width: '4rem', marginLeft: '0.5rem', boxShadow: 'none', borderRadius: '4px' }}>
-										<MDBIcon fas icon='share-square' />
-									</MDBBtn>
-								</div>
-							</form>
-						</MDBModalBody>
+                                    <MDBBtn color="success" style={{ width: '4rem', marginLeft: '0.5rem', boxShadow: 'none', borderRadius: '4px' }}>
+                                        <MDBIcon fas icon="share-square" />
+                                    </MDBBtn>
+                                </div>
+                            </form>
+                        </MDBModalBody>
 
-						<MDBModalFooter style={{ justifyContent: 'start', padding: '0' }} id='team-list'>
-							<TeamTable />
-						</MDBModalFooter>
-					</MDBModalContent>
-				</MDBModalDialog>
-			</MDBModal>
-		</>
-	);
+                        <MDBModalFooter style={{ justifyContent: 'start', padding: '0' }} id="team-list">
+                            <TeamTable />
+                        </MDBModalFooter>
+                    </MDBModalContent>
+                </MDBModalDialog>
+            </MDBModal>
+        </>
+    );
 }

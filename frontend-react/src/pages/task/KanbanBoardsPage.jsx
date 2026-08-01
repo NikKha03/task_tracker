@@ -1,54 +1,46 @@
 import { useState, useEffect, useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import axios from 'axios';
-
 import Navbar from '../../components/navigate/Navbar';
 import LeftMenu from '../../components/navigate/LeftMenu';
 import Column from '../../components/project/Column';
-
 import { AppContext } from '../../context/AppContext';
 import { AuthContext } from '../../context/AuthContext';
-import { getTasksByTabIdPath } from '../../api/api-path';
+import api from '../../api/ApiHandlers';
 
 export default function KanbanBoardsPage() {
-	let [searchParams, setSearchParams] = useSearchParams();
-	const { user } = useContext(AuthContext);
-	const { taskTrigger, setTaskTrigger, tabIdClicked, projectIdClicked } = useContext(AppContext);
-	const [tasks, setTasks] = useState([]);
+    let [searchParams, setSearchParams] = useSearchParams();
+    const { user } = useContext(AuthContext);
+    const { taskTrigger, setTaskTrigger, tabIdClicked, projectIdClicked } = useContext(AppContext);
+    const [tasks, setTasks] = useState([]);
 
-	useEffect(() => {
-		const getTasks = async tabId => {
-			try {
-				const response = await axios.get(getTasksByTabIdPath(searchParams.get('project'), tabId, user.name), { withCredentials: true });
-				setTasks(response.data);
-			} catch (error) {
-				console.error('Error fetching projects:', error);
-			}
-		};
+    useEffect(() => {
+        if (taskTrigger) setTaskTrigger(false);
+        if (!isNaN(tabIdClicked)) {
+            api.getTasksByTabId(tabIdClicked, searchParams.get('project'), user.name).then((tasks) => {
+                if (tasks) setTasks(tasks);
+            });
+        }
+    }, [taskTrigger, tabIdClicked]);
 
-		if (taskTrigger) setTaskTrigger(false);
-		if (!isNaN(tabIdClicked)) getTasks(tabIdClicked);
-	}, [taskTrigger, tabIdClicked]);
+    useEffect(() => {
+        setTasks([]);
+    }, [projectIdClicked]);
 
-	useEffect(() => {
-		setTasks([]);
-	}, [projectIdClicked]);
-
-	return (
-		<>
-			<Navbar pageType={'board'} />
-			<div className='task-area'>
-				<LeftMenu />
-				<div className='main-window'>
-					{!isNaN(tabIdClicked) && (
-						<>
-							<Column status={'AWAITING_COMPLETION'} tasks={tasks.AWAITING_COMPLETION} />
-							<Column status={'IN_PROGRESS'} tasks={tasks.IN_PROGRESS} />
-							<Column status={'COMPLETED'} tasks={tasks.COMPLETED} />
-						</>
-					)}
-				</div>
-			</div>
-		</>
-	);
+    return (
+        <>
+            <Navbar pageType={'board'} />
+            <div className="task-area">
+                <LeftMenu />
+                <div className="main-window">
+                    {!isNaN(tabIdClicked) && (
+                        <>
+                            <Column status={'AWAITING_COMPLETION'} tasks={tasks.AWAITING_COMPLETION} />
+                            <Column status={'IN_PROGRESS'} tasks={tasks.IN_PROGRESS} />
+                            <Column status={'COMPLETED'} tasks={tasks.COMPLETED} />
+                        </>
+                    )}
+                </div>
+            </div>
+        </>
+    );
 }

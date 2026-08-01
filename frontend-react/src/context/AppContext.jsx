@@ -39,25 +39,22 @@ export const AppProvider = ({ children }) => {
         if (!user) return;
         if (isNaN(projectIdClicked)) return;
 
-        const fetchProject = async () => {
-            const project = await api.getProject(projectIdClicked, user.name);
+        api.getProject(projectIdClicked, user.name).then((project) => {
             if (project) {
                 setProject(project);
                 setTabs(project.tabs);
             }
-        };
-        fetchProject();
+        });
     }, [projectIdClicked, projectTrigger, user]);
 
     useEffect(() => {
         if (project.team !== undefined) project.team.forEach((i) => usernames.push(i.username));
-        const fetchUsernameAndName = async () => {
-            if (usernames.length > 0) {
-                const data = await api.getUsersByUsername(usernames);
+
+        if (usernames.length > 0) {
+            api.getUsersByUsername(usernames).then((data) => {
                 if (data) setUsernameAndName(data);
-            }
-        };
-        fetchUsernameAndName();
+            });
+        }
     }, [project]);
 
     return (

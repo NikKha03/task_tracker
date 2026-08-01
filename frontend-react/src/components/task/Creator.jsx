@@ -7,11 +7,9 @@ export function Creator({ username }) {
     let [creator, setCreator] = useState(null);
 
     useEffect(() => {
-        const fetchFio = async () => {
-            const fio = await api.getUserByUsername(username, setCreator);
+        api.getUserByUsername(username, setCreator).then((fio) => {
             if (fio) setCreator(`${fio.firstName} ${fio.lastName}`);
-        };
-        fetchFio();
+        });
     }, []);
 
     return (

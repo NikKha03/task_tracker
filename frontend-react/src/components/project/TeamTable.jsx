@@ -8,8 +8,10 @@ export default function TeamTable() {
     const { project, projectIdClicked, usernameAndName } = useContext(AppContext);
     const { setProjectTrigger } = useContext(AuthContext);
 
-    const kick = async (member) => {
-        (await api.kickedOut(projectIdClicked, member.username)) && setProjectTrigger(true);
+    const kick = (member) => {
+        api.kickedOut(projectIdClicked, member.username).then((isKicked) => {
+            setProjectTrigger(true);
+        });
     };
 
     return (
