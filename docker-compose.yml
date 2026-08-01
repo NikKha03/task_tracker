@@ -88,7 +88,7 @@ services:
       context: .
       dockerfile: ./packs/api_gateway/Dockerfile
       args:
-        JAR_FILE: ./packs/api_gateway/apiGateway.v1.jar
+        JAR_FILE: ./packs/api_gateway/apiGateway.hotfix-v1.1.jar
     container_name: api-gateway
     ports:
       - "${API_PORT}:8760"
@@ -104,6 +104,7 @@ services:
       - EUREKA_INSTANCE_NON_SECURE_PORT=${API_PORT}
       - EUREKA_INSTANCE_INSTANCE_ID=${HOST_IP}:api-gateway:${API_PORT}
       - APP_ENV_ALLOWED_ORIGINS=${API_ALLOWED_ORIGINS}
+      - APP_ENV_GATEWAY_SECRET=${GATEWAY_SECRET}
       - SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED=true
       - SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_LOWER_CASE_SERVICE_ID=true
       # ВАЖНО: Отключаем автоматический discovery locator
@@ -124,7 +125,7 @@ services:
       context: .
       dockerfile: ./packs/task_service/Dockerfile
       args:
-        JAR_FILE: ./packs/task_service/taskTracker.v1.jar
+        JAR_FILE: ./packs/task_service/taskTracker.hotfix-v1.1.jar
     container_name: task-service
     ports: 
       - "${TASK_PORT}:8081"
@@ -141,6 +142,7 @@ services:
       - EUREKA_INSTANCE_NON_SECURE_PORT=${TASK_PORT}
       - EUREKA_INSTANCE_INSTANCE_ID=${HOST_IP}:task-service:${TASK_PORT}
       - APP_ENV_ALLOWED_ORIGINS=${SERVICE_ALLOWED_ORIGINS}
+      - APP_ENV_GATEWAY_SECRET=${GATEWAY_SECRET}
       - SPRING_DATASOURCE_URL=${TASK_DATASOURCE_URL:-jdbc:postgresql://postgres:5432/task-db}
       - SPRING_DATASOURCE_USERNAME=${TASK_DATASOURCE_USERNAME:-postgres}
       - SPRING_DATASOURCE_PASSWORD=${TASK_DATASOURCE_PASSWORD:-postgres}

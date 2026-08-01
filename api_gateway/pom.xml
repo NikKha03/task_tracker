@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.NikKha03</groupId>
 	<artifactId>EurekaServer</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>hotfix-1.1</version>
 	<name>EurekaServer</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
