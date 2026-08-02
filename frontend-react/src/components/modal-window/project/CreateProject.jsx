@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBInput } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter } from 'mdb-react-ui-kit';
 import { AuthContext } from '../../../context/AuthContext';
 import api from '../../../api/ApiHandlers';
 
@@ -22,12 +22,12 @@ export default function CreateProject({ isOpen, toggle }) {
                     <MDBModalContent className="modal-content">
                         <MDBModalHeader>
                             <MDBModalTitle>Создать проект</MDBModalTitle>
-                            <MDBBtn className="btn-close" color="none" onClick={toggle}></MDBBtn>
+                            <MDBBtn className="btn-close btn-close-white" color="none" onClick={toggle}></MDBBtn>
                         </MDBModalHeader>
                         <form onSubmit={handleSubmitSave}>
                             <MDBModalBody>
                                 <p style={{ marginBottom: '0.25rem' }}>Название проекта</p>
-                                <MDBInput name="projectName" autoComplete="off" />
+                                <input name="projectName" autoComplete="off" />
                             </MDBModalBody>
 
                             <MDBModalFooter>

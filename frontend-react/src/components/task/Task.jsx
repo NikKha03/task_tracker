@@ -8,58 +8,71 @@ import { MDBIcon } from 'mdb-react-ui-kit';
 */
 
 export default function Task({ task, tasks = [], setChangeTask, toggleOpen, displayMethod }) {
-	const iconColor = {
-		color: '#797979',
-	};
-	if (task.taskStatus === 'COMPLETED') iconColor.color = '#22ac55';
+    const iconColor = {
+        color: '#797979',
+    };
+    if (task.taskStatus === 'COMPLETED') iconColor.color = '#22ac55';
 
-	const click = () => {
-		setChangeTask(task);
-		toggleOpen();
-	};
+    const click = () => {
+        setChangeTask(task);
+        toggleOpen();
+    };
 
-	let borderColor = '#F5F5F5';
-	if (displayMethod === 'list' && task.taskStatus === 'COMPLETED') {
-		if (task.deadline !== null) {
-			const datePlannedImplementation = Date.parse(task.deadline.substring(0, 10));
-			const dateExecution = Date.parse(task.executionDate.substring(0, 10));
-			const currenDate = dateParser(new Date());
+    let borderColor;
+    if (displayMethod === 'list' && task.taskStatus === 'COMPLETED') {
+        if (task.deadline !== null) {
+            const datePlannedImplementation = Date.parse(task.deadline.substring(0, 10));
+            const dateExecution = Date.parse(task.executionDate.substring(0, 10));
+            const currenDate = dateParser(new Date());
 
-			datePlannedImplementation === dateExecution || currenDate < datePlannedImplementation ? (borderColor = '#C8E6C9') : (borderColor = '#FFE0B2');
-		}
-		if (task.deadline === null) {
-			borderColor = '#C8E6C9';
-		}
-	} else if (displayMethod === 'list') {
-		if (task.deadline !== null) {
-			const datePlannedImplementation = Date.parse(task.deadline.substring(0, 10));
-			const currenDate = dateParser(new Date());
+            datePlannedImplementation === dateExecution || currenDate < datePlannedImplementation
+                ? (borderColor = 'var(--color-done)')
+                : (borderColor = 'var(--color-progress)');
+        }
+        if (task.deadline === null) {
+            borderColor = 'var(--color-done)';
+        }
+    } else if (displayMethod === 'list') {
+        if (task.deadline !== null) {
+            const datePlannedImplementation = Date.parse(task.deadline.substring(0, 10));
+            const currenDate = dateParser(new Date());
 
-			datePlannedImplementation < currenDate ? (borderColor = '#FFCDD2') : null;
-		}
-	}
+            if (datePlannedImplementation < currenDate) borderColor = 'var(--color-danger)';
+        }
+    }
 
-	const listStyle = () => {
-		return displayMethod === 'list' ? { backgroundColor: borderColor } : {};
-	};
+    const listStyle = () => {
+        const style = { backgroundColor: 'var(--bg-field)' };
+        if (borderColor) {
+            style.borderColor = borderColor;
+        }
+        return displayMethod === 'list' ? style : {};
+    };
 
-	return (
-		<>
-			{displayMethod === 'list' && <GroupByDate tasks={tasks} task={task} />}
-			<div className='task' style={listStyle()}>
-				<MDBIcon className='doneIcon' fas icon='check-circle' size='2x' style={iconColor} />
-				<div className='main'>
-					<div className='top'>
-						<h3>{task.header}</h3>
-					</div>
-				</div>
-				<div className='right'>
-					<div className='top'>
-						<MDBIcon fas icon='ellipsis-v' style={{ cursor: 'pointer', height: '1rem', width: '1rem', textAlign: 'center' }} onClick={() => click()} />
-					</div>
-					<div className='bot'>{task.implementer !== null && <MDBIcon className='user-icon' style={{ cursor: 'pointer' }} size='lg' fas icon='user-circle' />}</div>
-				</div>
-			</div>
-		</>
-	);
+    return (
+        <>
+            {displayMethod === 'list' && <GroupByDate tasks={tasks} task={task} />}
+            <div className="task" style={listStyle()}>
+                <MDBIcon className="doneIcon" fas icon="check-circle" size="2x" style={iconColor} />
+                <div className="main">
+                    <div className="top">
+                        <h3>{task.header}</h3>
+                    </div>
+                </div>
+                <div className="right">
+                    <div className="top">
+                        <MDBIcon
+                            fas
+                            icon="ellipsis-v"
+                            style={{ cursor: 'pointer', height: '1rem', width: '1rem', textAlign: 'center' }}
+                            onClick={() => click()}
+                        />
+                    </div>
+                    <div className="bot">
+                        {task.implementer !== null && <MDBIcon className="user-icon" style={{ cursor: 'pointer' }} size="lg" fas icon="user-circle" />}
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 }

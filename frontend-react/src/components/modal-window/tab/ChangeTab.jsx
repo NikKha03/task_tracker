@@ -1,18 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import {
-    MDBBtn,
-    MDBModal,
-    MDBModalDialog,
-    MDBModalContent,
-    MDBModalHeader,
-    MDBModalTitle,
-    MDBModalBody,
-    MDBModalFooter,
-    MDBInput,
-    MDBIcon,
-} from 'mdb-react-ui-kit';
+import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter, MDBIcon } from 'mdb-react-ui-kit';
 
 import { AuthContext } from '../../../context/AuthContext';
 import { AppContext } from '../../../context/AppContext';
@@ -54,12 +43,12 @@ export default function ChangeTab({ tab, isOpen, toggle }) {
                     <MDBModalContent className="modal-content">
                         <MDBModalHeader>
                             <MDBModalTitle>Редактировать доску</MDBModalTitle>
-                            <MDBBtn className="btn-close" color="none" onClick={toggle}></MDBBtn>
+                            <MDBBtn className="btn-close btn-close-white" color="none" onClick={toggle}></MDBBtn>
                         </MDBModalHeader>
                         <form onSubmit={handleSubmitSave}>
                             <MDBModalBody>
                                 <p style={{ marginBottom: '0.25rem' }}>Название доски</p>
-                                <MDBInput name="tabName" defaultValue={tab.name} autoComplete="off" />
+                                <input name="tabName" defaultValue={tab.name} autoComplete="off" />
                             </MDBModalBody>
 
                             <MDBModalFooter>

@@ -32,13 +32,15 @@ export default function KanbanBoardsPage() {
             <div className="task-area">
                 <LeftMenu />
                 <div className="main-window">
-                    {!isNaN(tabIdClicked) && (
-                        <>
-                            <Column status={'AWAITING_COMPLETION'} tasks={tasks.AWAITING_COMPLETION} />
-                            <Column status={'IN_PROGRESS'} tasks={tasks.IN_PROGRESS} />
-                            <Column status={'COMPLETED'} tasks={tasks.COMPLETED} />
-                        </>
-                    )}
+                    <div className="column-wrapper">
+                        {!isNaN(tabIdClicked) && (
+                            <>
+                                <Column status={'AWAITING_COMPLETION'} tasks={tasks.AWAITING_COMPLETION} />
+                                <Column status={'IN_PROGRESS'} tasks={tasks.IN_PROGRESS} />
+                                <Column status={'COMPLETED'} tasks={tasks.COMPLETED} />
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
         </>

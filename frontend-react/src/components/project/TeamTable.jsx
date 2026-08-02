@@ -15,7 +15,7 @@ export default function TeamTable() {
     };
 
     return (
-        <MDBTable align="middle" style={{ color: 'black', margin: '0' }}>
+        <MDBTable align="middle" style={{ color: 'var(--text-primary)', margin: '0' }}>
             <MDBTableBody>
                 {project.team.map((member) => (
                     <tr key={member.username} style={{ fontSize: '1rem', display: 'flex' }}>

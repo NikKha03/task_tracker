@@ -4,18 +4,7 @@ import { AppContext } from '../../../context/AppContext';
 import { AuthContext } from '../../../context/AuthContext';
 import TeamTable from '../../project/TeamTable';
 
-import {
-    MDBBtn,
-    MDBIcon,
-    MDBModal,
-    MDBModalDialog,
-    MDBModalContent,
-    MDBModalHeader,
-    MDBModalTitle,
-    MDBModalBody,
-    MDBModalFooter,
-    MDBInput,
-} from 'mdb-react-ui-kit';
+import { MDBBtn, MDBIcon, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter } from 'mdb-react-ui-kit';
 
 const teamList = (usernameAndName) => {
     const elements = [];
@@ -51,14 +40,14 @@ export default function TeamModal({ isOpen, toggle }) {
                     <MDBModalContent className="modal-content">
                         <MDBModalHeader>
                             <MDBModalTitle>Управление доступом</MDBModalTitle>
-                            <MDBBtn className="btn-close" color="none" onClick={toggle}></MDBBtn>
+                            <MDBBtn className="btn-close btn-close-white" color="none" onClick={toggle}></MDBBtn>
                         </MDBModalHeader>
 
                         <MDBModalBody style={{ padding: '1rem 1.4em' }}>
                             <p style={{ marginBottom: '0.25rem' }}>Username пользователя</p>
                             <form onSubmit={handleIncite}>
                                 <div style={{ display: 'flex' }}>
-                                    <MDBInput name="usernameInvite" autoComplete="off" />
+                                    <input name="usernameInvite" autoComplete="off" />
 
                                     <MDBBtn color="success" style={{ width: '4rem', marginLeft: '0.5rem', boxShadow: 'none', borderRadius: '4px' }}>
                                         <MDBIcon fas icon="share-square" />

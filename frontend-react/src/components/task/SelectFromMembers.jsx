@@ -4,42 +4,40 @@ import { AuthContext } from '../../context/AuthContext';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
-const selectStyle = { width: '100%', height: '2.25rem', backgroundColor: '#ffffff', color: '#4f4f4f' };
-
 export default function SelectFromMembers({ member, setMember }) {
-	const { project, usernameAndName } = useContext(AppContext);
-	const { user } = useContext(AuthContext);
+    const { project, usernameAndName } = useContext(AppContext);
+    const { user } = useContext(AuthContext);
 
-	const handleChange = event => {
-		setMember(event.target.value);
-	};
+    const handleChange = (event) => {
+        setMember(event.target.value);
+    };
 
-	return window.location.pathname === '/list' ? (
-		<>
-			<Select disabled style={selectStyle} value={user.name} onChange={handleChange} inputProps={{ 'aria-label': 'Without label' }} size='small'>
-				<MenuItem value={user.name}>{user.fullName}</MenuItem>
-			</Select>
-		</>
-	) : (
-		<>
-			{project && project.team ? (
-				<>
-					<Select style={selectStyle} displayEmpty value={member} onChange={handleChange} inputProps={{ 'aria-label': 'Without label' }} size='small'>
-						<MenuItem value=''>Нет</MenuItem>
-						{project.team.map(item => (
-							<MenuItem key={item.id} value={item.username}>
-								{usernameAndName[item.username]}
-							</MenuItem>
-						))}
-					</Select>
-				</>
-			) : (
-				<>
-					<Select style={selectStyle} displayEmpty value={member} onChange={handleChange} inputProps={{ 'aria-label': 'Without label' }} size='small'>
-						{/* <MenuItem value=''>Нет</MenuItem> */}
-					</Select>
-				</>
-			)}
-		</>
-	);
+    return window.location.pathname === '/list' ? (
+        <>
+            <select disabled value={user.name} onChange={handleChange} inputProps={{ 'aria-label': 'Without label' }}>
+                <option value={user.name}>{user.fullName}</option>
+            </select>
+        </>
+    ) : (
+        <>
+            {project && project.team ? (
+                <>
+                    <select displayEmpty value={member} onChange={handleChange} inputProps={{ 'aria-label': 'Without label' }}>
+                        <option value="">Нет</option>
+                        {project.team.map((item) => (
+                            <option key={item.id} value={item.username}>
+                                {usernameAndName[item.username]}
+                            </option>
+                        ))}
+                    </select>
+                </>
+            ) : (
+                <>
+                    <select displayEmpty value={member} onChange={handleChange} inputProps={{ 'aria-label': 'Without label' }}>
+                        {/* <MenuItem value=''>Нет</MenuItem> */}
+                    </select>
+                </>
+            )}
+        </>
+    );
 }

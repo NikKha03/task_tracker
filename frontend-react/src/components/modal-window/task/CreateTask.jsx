@@ -4,7 +4,7 @@ import { AppContext } from '../../../context/AppContext';
 import SelectFromMembers from '../../task/SelectFromMembers';
 import TaskStatus from '../../task/TaskStatus';
 import '../../../styles/TaskPanel.css';
-import { MDBBtn, MDBModal, MDBInput, MDBTextArea } from 'mdb-react-ui-kit';
+import { MDBBtn, MDBModal, MDBTextArea } from 'mdb-react-ui-kit';
 import api from '../../../api/ApiHandlers';
 
 const getCurrentDate = () => {
@@ -59,37 +59,37 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
             <MDBModal animationDirection="right" open={topRightModal} onClose={() => setTopRightModal(false)}>
                 <div className="create-task-panel">
                     <div className="header">
-                        <h2 style={{ fontSize: '1.375rem', margin: '0' }}>Создать задачу</h2>
+                        <h2>Создать задачу</h2>
                         <MDBBtn className="btn-close btn-close-white" color="none" onClick={() => setTopRightModal(false)}></MDBBtn>
                     </div>
 
                     <form style={{ height: '100%', position: 'relative' }} onSubmit={handleSubmitSave}>
                         <div className="content">
-                            <div>
-                                <h2 style={{ fontSize: '1.25rem' }}>Заголовок</h2>
-                                <MDBInput style={{ height: '2.25rem', backgroundColor: '#ffffff' }} name="header" type="text" autoComplete="off" />
+                            <div className="field">
+                                <label>Заголовок</label>
+                                <input style={{ height: '2.25rem' }} name="header" type="text" autoComplete="off" />
                             </div>
-                            <div>
-                                <h2 style={{ fontSize: '1.25rem' }}>Описание</h2>
-                                <MDBTextArea style={{ height: '5rem', backgroundColor: '#ffffff' }} name="comment" />
+                            <div className="field">
+                                <label>Описание</label>
+                                <textarea style={{ height: '10rem' }} name="comment" />
                             </div>
-                            <div>
-                                <h2 style={{ fontSize: '1.25rem' }}>Дедлайн</h2>
-                                <MDBInput
+                            <div className="field">
+                                <label>Дедлайн</label>
+                                <input
                                     id="date"
                                     name="deadline"
                                     type="date"
                                     autoComplete="off"
                                     defaultValue={null}
-                                    style={{ width: '100%', height: '2.25rem', backgroundColor: '#ffffff' }}
+                                    style={{ width: '100%', height: '2.25rem' }}
                                 />
                             </div>
-                            <div>
-                                <h2 style={{ fontSize: '1.25rem' }}>Исполнитель</h2>
+                            <div className="field">
+                                <label>Исполнитель</label>
                                 <SelectFromMembers member={implementer} setMember={setImplementer} />
                             </div>
-                            <div>
-                                <h2 style={{ fontSize: '1.25rem' }}>Статус</h2>
+                            <div className="field">
+                                <label>Статус</label>
                                 <TaskStatus status={status} setStatus={setStatus} />
                             </div>
                         </div>
