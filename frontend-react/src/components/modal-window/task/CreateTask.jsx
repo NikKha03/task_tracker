@@ -56,14 +56,14 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
 
     return (
         <>
-            <MDBModal animationDirection="right" open={topRightModal} onClose={() => setTopRightModal(false)}>
-                <div className="create-task-panel">
+            <MDBModal staticBackdrop animationDirection="right" open={topRightModal} onClose={() => setTopRightModal(false)}>
+                <div className="task-panel">
                     <div className="header">
                         <h2>Создать задачу</h2>
                         <MDBBtn className="btn-close btn-close-white" color="none" onClick={() => setTopRightModal(false)}></MDBBtn>
                     </div>
 
-                    <form style={{ height: '100%', position: 'relative' }} onSubmit={handleSubmitSave}>
+                    <form className="task-form" style={{ height: '100%', position: 'relative' }} onSubmit={handleSubmitSave}>
                         <div className="content">
                             <div className="field">
                                 <label>Заголовок</label>
@@ -91,6 +91,18 @@ export default function CreateTask({ toggleOpen, topRightModal, setTopRightModal
                             <div className="field">
                                 <label>Статус</label>
                                 <TaskStatus status={status} setStatus={setStatus} />
+                            </div>
+                            <div className="field">
+                                <label>Доска</label>
+                                <select>
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div className="field">
+                                <label>Проект</label>
+                                <select>
+                                    <option></option>
+                                </select>
                             </div>
                         </div>
 

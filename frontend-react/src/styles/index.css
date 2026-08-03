@@ -209,15 +209,14 @@ select:focus {
 .task-area .main-window {
     width: calc(100% - 21.25rem);
     background-color: var(--bg-page);
-   
 
-	display: flex;
-	width: calc(100% - 21.25rem);
-	overflow-x: auto;
+    display: flex;
+    width: calc(100% - 21.25rem);
+    overflow-x: auto;
 }
 
 .column-background {
-    margin: 0 0.75rem;
+    margin: 0;
     height: 100%;
 }
 
@@ -256,7 +255,8 @@ select:focus {
 }
 
 .column-wrapper {
-	width: 100%;
+    width: 100%;
+    gap: 1rem;
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(auto-fit, minmax(21rem, 1fr));
@@ -264,7 +264,7 @@ select:focus {
 
 .column-wrapper,
 .list-area {
-    padding: 1.25rem 0.5rem;
+    padding: 1rem;
 }
 
 .list-area {
